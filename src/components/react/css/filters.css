@@ -1,0 +1,9 @@
+.filters::-webkit-scrollbar{
+  height: 4px;
+  background-color: #000105;
+}
+
+.filters::-webkit-scrollbar-thumb {
+  background: #171717;
+  border-radius: 4px;
+}

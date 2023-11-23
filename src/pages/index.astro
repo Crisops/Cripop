@@ -1,10 +1,36 @@
 ---
-import Layout from '../layouts/Layout.astro';
-
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/astro/Header.astro';
+import Main from '@/components/astro/Main.astro';
 ---
 
 <Layout title="Crisop | Un espacio donde puedes ver lo que te gusta">
-	<main>
-		
-	</main>
+	<div id="movies" class="relative h-screen grid grid-cols-[730px_1fr] grid-rows-[100px_1fr_auto] max-[1536px]:grid-cols-[580px_1fr]">
+		<header class="max-[640px]:col-span-2 sm:[grid-area:header] xl:[grid-area:header] relative top-0 left-0 flex justify-between items-center px-9 bg-red-500">
+			<Header/>
+		</header>
+		<aside class="max-[640px]:col-span-2 sm:col-span-2 xl:[grid-area:slider] bg-yellow-300">aside</aside>
+		<main class="max-[640px]:col-span-2 sm:col-span-2 xl:[grid-area:main] bg-blue-300">
+			<Main/>
+		</main>
+		<footer class="max-[640px]:col-span-2 sm:col-span-2 xl:[grid-area:footer] bg-green-300">footer</footer>
+	</div>
 </Layout>
+
+
+<style>
+
+
+#movies{
+		/* // display: grid;
+		// grid-template-columns: 730px 1fr;
+		// grid-template-rows: 100px 1fr auto; */
+		grid-template-areas: 
+			"header header"
+			"slider main"
+			"footer main"
+		;
+	}
+
+
+</style>
