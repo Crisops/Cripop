@@ -1,0 +1,72 @@
+---
+import Filters from "../react/Filters";
+import SearchMovie from "../react/SearchMovie";
+
+import { Image } from "astro:assets";
+import {type MoviesDiscover } from '@/types/dataMovie'
+
+const API_KEY = import.meta.env.SECRET_API_KEY
+const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
+
+
+const URL_DISCOVER = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&include_adult=false&language=en-US&page=1&sort_by=popularity.desc`
+const URL_IMG: string = `https://image.tmdb.org/t/p/original/`
+
+
+
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${ACCESS_TOKEN}`
+    }
+  }
+
+  const response = await fetch(`${URL_DISCOVER}`, options)
+
+  const movies = await response.json() as MoviesDiscover
+
+---
+
+<div class="relative h-full flex flex-col gap-10 pt-5">
+  <header class="flex justify-between items-center py-5 px-10 gap-10">
+    <SearchMovie/>
+    <Filters/>
+  </header>
+  <div class="block w-full h-full overflow-y-scroll">
+    <div class="grid w-full h-full px-10 gap-2 grid-cols-[repeat(auto-fit,_minmax(300px,1fr))] auto-rows-[500px]">
+      {
+        movies.results.map(movies => (
+          <div id={`${movies.id}`} class="relative overflow-hidden">
+            <Image
+              class="absolute max-w-full h-full object-cover transition-transform duration-300 rounded-lg linear hover:scale-105"
+              src={`${URL_IMG}${movies.poster_path}`}
+              alt={`${movies.title}`}
+              width="400"
+              height="550" 
+              quality={"max"}
+              />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<!-- <div class="relative overflow-hidden">
+  <Image src={imagenMia} class="absolute w-full h-full object-cover transition-transform duration-300 linear hover:scale-105" alt="Imagen de prueba" />
+</div> -->
+
+      <!-- {
+        movies.results.map(movies => (
+          <div id={`${movies.id}`} class="relative overflow-hidden">
+            <Image
+              class="absolute w-full h-full object-cover transition-transform duration-300 linear hover:scale-105"
+              src={`${URL_IMG}${movies.poster_path}`}
+              alt={`${movies.title}`}
+              width="200"
+              height="150" 
+              format="webp"/>
+          </div>
+        ))
+      } -->

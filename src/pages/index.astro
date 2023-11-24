@@ -1,19 +1,19 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Header from '@/components/astro/Header.astro';
-import Main from '@/components/astro/Main.astro';
+import Movies from '@/components/astro/Movies.astro';
 ---
 
 <Layout title="Crisop | Un espacio donde puedes ver lo que te gusta">
-	<div id="movies" class="relative h-screen grid grid-cols-[730px_1fr] grid-rows-[100px_1fr_auto] max-[1536px]:grid-cols-[580px_1fr]">
-		<header class="max-[640px]:col-span-2 sm:[grid-area:header] xl:[grid-area:header] relative top-0 left-0 flex justify-between items-center px-9 bg-red-500">
+	<div id="movies" class="relative h-screen flex flex-col xl:grid xl:grid-cols-[730px_1fr] xl:grid-rows-[100px_1fr_auto] max-[1536px]:xl:grid-cols-[580px_1fr]">
+		<header class="xl:[grid-area:header] relative w-full h-24  xl:h-full flex justify-between items-center px-9">
 			<Header/>
 		</header>
-		<aside class="max-[640px]:col-span-2 sm:col-span-2 xl:[grid-area:slider] bg-yellow-300">aside</aside>
-		<main class="max-[640px]:col-span-2 sm:col-span-2 xl:[grid-area:main] bg-blue-300">
-			<Main/>
+		<aside class="relative flex-grow xl:[grid-area:slider] bg-yellow-200">aside</aside>
+		<main class="xl:[grid-area:main]">
+			<Movies/>
 		</main>
-		<footer class="max-[640px]:col-span-2 sm:col-span-2 xl:[grid-area:footer] bg-green-300">footer</footer>
+		<footer class="xl:[grid-area:footer]">footer</footer>
 	</div>
 </Layout>
 
