@@ -1,0 +1,67 @@
+---
+  import type { Movies } from "@/types/dataMovie";
+  import { getGenders } from "@/services/get_genders";
+  import {getGendersMovies} from '@/services/get_genders_movies'
+  import Movie from "./Movie.astro";
+  import  {type MovieWithGenders } from "@/types/Genders";
+
+
+  const API_KEY = import.meta.env.SECRET_API_KEY
+  const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
+
+  const URL_NOW_PLAYING = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}language=es&page=1`
+  const URL_IMG: string = 'https://image.tmdb.org/t/p/original'
+
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${ACCESS_TOKEN}`
+    }
+  }
+
+  const response = await fetch(URL_NOW_PLAYING, options)
+
+  const movies = await response.json() as Movies
+
+  const movie_gendersId = movies.results.map(movie => movie.genre_ids)
+
+  const gendersList = await getGenders(ACCESS_TOKEN)
+
+  let listIdWithGender: MovieWithGenders
+
+  if (gendersList) {
+    listIdWithGender = await getGendersMovies(movie_gendersId, gendersList) as MovieWithGenders
+  }
+
+  const movies_render = movies.results.slice(0,5)
+  
+---
+
+<div class="flex flex-col gap-4">
+  <div class="flex flex-col gap-2">
+    <span class="font-Libre_Franklin text-white font-bold text-2xl">Películas actualmente en cartelera</span>
+    <span class="text-zinc-400 font-Noto_Sans text-md">11-10-2023 al 20-12-2023</span>
+  </div>
+  <div class="relative h-full overflow-hidden rounded-lg gap-2  py-3">
+    <div class="flex gap-2">
+      {
+        movies_render.map((movie, index) =>(
+          <Movie
+          id={movie.id}
+          url_image={URL_IMG + movie.poster_path}
+          title={movie.title}
+          widht={400}
+          height={200}
+          genders={listIdWithGender.slice(0,5)}
+          rate={movie.vote_average}
+          index={index}
+          />
+        ))
+      }
+    </div>
+    <div class="absolute top-0 right-0 bg-gradient-to-l from-black from-30% w-96 h-full flex justify-center items-center">
+      <a href="#" class="border border-zinc-500 px-3 py-2 font-Noto_Sans text-white font-medium text-sm transition-colors duration-300 hover:bg-white hover:text-black">Ver Más</a>
+    </div>
+  </div>
+</div>

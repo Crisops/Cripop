@@ -1,0 +1,66 @@
+---
+  
+  
+  import { Image } from "astro:assets";
+  import {type Movies } from '@/types/dataMovie'
+
+  import MovieHome from '@/components/astro/MovieHome.astro'
+  import {getDetailsMovie} from '@/services/get_details_movie'
+
+
+  const API_KEY = import.meta.env.SECRET_API_KEY
+  const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
+
+  const URL_TOP_RATED:string  = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}language=en-US&page=1`
+
+  const URL_IMG: string = `https://image.tmdb.org/t/p/original/`
+
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${ACCESS_TOKEN}`
+    }
+  }
+
+  const response = await fetch(`${URL_TOP_RATED}`,  options)
+
+  const top_movies = await response.json() as Movies
+
+  const top_movie = top_movies.results[0]
+
+  const {id} = top_movie
+
+  const movie_details = await getDetailsMovie(ACCESS_TOKEN, id)
+
+  
+
+  console.log(movie_details);
+  
+  
+  
+
+
+---
+<div class="relative w-full h-screen">
+  <div class="absolute inset-0 bg-black/30"></div>
+  <div class="absolute inset-0 bg-gradient-to-t from-black"></div>
+  <aside class="absolute flex items-center top-0 left-0 w-full h-full">
+    <MovieHome 
+      title={movie_details?.title}
+      language={movie_details?.original_language}
+      genders={movie_details?.genres}
+      overview={movie_details?.overview}
+      date={movie_details?.release_date}
+      rate={movie_details?.vote_average}
+      time={movie_details?.runtime}
+    />
+  </aside>
+  <Image
+    id={`${top_movie.id}`}
+    src={`${URL_IMG}${top_movie.backdrop_path}`}
+    alt={`${top_movie.title}`}
+    width={3860}
+    height={2160}
+  />
+</div>

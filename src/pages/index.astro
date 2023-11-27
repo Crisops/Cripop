@@ -1,36 +1,27 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Header from '@/components/astro/Header.astro';
-import Movies from '@/components/astro/Movies.astro';
+import MovieHomePreview from '@/components/astro/MovieHomePreview.astro';
+import MoviesDataBase from '@/components/astro/MoviesDataBase.astro';
 ---
 
 <Layout title="Crisop | Un espacio donde puedes ver lo que te gusta">
-	<div id="movies" class="relative h-screen flex flex-col xl:grid xl:grid-cols-[730px_1fr] xl:grid-rows-[100px_1fr_auto] max-[1536px]:xl:grid-cols-[580px_1fr]">
-		<header class="xl:[grid-area:header] relative w-full h-24  xl:h-full flex justify-between items-center px-9">
-			<Header/>
-		</header>
-		<aside class="relative flex-grow xl:[grid-area:slider] bg-yellow-200">aside</aside>
-		<main class="xl:[grid-area:main]">
-			<Movies/>
+	<div class="relative w-full h-full flex flex-col">
+		<div class="fixed top-0 left-0 w-full h-24 z-50 backdrop-blur-sm">
+			<header class="w-full h-24 flex justify-between items-center px-9 ">
+				<Header/>
+			</header>
+		</div>
+		<div class="relative w-full h-full overflow-hidden">
+			<MovieHomePreview/>
+		</div>
+		<main class="relative">
+			<div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black"></div>
+			<div class="relative h-52 flex items-center px-10">
+				<h2 class="text-white font-Libre_Franklin text-3xl font-semibold uppercase">Disfruta de tus peliculas y series favoritas</h2>
+			</div>
+			<MoviesDataBase/>
 		</main>
-		<footer class="xl:[grid-area:footer]">footer</footer>
+		<!-- <footer class="">footer</footer> -->
 	</div>
 </Layout>
-
-
-<style>
-
-
-#movies{
-		/* // display: grid;
-		// grid-template-columns: 730px 1fr;
-		// grid-template-rows: 100px 1fr auto; */
-		grid-template-areas: 
-			"header header"
-			"slider main"
-			"footer main"
-		;
-	}
-
-
-</style>

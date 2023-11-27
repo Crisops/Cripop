@@ -18,6 +18,9 @@
       "@/types/*": [
         "src/types/*"
       ],
+      "@/services/*": [
+        "src/services/*"
+      ],
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"

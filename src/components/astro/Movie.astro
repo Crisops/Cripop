@@ -1,0 +1,35 @@
+---
+
+import  {type MovieWithGenders } from "@/types/Genders";
+import { Image } from 'astro:assets';
+import FooterMovie from './FooterMovie.astro';
+
+interface Props {
+  id: number
+  url_image: string
+  title: string
+  widht: number
+  height: number
+  genders: MovieWithGenders
+  rate: number
+  index: number
+}
+
+const {id, url_image, title, widht, height, genders, rate, index} = Astro.props
+
+---
+
+
+
+<div id={`${id}`} class="relative min-w-[300px] group rounded-lg overflow-hidden">
+  <Image
+  class="cursor-pointer transition-transform duration-500 group-hover:scale-105"
+  src={url_image}
+  alt={`${title}`}
+  width={widht}
+  height={height}
+  quality={"max"}
+  />
+  <FooterMovie genders={genders} index={index} rate={rate}/>
+    <div class="absolute inset-0 top-0 right-0 bg-gradient-to-t from-black translate-y-full transition-all duration-300 ease-linear group-hover:translate-y-0 cursor-pointer"></div>
+</div>

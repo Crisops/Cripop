@@ -1,0 +1,59 @@
+---
+
+interface Props {
+  title?: string,
+  language?: string,
+  genders?: Genre[],
+  overview?: string,
+  date?: Date,
+  rate?: number,
+  time?: number,
+}
+
+
+import IconLanguage from "@/icons/IconLanguage.astro";
+import IconClaqueta from "@/icons/IconClaqueta.astro";
+import IconTime from "@/icons/IconTime.astro";
+import { type Genre } from "@/types/DetailsMovieId";
+
+
+const {title, language, genders, overview, date, rate, time} = Astro.props
+
+  let hour
+  let minutes
+  let seconds
+
+if (time) {
+  hour = Math.floor(time / 60) 
+  minutes =  Math.floor(time % 60) 
+  seconds = Math.floor(minutes / 60) 
+}
+
+
+---
+
+
+<div class="relative flex flex-col gap-5 px-10">
+  <h1 class="font-Ubuntu text-9xl font-semibold text-white max-w-xl m-0 uppercase">{title}</h1>
+  <div class="flex items-center gap-4">
+    <div class="inline-flex items-center gap-2">
+      <IconLanguage/>
+      <span class="text-white uppercase font-Noto_Sans font-light">{language}</span>
+    </div>
+    <div class="inline-flex gap-2">
+      <IconClaqueta/>
+      {genders?.map(gender => (<span class="text-white font-Noto_Sans font-light">{gender.name}</span>))}
+    </div>
+  </div>
+  <div class="flex flex-col gap-1 py-1">
+    <span class="text-white font-Noto_Sans font-light">Fecha de estreno: {date}</span>
+    <span class="text-white font-Noto_Sans font-light">Rate: {rate?.toFixed(1).toString()}</span>
+  </div>
+  <div class="max-w-lg">
+    <p class="text-white font-Noto_Sans font-light">{overview}</p>
+  </div>
+  <div class="flex gap-2">
+    <IconTime/>
+    <span class="text-white font-Noto_Sans font-light">{hour} horas  {minutes} minutos {seconds} segundos</span>
+  </div>
+</div>

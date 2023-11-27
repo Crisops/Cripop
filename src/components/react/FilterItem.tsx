@@ -1,6 +1,8 @@
 import { type Filters} from '@/types/Filters'
+import { useId } from 'react'
 
 const FilterItem: React.FC<Filters> = ({ iconFilter, typeFilter, options, select }) => {
+  const optionId = useId()
   return (
     <div className='flex items-center gap-2'>
       <div className='flex items-center gap-2'>
@@ -13,7 +15,7 @@ const FilterItem: React.FC<Filters> = ({ iconFilter, typeFilter, options, select
           id='rate'>
             {
               options.map(({valueOption, valueText}) => (
-                <option value={valueOption}>{valueText}</option>
+                <option key={optionId} value={valueOption}>{valueText}</option>
               ))
             }
         </select>

@@ -1,7 +1,8 @@
 
 // When the request is https://api.themoviedb.org/3/discover/movie?api_key=12345&include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc
 
-export interface MoviesDiscover {
+export interface Movies {
+  dates?: Movie_Cartelera
   page:          number;
   results:       Result[];
   total_pages:   number;
@@ -23,6 +24,11 @@ export interface Result {
   video:             boolean;
   vote_average:      number;
   vote_count:        number;
+}
+
+interface Movie_Cartelera {
+  maximum: Date,
+  minimum: Date 
 }
 
 //****** End Request DISCOVER */
