@@ -1,9 +1,9 @@
 ---
   import type { Movies } from "@/types/dataMovie";
-  import { getGenders } from "@/services/get_genders";
-  import {getGendersMovies} from '@/services/get_genders_movies'
+  import { getGendersMoviesList } from "@/services/get_genders";
+  import {getGendersMovies} from '@/services/get_genders_list'
   import Movie from "./Movie.astro";
-  import  {type MovieWithGenders } from "@/types/Genders";
+  import  {type Genders, type MovieWithGenders } from "@/types/Genders";
 
 
   const API_KEY = import.meta.env.SECRET_API_KEY
@@ -26,22 +26,22 @@
 
   const movie_gendersId = movies.results.map(movie => movie.genre_ids)
 
-  const gendersList = await getGenders(ACCESS_TOKEN)
+  const gendersList = await getGendersMoviesList(ACCESS_TOKEN) as Genders
+ 
+  const listIdWithGender = await getGendersMovies(movie_gendersId, gendersList) as MovieWithGenders
 
-  let listIdWithGender: MovieWithGenders
-
-  if (gendersList) {
-    listIdWithGender = await getGendersMovies(movie_gendersId, gendersList) as MovieWithGenders
-  }
 
   const movies_render = movies.results.slice(0,5)
+
+  const genders = listIdWithGender.slice(0,5)
+  
   
 ---
 
 <div class="flex flex-col gap-4">
   <div class="flex flex-col gap-2">
-    <span class="font-Libre_Franklin text-white font-bold text-2xl">Populares</span>
-    <span class="text-zinc-400 font-Noto_Sans text-md">Más vistas</span>
+    <span class="font-Libre_Franklin text-white font-bold text-2xl">Mejores Calificadas</span>
+    <span class="text-zinc-400 font-Noto_Sans text-md">¡¡ No te las puedes perder !!</span>
   </div>
   <div class="relative h-full overflow-hidden rounded-lg gap-2  py-3">
     <div class="flex gap-2">
@@ -53,7 +53,7 @@
           title={movie.title}
           widht={400}
           height={200}
-          genders={listIdWithGender.slice(0,5)}
+          genders={genders}
           rate={movie.vote_average}
           index={index}
           />

@@ -1,6 +1,6 @@
 ---
 
-import  {type MovieWithGenders } from "@/types/Genders";
+import  type { MovieWithGenders } from "@/types/Genders";
 
 interface Props {
 
@@ -10,6 +10,9 @@ interface Props {
 }
 
 const {index, genders} = Astro.props
+
+
+
 
 
 ---
@@ -38,6 +41,8 @@ const {index, genders} = Astro.props
           "bg-gradient-to-r from-red-500 to-red-800": el.name === "Crimen",
           "bg-gradient-to-r from-blue-700 via-blue-800 to-gray-900": el.name === "Aventura",
           "bg-gradient-to-r from-fuchsia-600 to-pink-600": el.name === "Romance",
+          "bg-gradient-to-r from-[#780206] to-[#780206]": el.name === "Action & Adventure",
+          "bg-gradient-to-r from-[#6A9113] to-[#141517]": el.name === "Sci-Fi & Fantasy",
         }
       ]}>{el.name}</span>
     ))}

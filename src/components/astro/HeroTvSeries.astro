@@ -1,7 +1,32 @@
 ---
-import IconSearch from "@/icons/IconSearch.astro";
-import { Image } from "astro:assets";
-import movie from '../../img/movie1.jpg'
+  import  { type TvSeriesPopularity } from "@/types/tvSeriesPopularity";
+  import  { type Serie } from "@/types/tvSeriesPopularity";
+  import IconSearch from "@/icons/IconSearch.astro";
+  import TvSerie from "./TvSerie.astro";
+
+
+  const API_KEY = import.meta.env.SECRET_API_KEY
+  const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
+
+
+  const URL_TV_SERIES_POPULARITY = `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=es&page=2`
+  const URL_IMG: string = 'https://image.tmdb.org/t/p/original'
+
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${ACCESS_TOKEN}`
+    }
+  }
+
+  const response = await fetch(URL_TV_SERIES_POPULARITY, options)
+
+  const tv_series = await response.json() as TvSeriesPopularity
+
+  const series: Serie[] = tv_series.results.slice(4,7)
+
+  
 
 ---
 
@@ -11,14 +36,13 @@ import movie from '../../img/movie1.jpg'
     <a href="#" class="font-Libre_Franklin text-white font-bold text-2xl hover:underline">Busca tus series favoritas</a>
   </div>
   <div class="relative flex gap-1 overflow-hidden">
-    <div class="relative w-[500px] h-[500px] flex-1 transition-all duration-1000 ease-in-out hover:flex-grow-[2]">
-      <Image class={"absolute w-full h-full object-cover"} src={movie} alt={"asasa"}/>
-    </div>
-    <div class="relative w-[500px] h-[500px] flex-1 transition-all duration-1000 ease-in-out hover:flex-grow-[2]">
-      <Image class={"absolute w-full h-full object-cover"} src={movie} alt={"asasa"}/>
-    </div>
-    <div class="relative w-[500px] h-[500px] flex-1 transition-all duration-1000 ease-in-out hover:flex-grow-[2]">
-      <Image class={"absolute w-full h-full object-cover"} src={movie} alt={"asasa"}/>
-    </div>
+    {
+      series.map(serie => (
+        <TvSerie 
+        name={serie.name} 
+        url_image={URL_IMG + serie.backdrop_path} 
+        overview={serie.overview}/>
+      ))
+    }
   </div>
 </div>

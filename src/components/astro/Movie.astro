@@ -1,13 +1,14 @@
 ---
 
-import  {type MovieWithGenders } from "@/types/Genders";
+import  type { MovieWithGenders } from "@/types/Genders";
 import { Image } from 'astro:assets';
 import FooterMovie from './FooterMovie.astro';
 
 interface Props {
   id: number
   url_image: string
-  title: string
+  title?: string
+  name?: string 
   widht: number
   height: number
   genders: MovieWithGenders
@@ -15,7 +16,9 @@ interface Props {
   index: number
 }
 
-const {id, url_image, title, widht, height, genders, rate, index} = Astro.props
+const {id, url_image, title, name, widht, height, genders, rate, index} = Astro.props
+
+
 
 ---
 
@@ -25,7 +28,7 @@ const {id, url_image, title, widht, height, genders, rate, index} = Astro.props
   <Image
   class="cursor-pointer transition-transform duration-500 group-hover:scale-105"
   src={url_image}
-  alt={`${title}`}
+  alt={`${title ?? name}`}
   width={widht}
   height={height}
   quality={"max"}

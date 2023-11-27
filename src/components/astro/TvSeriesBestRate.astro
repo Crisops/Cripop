@@ -1,34 +1,65 @@
-
 ---
-import { Image } from "astro:assets";
+  import type { TvSeriesTop } from "@/types/dataTvSeriesTop";
+  import { getGendersSeriesList } from "@/services/get_genders";
+  import { getGendersSeries} from '@/services/get_genders_list'
+  import  {type Genders, type MovieWithGenders } from "@/types/Genders";
+import Movie from "./Movie.astro";
 
-import movie from '../../img/movie1.jpg'
+
+  const API_KEY = import.meta.env.SECRET_API_KEY
+  const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
+
+  const URL_SERIES_TOP = `https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}language=es&page=1`
+  const URL_IMG: string = 'https://image.tmdb.org/t/p/original'
+
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${ACCESS_TOKEN}`
+    }
+  }
+
+  const response = await fetch(URL_SERIES_TOP, options)
+
+  const series_tv = await response.json() as TvSeriesTop 
+
+  const serieTv_gendersId = series_tv.results.map(serie => serie.genre_ids)
+
+  const gendersList = await getGendersSeriesList(ACCESS_TOKEN) as Genders
+ 
+  const listIdWithGender = await getGendersSeries(serieTv_gendersId, gendersList) as MovieWithGenders
+
+  const series_render = series_tv.results.slice(0,5)
+
+  const genders = listIdWithGender.slice(0,5)
+  
 ---
-
 
 <div class="flex flex-col gap-4">
   <div class="flex flex-col gap-2">
-    <span class="font-Libre_Franklin text-white font-bold text-2xl">Series de TV</span>
+    <span class="font-Libre_Franklin text-white font-bold text-2xl">TOP SERIES</span>
     <span class="text-zinc-400 font-Noto_Sans text-md">¿Ya te viste alguna?</span>
   </div>
-  <div class="relative flex w-full gap-2 overflow-x-hidden">
-    <div class="relative overflow-hidden rounded-lg group">
-      <Image src={movie} width={350} height={300} alt={"asasa"}/>
-    </div>
-    <div class="relative overflow-hidden rounded-lg group">
-      <Image src={movie} width={350} height={300} alt={"asasa"}/>
-    </div>
-    <div class="relative overflow-hidden rounded-lg group">
-      <Image src={movie} width={350} height={300} alt={"asasa"}/>
-    </div>
-    <div class="relative overflow-hidden rounded-lg group">
-      <Image src={movie} width={350} height={300} alt={"asasa"}/>
-    </div>
-    <div class="relative overflow-hidden rounded-lg group">
-      <Image src={movie} width={350} height={300} alt={"asasa"}/>
+  <div class="relative h-full overflow-hidden rounded-lg gap-2  py-3">
+    <div class="flex gap-2">
+      {
+        series_render.map((serie, index) =>(
+          <Movie
+          id={serie.id}
+          url_image={URL_IMG + serie.poster_path}
+          name={serie.name}
+          widht={400}
+          height={200}
+          genders={genders}
+          rate={serie.vote_average}
+          index={index}
+          />
+        ))
+      }
     </div>
     <div class="absolute top-0 right-0 bg-gradient-to-l from-black from-30% w-96 h-full flex justify-center items-center">
-      <a href="#" class="border border-zinc-500 px-3 py-2 font-Noto_Sans text-white font-medium text-sm">Ver Más</a>
+      <a href="#" class="border border-zinc-500 px-3 py-2 font-Noto_Sans text-white font-medium text-sm transition-colors duration-300 hover:bg-white hover:text-black">Ver Más</a>
     </div>
   </div>
 </div>

@@ -1,6 +1,5 @@
 ---
   
-  
   import { Image } from "astro:assets";
   import {type Movies } from '@/types/dataMovie'
 
@@ -31,14 +30,7 @@
 
   const {id} = top_movie
 
-  const movie_details = await getDetailsMovie(ACCESS_TOKEN, id)
-
-  
-
-  console.log(movie_details);
-  
-  
-  
+  const movie_details = await getDetailsMovie(ACCESS_TOKEN, id)  
 
 
 ---
