@@ -1,5 +1,4 @@
 ---
-
 import  type { MovieWithGenders } from "@/types/Genders";
 
 interface Props {
@@ -11,13 +10,7 @@ interface Props {
 
 const {index, genders} = Astro.props
 
-
-
-
-
 ---
-
-
 
 <div class="flex flex-wrap max-w-[200px] justify-end gap-1 pb-1 transition-opacity duration-300 opacity-0 group-hover:opacity-100">
   {genders[index].map(el => 
@@ -43,6 +36,7 @@ const {index, genders} = Astro.props
           "bg-gradient-to-r from-fuchsia-600 to-pink-600": el.name === "Romance",
           "bg-gradient-to-r from-[#780206] to-[#780206]": el.name === "Action & Adventure",
           "bg-gradient-to-r from-[#6A9113] to-[#141517]": el.name === "Sci-Fi & Fantasy",
+          "bg-gradient-to-r from-[#00B4DB] to-[#0083B0]": el.name === "Reality",
         }
       ]}>{el.name}</span>
     ))}
