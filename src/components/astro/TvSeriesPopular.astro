@@ -9,7 +9,7 @@
   const API_KEY = import.meta.env.SECRET_API_KEY
   const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
 
-  const URL_SERIES_POPULARITY = `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}language=es&page=4`
+  const URL_SERIES_POPULARITY = `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}language=es&page=10`
   const URL_IMG: string = 'https://image.tmdb.org/t/p/original'
 
   const options = {
@@ -30,16 +30,16 @@
  
   const listIdWithGender = await getGendersSeries(serieTv_gendersId, gendersList) as MovieWithGenders
 
-  const series_render = series_tv.results.slice(0,5)
+  const series_render = series_tv.results.slice(-6,19)
 
-  const genders = listIdWithGender.slice(0,5)
+  const genders = listIdWithGender.slice(-6,19)
   
 ---
 
 <div class="flex flex-col gap-4">
   <div class="flex flex-col gap-2">
     <span class="font-Libre_Franklin text-white font-bold text-2xl">Series Populares</span>
-    <span class="text-zinc-400 font-Noto_Sans text-md">¡¡ No te las pierdas !!</span>
+    <span class="text-zinc-400 font-Noto_Sans text-md">¡¡ No te las puedes perder !!</span>
   </div>
   <div class="relative h-full overflow-hidden rounded-lg gap-2  py-3">
     <div class="flex gap-2">
@@ -54,6 +54,7 @@
           genders={genders}
           rate={serie.vote_average}
           index={index}
+          url="serie"
           />
         ))
       }

@@ -25,6 +25,9 @@
 
   const movies = await response.json() as Movies
 
+  console.log(movies);
+  
+
   const movie_gendersId = movies.results.map(movie => movie.genre_ids)
   
   const gendersList = await getGendersMoviesList(ACCESS_TOKEN) as Genders
@@ -56,6 +59,7 @@
           genders={genders}
           rate={movie.vote_average}
           index={index}
+          url= "movie"
           />
         ))
       }

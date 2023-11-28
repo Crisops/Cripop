@@ -1,7 +1,7 @@
 export type DetailsMovieID = {
   adult:                 boolean;
   backdrop_path:         string;
-  belongs_to_collection: BelongsToCollection;
+  belongs_to_collection: null;
   budget:                number;
   genres:                Genre[];
   homepage:              string;
@@ -24,13 +24,6 @@ export type DetailsMovieID = {
   video:                 boolean;
   vote_average:          number;
   vote_count:            number;
-}
-
-export type BelongsToCollection = {
-  id:            number;
-  name:          string;
-  poster_path:   string;
-  backdrop_path: string;
 }
 
 export type Genre = {

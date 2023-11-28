@@ -9,7 +9,7 @@
   const API_KEY = import.meta.env.SECRET_API_KEY
   const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
 
-  const URL_MOVIES_POPULARITY = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}language=es&page=3`
+  const URL_MOVIES_BEST_RENDER = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}language=es&page=3`
   const URL_IMG: string = 'https://image.tmdb.org/t/p/original'
 
   const options = {
@@ -20,7 +20,7 @@
     }
   }
 
-  const response = await fetch(URL_MOVIES_POPULARITY, options)
+  const response = await fetch(URL_MOVIES_BEST_RENDER, options)
 
   const movies = await response.json() as Movies
 
@@ -34,6 +34,7 @@
   const movies_render = movies.results.slice(0,5)
 
   const genders = listIdWithGender.slice(0,5)
+
   
   
 ---
@@ -56,6 +57,7 @@
           genders={genders}
           rate={movie.vote_average}
           index={index}
+          url="movie"
           />
         ))
       }
