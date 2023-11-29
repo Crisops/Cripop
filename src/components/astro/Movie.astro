@@ -26,8 +26,7 @@ const urlName = name?.replace(/\s/g, "-") // Se cambia los espacios en blanco po
 
 
 
-<article id={`${id}`} class="relative min-w-[300px] group rounded-lg overflow-hidden">
-  
+<article id={`${id}`} class="relative min-w-[300px] group rounded-lg overflow-hidden" transition:name=`movie image ${id}`>
   <a href=`/Cripop/${url === "movie" ? 'movie': 'tv/series'}/${id}/${urlTitle ?? urlName}`>
     <Image
     class="cursor-pointer transition-transform duration-500 rounded-lg group-hover:scale-105"
@@ -35,7 +34,7 @@ const urlName = name?.replace(/\s/g, "-") // Se cambia los espacios en blanco po
     alt={`${title ?? name}`}
     width={widht}
     height={height}
-    quality={"max"}
+    quality={"high"}
     />
     <FooterMovie genders={genders} index={index} rate={rate}/>
       <div class="absolute inset-0 top-0 right-0 bg-gradient-to-t from-black translate-y-full transition-all duration-300 ease-linear group-hover:translate-y-0 cursor-pointer"></div>

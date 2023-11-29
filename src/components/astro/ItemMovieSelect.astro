@@ -7,7 +7,7 @@ import type { Genre, ProductionCompany, Result, SpokenLanguage} from '@/types/da
 import { Image } from 'astro:assets'
 
 interface Props {
-
+  id: number
   title: string
   genres?: Genre[]
   language?: SpokenLanguage[]
@@ -21,7 +21,7 @@ interface Props {
   rate?: number
 }
 
-  const { title, genres, language, overview, poster_img, production_companies, date, duration, tagline, video, rate } = Astro.props
+  const { id, title, genres, language, overview, poster_img, production_companies, date, duration, tagline, video, rate } = Astro.props
   
 
   let hour
@@ -82,64 +82,15 @@ interface Props {
     <div class="flex-grow flex items-center justify-center">
       <div class="relative w-[580px] rounded-lg">
         <Image
+        transition:name=`movie image ${id}`
         class={"rounded-lg"}
         src={poster_img}
         alt={title}
         width={900}
         height={500}
-        quality="max"
+        quality="high"
         />
       </div>
     </div>
   </div>
 </section>
-
-<!-- 
-<div class="relative w-full h-screen">
-  <div class="absolute inset-0 bg-black/30"></div>
-  <div class="absolute inset-0 bg-gradient-to-t from-black"></div>
-  <aside class="absolute flex items-center top-0 left-0 w-full h-full">
-    <MovieHome 
-      title={movie_details?.title}
-      language={movie_details?.original_language}
-      genders={movie_details?.genres}
-      overview={movie_details?.overview}
-      date={movie_details?.release_date}
-      rate={movie_details?.vote_average}
-      time={movie_details?.runtime}
-    />
-  </aside>
-  <Image
-    id={`${top_movie.id}`}
-    src={`${URL_IMG}${top_movie.backdrop_path}`}
-    alt={`${top_movie.title}`}
-    width={3860}
-    height={2160}
-  />
-</div> -->
-
-
-<!-- <div class="relative flex flex-col gap-5 px-10">
-  <h1 class="font-Ubuntu text-9xl font-semibold text-white max-w-xl m-0 uppercase">{title}</h1>
-  <div class="flex items-center gap-4">
-    <div class="inline-flex items-center gap-2">
-      <IconLanguage/>
-      <span class="text-white uppercase font-Noto_Sans font-light">{language}</span>
-    </div>
-    <div class="inline-flex gap-2">
-      <IconClaqueta/>
-      {genders?.map(gender => (<span class="text-white font-Noto_Sans font-light">{gender.name}</span>))}
-    </div>
-  </div>
-  <div class="flex flex-col gap-1 py-1">
-    <span class="text-white font-Noto_Sans font-light">Fecha de estreno: {date}</span>
-    <span class="text-white font-Noto_Sans font-light">Rate: {rate?.toFixed(1).toString()}</span>
-  </div>
-  <div class="max-w-lg">
-    <p class="text-white font-Noto_Sans font-light">{overview}</p>
-  </div>
-  <div class="flex gap-2">
-    <IconTime/>
-    <span class="text-white font-Noto_Sans font-light">{hour} horas  {minutes} minutos {seconds} segundos</span>
-  </div>
-</div> -->

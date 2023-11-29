@@ -78,16 +78,12 @@
 
   }
 
-
-
-  
-
-
 ---
 
 <Layout title={`Cripop | ${title}`}>
   <main class="relative h-screen">
     <ItemMovieSelect
+      id={idMovie}
       title={data?.title}
       genres={data?.genres}
       language={data?.spoken_languages}
@@ -101,7 +97,7 @@
       rate={data?.vote_average}
   
     />
-    <div id={idMovie} class="absolute w-full h-96 xl:h-full">
+    <div class="absolute w-full h-96 xl:h-full">
       <Image
       class={"absolute max-w-full h-full object-cover object-center"}
       src={URL_IMG + backdrop_path}
