@@ -9,15 +9,15 @@
   
   const {movie} = Astro.params
 
-  let idMovie: number
-  let title
+  let idMovie: number | undefined
+  let title: string | undefined
   let data
-  let URL_IMG: string
+  let URL_IMG: string | undefined
   let pathImgPreview
-  let path: (string | undefined)
+  let path: string | undefined
   let movies: Result[]
 
-  let backdrop_path: string
+  let backdrop_path: string | undefined
 
   
   const API_KEY = import.meta.env.SECRET_API_KEY
@@ -42,7 +42,7 @@
       method: 'GET',
       headers: {
         accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjhmOTllNmM0MjZjNzg5ODZiMThhOTQ3ZjllN2MyMyIsInN1YiI6IjY1NGViMzQ4NjdiNjEzMDBhZmNhNTAwNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.sukqcUtUHVZ7GTSoPmYEX1MEa5Voqqv-WvLM5O5tTYE'
+        Authorization: `Bearer ${ACCESS_TOKEN}`
       }
     };
 
@@ -65,8 +65,6 @@
     
     movies = [...now_render,...popularity_render, ...rate_render]
 
-    // const response_now = await response_now_playing.json() as Movies
-
     pathImgPreview = movies.find(movie => movie?.id === idMovie) 
 
     path = pathImgPreview?.poster_path
@@ -88,7 +86,7 @@
       genres={data?.genres}
       language={data?.spoken_languages}
       overview={data?.overview}
-      poster_img={URL_IMG + path}
+      poster_img={URL_IMG + (path ?? "")}
       production_companies={data?.production_companies}
       date={data?.release_date}
       duration={data?.runtime}
@@ -97,14 +95,14 @@
       rate={data?.vote_average}
   
     />
-    <div class="absolute w-full h-96 xl:h-full">
+    <div class="absolute w-full h-[500px] xl:h-full">
       <Image
       class={"absolute max-w-full h-full object-cover object-center"}
-      src={URL_IMG + backdrop_path}
-      alt={title}
+      src={URL_IMG + (backdrop_path ?? "")}
+      alt={title ?? ""}
       width={3600}
       height={2160}
-      quality="high"
+      quality="mid"
       />
       <div class="absolute inset-0 bg-gradient-to-t from-black"></div>
       <div class="absolute inset-0 bg-black/50"></div>

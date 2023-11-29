@@ -1,18 +1,16 @@
 ---
 
-import IconClaqueta from '@/icons/IconClaqueta.astro'
-import IconLanguage from '@/icons/IconLanguage.astro'
-import IconTime from '@/icons/IconTime.astro'
 import type { Genre, ProductionCompany, Result, SpokenLanguage} from '@/types/dataIdMovieSelect'
 import { Image } from 'astro:assets'
+import ItemInfoMovie from './ItemInfoMovie.astro'
 
 interface Props {
-  id: number
-  title: string
+  id: number | undefined
+  title: string | undefined
   genres?: Genre[]
   language?: SpokenLanguage[]
   overview?: string
-  poster_img: string
+  poster_img: string | undefined
   production_companies?: ProductionCompany[]
   date?: Date
   duration?: number
@@ -24,68 +22,33 @@ interface Props {
   const { id, title, genres, language, overview, poster_img, production_companies, date, duration, tagline, video, rate } = Astro.props
   
 
-  let hour
-  let minutes
-  let seconds
-
-  if (duration) {
-    hour = Math.floor(duration / 60) 
-    minutes =  Math.floor(duration % 60) 
-    seconds = Math.floor(duration / 60) 
-  }
-
-
 ---
 
 
-<section class="absolute w-full h-full z-10">
-  <div class="flex h-full">
-    <div class="flex-grow flex flex-col justify-center">
-        <div class="relative flex flex-col gap-5 px-10">
-          <h1 class=`font-Ubuntu ${title.length > 23 ? 'text-7xl' : 'text-9xl'} font-semibold text-white max-w-2xl m-0 uppercase`>{title}</h1>
-          <div class="flex">
-            <span class="text-zinc-400/50 font-bold font-Libre_Franklin text-xs ">{tagline}</span>
-          </div>
-          <div class="flex items-center gap-4">
-            <div class="inline-flex items-center gap-2">
-              <IconLanguage/>
-              <div class="flex gap-2">
-                {language?.map(lang =>
-                  <span class="text-white uppercase font-Noto_Sans font-light"> {lang.name}</span>
-                 )}
-              </div>
-            </div>
-            <div class="inline-flex gap-2">
-              <IconClaqueta/>
-              {genres?.map(gender => (<span class="text-white font-Noto_Sans font-light">{gender.name}</span>))}
-            </div>
-          </div>
-          <div class="flex flex-col gap-1 py-1">
-            <span class="text-white font-Noto_Sans font-light">Fecha de estreno: {date}</span>
-            <span class="text-white font-Noto_Sans font-light">Rate: {rate?.toFixed(1).toString()}</span>
-          </div>
-          <div class="max-w-lg">
-            <p class="text-white font-Noto_Sans font-light">{overview}</p>
-          </div>
-          <div class="flex gap-2">
-            <IconTime/>
-            <span class="text-white font-Noto_Sans font-light">
-              {hour}h {minutes?.toString().padStart(2,'0')}m {seconds?.toString().padStart(2, '0')}
-              segundos
-            </span>
-          </div>
-          <div>
-            <button class="border border-zinc-500 px-5 py-2 font-Noto_Sans text-white font-medium text-sm transition-colors duration-300 hover:bg-white hover:text-black">Ver Trailer</button>
-          </div>
-      </div>
+<section class="absolute w-full xl:h-full z-10">
+  <div class="flex flex-col-reverse gap-5 xl:flex-row xl:gap-0 h-full">
+    <div class="flex-grow flex flex-col justify-center mt-5 py-10 xl:mt-0 xl:py-0">
+      <ItemInfoMovie
+        id={id}
+        title={title}
+        genres={genres}
+        language={language}
+        overview={overview}
+        production_companies={production_companies}
+        date={date}
+        duration={duration}
+        tagline={tagline}
+        video={video}
+        rate={rate}
+      />
     </div>
-    <div class="flex-grow flex items-center justify-center">
-      <div class="relative w-[580px] rounded-lg">
+    <div class="flex-grow flex items-end justify-center pl-0 h-[500px] md:max-xl:pl-10 xl:pl-0 md:max-xl:justify-start xl:h-full xl:items-center">
+      <div class="relative min-[300px]:max-xl:w-[200px] w-[500px] xl:max-2xl:w-[430px] rounded-lg">
         <Image
         transition:name=`movie image ${id}`
         class={"rounded-lg"}
-        src={poster_img}
-        alt={title}
+        src={poster_img ?? ""}
+        alt={title ?? "Sin titulo"}
         width={900}
         height={500}
         quality="high"

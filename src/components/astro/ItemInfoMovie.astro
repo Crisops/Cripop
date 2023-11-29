@@ -1,0 +1,74 @@
+---
+import IconClaqueta from '@/icons/IconClaqueta.astro';
+import IconLanguage from '@/icons/IconLanguage.astro';
+import IconTime from '@/icons/IconTime.astro';
+import type { Genre, ProductionCompany, Result, SpokenLanguage } from '@/types/dataIdMovieSelect';
+
+interface Props {
+  id: number | undefined
+  title: string | undefined
+  genres?: Genre[]
+  language?: SpokenLanguage[]
+  overview?: string
+  production_companies?: ProductionCompany[]
+  date?: Date
+  duration?: number
+  tagline?: string
+  video?: Result[]
+  rate?: number
+}
+
+const {title, tagline, language, genres, date, rate, overview, duration, video, production_companies} = Astro.props
+
+
+let hour
+let minutes
+let seconds
+
+  if (duration) {
+    hour = Math.floor(duration / 60) 
+    minutes =  Math.floor(duration % 60) 
+    seconds = Math.floor(duration / 60) 
+  }
+
+
+---
+
+
+<div class="relative flex flex-col gap-5 px-10 xl:max-2xl:pr-0">
+  <h1 class=`font-Ubuntu ${title !== undefined && title.length > 23 ? 'text-[3rem] leading-[45px] md:text-7xl' : 'text-5xl sm:max-xl:text-7xl xl:max-2xl:text-8xl 2xl:text-9xl '} font-semibold text-white max-w-2xl m-0 uppercase`>{title}</h1>
+  <div class="flex">
+    <span class="text-zinc-400/50 font-bold font-Libre_Franklin text-xs ">{tagline}</span>
+  </div>
+  <div class="flex flex-wrap items-center gap-4">
+    <div class="inline-flex items-center gap-2">
+      <IconLanguage/>
+      <div class="flex gap-2">
+        {language?.map(lang =>
+          <span class="text-white uppercase font-Noto_Sans font-light"> {lang.name}</span>
+         )}
+      </div>
+    </div>
+    <div class="inline-flex gap-2">
+      <IconClaqueta/>
+      {genres?.map(gender => (<span class="text-white font-Noto_Sans font-light">{gender.name}</span>))}
+    </div>
+  </div>
+  <div class="flex flex-col gap-1 py-1">
+    <span class="text-white font-Noto_Sans font-light">Fecha de estreno: {date}</span>
+    <span class="text-white font-Noto_Sans font-light">Rate: {rate?.toFixed(1).toString()}</span>
+  </div>
+  <div class="max-w-lg xl:max-2xl:max-w-xl">
+    <p class="text-white font-Noto_Sans font-light">{overview}</p>
+  </div>
+  <div class="flex gap-2">
+    <IconTime/>
+    <span class="text-white font-Noto_Sans font-light">
+      {hour}h {minutes?.toString().padStart(2,'0')}m {seconds?.toString().padStart(2, '0')}
+      segundos
+    </span>
+  </div>
+  <div>
+    <button class="border border-zinc-500 px-5 py-2 font-Noto_Sans text-white font-medium text-sm transition-colors duration-300 hover:bg-white hover:text-black">Ver Trailer</button>
+  </div>
+</div>
