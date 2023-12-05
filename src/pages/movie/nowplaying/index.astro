@@ -1,45 +1,15 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import ShowMoreMovies from "@/components/astro/ShowMoreMovies.astro";
-import type { Movies } from "@/types/dataMovie";
-import type { Genders, MovieWithGenders } from "@/types/Genders";
-import { getGendersMoviesList } from "@/services/get_genders";
-import { getGendersMovies } from "@/services/get_genders_list";
-
-
-  const API_KEY = import.meta.env.SECRET_API_KEY
-  const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
 
 
 
-  const URL_NOW_PLAYING: string = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}language=es&page=1`
-  const URL_IMG: string = 'https://image.tmdb.org/t/p/original'
 
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${ACCESS_TOKEN}`
-    }
-  };
-
-  const response = await fetch(URL_NOW_PLAYING, options)
-
-  const movies = await response.json() as Movies
-
-  const movie_gendersId = movies.results.map(movie => movie.genre_ids)
-
-  const gendersList = await getGendersMoviesList(ACCESS_TOKEN) as Genders
-
-  const listIdWithGender = await getGendersMovies(movie_gendersId, gendersList) as MovieWithGenders
 
 
 ---
 
 
 <Layout title="Cripop | Películas en cartelera">
-  <ShowMoreMovies
-    movies={movies}
-    genders={listIdWithGender}
-  />
+  <ShowMoreMovies/>
 </Layout>

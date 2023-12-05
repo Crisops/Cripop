@@ -4,6 +4,7 @@
   import {getGendersMovies} from '@/services/get_genders_list'
   import Movie from "./Movie.astro";
   import  {type Genders, type MovieWithGenders } from "@/types/Genders";
+import { getPosterPath } from "@/services/get_poster_img";
 
 
   const API_KEY = import.meta.env.SECRET_API_KEY
@@ -34,6 +35,12 @@
   const movies_render = movies.results.slice(0,5)
 
   const genders = listIdWithGender.slice(0,5)
+
+  const render = await Promise.all(
+    movies_render.map(async (movie) => {
+      return await getPosterPath(ACCESS_TOKEN, movie.id, "movie");
+    })
+  );
   
   
 ---
@@ -49,7 +56,7 @@
         movies_render.map((movie, index) =>(
           <Movie
           id={movie.id}
-          url_image={URL_IMG + movie.poster_path}
+          url_image={URL_IMG + render[index]?.file_path}
           title={movie.title}
           widht={400}
           height={200}

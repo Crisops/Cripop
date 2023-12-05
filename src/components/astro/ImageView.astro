@@ -1,0 +1,20 @@
+---
+
+interface Props {
+  url_image: string
+  title: string | undefined
+  name?: string
+  widht: number
+  height: number
+}
+
+
+const {url_image, title, name, widht, height} = Astro.props
+
+import { Image } from "astro:assets";
+
+const URL_IMG: string = 'https://image.tmdb.org/t/p/w780'
+
+---
+
+

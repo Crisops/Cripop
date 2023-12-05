@@ -6,9 +6,10 @@
 
   import ItemMovieSelect from '@/components/astro/ItemMovieSelect.astro'
   import type { Movies, Result } from "@/types/dataMovie";
+  import { getPosterPath } from "@/services/get_poster_img";
   
   const {movie} = Astro.params
-
+  
   let idMovie: number | undefined
   let title: string | undefined
   let data
@@ -17,6 +18,9 @@
   let pathImgPreview
   let path: string | undefined
   let movies: Result[]
+  let img
+  let imgUrl: string | undefined
+  let chooseURL: string = Astro.url.pathname.split("/")[1]
 
   let backdrop_path: string | undefined
 
@@ -61,9 +65,9 @@
     const movies_popularity = await popularity.json() as Movies
     const movies_best_rate = await best_rate.json() as Movies
 
-    const now_render = movies_now.results.splice(0,5)
-    const popularity_render = movies_popularity.results.splice(0,5)
-    const rate_render = movies_best_rate.results.splice(0,5)
+    const now_render = movies_now.results
+    const popularity_render = movies_popularity.results
+    const rate_render = movies_best_rate.results
     
     movies = [...now_render,...popularity_render, ...rate_render]
 
@@ -75,6 +79,10 @@
 
     backdrop_path = (movie_details.belongs_to_collection) ? movie_details.belongs_to_collection.backdrop_path : movie_details.backdrop_path
 
+    img = await getPosterPath(ACCESS_TOKEN, idMovie, chooseURL)
+
+    imgUrl = img?.file_path
+    
 
   }
 
@@ -88,7 +96,7 @@
       genres={data?.genres}
       language={data?.spoken_languages}
       overview={data?.overview}
-      poster_img={URL_IMG_POSTER + (path ?? "")}
+      poster_img={URL_IMG_POSTER + (imgUrl ?? "")}
       production_companies={data?.production_companies}
       date={data?.release_date}
       duration={data?.runtime}

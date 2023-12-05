@@ -1,22 +1,25 @@
 ---
 
-interface Props  {
-  movies: Movies
-  genders: MovieWithGenders
-}
-
-import { Image } from "astro:assets";
-import Filters from "../react/Filters";
-import movie1 from '@/img/movie1.jpg'
-import type { MovieWithGenders } from "@/types/Genders"
-import type { Movies } from "@/types/dataMovie";
+  // Renderiza todas las peliculas que hay en cartelera
 
 
+  import Filters from "../react/Filters";
+  import type { Genders, MovieWithGenders } from "@/types/Genders"
+  import type { Movies } from "@/types/dataMovie";
+  import { getGendersMoviesList } from "@/services/get_genders";
+  import { getGendersMovies } from "@/services/get_genders_list";
+  import ShowMovie from "./ShowMovie.astro";
 
-const API_KEY = import.meta.env.SECRET_API_KEY
-const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
 
-const options = {
+  const API_KEY = import.meta.env.SECRET_API_KEY
+  const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
+
+
+
+  const URL_NOW_PLAYING: string = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}language=es&page=2`
+  const URL_IMG: string = 'https://image.tmdb.org/t/p/w780'
+
+  const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
@@ -24,6 +27,18 @@ const options = {
     }
   };
 
+  const response = await fetch(URL_NOW_PLAYING, options)
+
+  const movies = await response.json() as Movies
+
+  const movie_gendersId = movies.results.map(movie => movie.genre_ids)
+
+  const gendersList = await getGendersMoviesList(ACCESS_TOKEN) as Genders
+
+  const listIdWithGender = await getGendersMovies(movie_gendersId, gendersList) as MovieWithGenders
+
+
+  
 ---
 
 
@@ -35,31 +50,21 @@ const options = {
     </div>
   </div>
   <div id="containerMovies" class="relative h-full mt-10">
-    <div class="relative grid grid-cols-[repeat(auto-fit,_minmax(350px,1fr))] gap-5 px-10 pb-20">
-      <Image src={movie1} alt={"aaaa"}/>
-      <Image src={movie1} alt={"aaaa"}/>
-      <Image src={movie1} alt={"aaaa"}/>
-      <Image src={movie1} alt={"aaaa"}/>
-      <Image src={movie1} alt={"aaaa"}/>
-      <Image src={movie1} alt={"aaaa"}/>
-      <Image src={movie1} alt={"aaaa"}/>
-      <Image src={movie1} alt={"aaaa"}/>
-      <Image src={movie1} alt={"aaaa"}/>
-      <Image src={movie1} alt={"aaaa"}/>
-      <Image src={movie1} alt={"aaaa"}/>
-      <Image src={movie1} alt={"aaaa"}/>
-      <Image src={movie1} alt={"aaaa"}/>
-      <Image src={movie1} alt={"aaaa"}/>
-      <Image src={movie1} alt={"aaaa"}/>
-      <Image src={movie1} alt={"aaaa"}/>
-      <Image src={movie1} alt={"aaaa"}/>
-      <Image src={movie1} alt={"aaaa"}/>
-      <Image src={movie1} alt={"aaaa"}/>
-      <Image src={movie1} alt={"aaaa"}/>
-      <!-- <MoviesRender client:load/> -->
-      <div class="w-full flex justify-center items-center h-96 border border-dashed border-zinc-600">
-        <button id="loading" class="text-zinc-500 outline-none font-Noto_Sans text-sm">Cargar más</button>
-      </div>
+    <div class="relative grid place-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 px-10 pb-20">
+      {
+        movies.results.map((movie, index) =>(
+          <ShowMovie
+            id={movie.id}
+            url_image={URL_IMG + movie.poster_path}
+            title={movie.title}
+            widht={400}
+            height={500}
+            genders={listIdWithGender}
+            rate={movie.vote_average}
+            index={index}
+          />
+        ))
+      }
     </div>
   </div>
 </main>
@@ -81,38 +86,3 @@ const options = {
   }
 
 </style>
-
-
-<script>
-
-let count: number = 1;
-
-  document.addEventListener("click", (e) => {
-  const btnLoading = e.target;
-
-  if (btnLoading instanceof HTMLButtonElement) {
-    if (btnLoading.id === "loading") {
-      e.stopPropagation();
-
-
-
-
-    }
-  }
-
-  async function getMovies() {
-
-    let options 
-
-    try {
-
-      
-
-    } catch (error) { 
-      console.log(error);
-    }
-
-
-  }
-});
-</script>
