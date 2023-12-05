@@ -1,0 +1,118 @@
+---
+
+interface Props  {
+  movies: Movies
+  genders: MovieWithGenders
+}
+
+import { Image } from "astro:assets";
+import Filters from "../react/Filters";
+import movie1 from '@/img/movie1.jpg'
+import type { MovieWithGenders } from "@/types/Genders"
+import type { Movies } from "@/types/dataMovie";
+
+
+
+const API_KEY = import.meta.env.SECRET_API_KEY
+const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
+
+const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${ACCESS_TOKEN}`
+    }
+  };
+
+---
+
+
+<main class="relative w-full overflow-hidden pt-40">
+  <div class="relative px-10 flex items-center flex-col xl:flex-row justify-between">
+    <h1 class="text-white font-Libre_Franklin text-3xl text-center sm:text-left lg:max-xl:text-center xl:text-left md font-bold">Películas recientes</h1>
+    <div class="flex flex-wrap items-center pt-10 gap-10 justify-start lg:max-xl:justify-center xl:justify-start px-10 xl:pt-0">
+      <Filters/>
+    </div>
+  </div>
+  <div id="containerMovies" class="relative h-full mt-10">
+    <div class="relative grid grid-cols-[repeat(auto-fit,_minmax(350px,1fr))] gap-5 px-10 pb-20">
+      <Image src={movie1} alt={"aaaa"}/>
+      <Image src={movie1} alt={"aaaa"}/>
+      <Image src={movie1} alt={"aaaa"}/>
+      <Image src={movie1} alt={"aaaa"}/>
+      <Image src={movie1} alt={"aaaa"}/>
+      <Image src={movie1} alt={"aaaa"}/>
+      <Image src={movie1} alt={"aaaa"}/>
+      <Image src={movie1} alt={"aaaa"}/>
+      <Image src={movie1} alt={"aaaa"}/>
+      <Image src={movie1} alt={"aaaa"}/>
+      <Image src={movie1} alt={"aaaa"}/>
+      <Image src={movie1} alt={"aaaa"}/>
+      <Image src={movie1} alt={"aaaa"}/>
+      <Image src={movie1} alt={"aaaa"}/>
+      <Image src={movie1} alt={"aaaa"}/>
+      <Image src={movie1} alt={"aaaa"}/>
+      <Image src={movie1} alt={"aaaa"}/>
+      <Image src={movie1} alt={"aaaa"}/>
+      <Image src={movie1} alt={"aaaa"}/>
+      <Image src={movie1} alt={"aaaa"}/>
+      <!-- <MoviesRender client:load/> -->
+      <div class="w-full flex justify-center items-center h-96 border border-dashed border-zinc-600">
+        <button id="loading" class="text-zinc-500 outline-none font-Noto_Sans text-sm">Cargar más</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+<style>
+  
+  #containerMovies::-webkit-scrollbar{
+    width: 5px;
+  }
+
+  #containerMovies::-webkit-scrollbar-thumb{
+    background-color: #003B07;
+    border-radius: 10px;
+  }
+
+  #containerMovies::-webkit-scrollbar-track{
+    background-color: #000105;
+  }
+
+</style>
+
+
+<script>
+
+let count: number = 1;
+
+  document.addEventListener("click", (e) => {
+  const btnLoading = e.target;
+
+  if (btnLoading instanceof HTMLButtonElement) {
+    if (btnLoading.id === "loading") {
+      e.stopPropagation();
+
+
+
+
+    }
+  }
+
+  async function getMovies() {
+
+    let options 
+
+    try {
+
+      
+
+    } catch (error) { 
+      console.log(error);
+    }
+
+
+  }
+});
+</script>

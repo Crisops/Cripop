@@ -8,8 +8,8 @@ const Filters = () => {
 
   return (
 
-    <form className='relative flex items-center top-0'>
-      <div className='flex flex-grow items-center gap-5'>
+    <form className='relative'>
+      <div className='flex flex-wrap flex-grow gap-10 items-center justify-center'>
         <FilterItem iconFilter={<IconFilter />} typeFilter='Rate' options={optionsRate} select="vote_average"/>
         <FilterItem iconFilter={<IconFilter />} typeFilter='Popularidad' options={optionsPopularity} select="sort_by"/>
         <FilterItem iconFilter={<IconFilter />} typeFilter='Género' options={optionsGenders} select="with_genres"/>

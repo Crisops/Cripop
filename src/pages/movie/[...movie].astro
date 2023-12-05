@@ -13,6 +13,7 @@
   let title: string | undefined
   let data
   let URL_IMG: string | undefined
+  let URL_IMG_POSTER: string | undefined
   let pathImgPreview
   let path: string | undefined
   let movies: Result[]
@@ -37,6 +38,7 @@
     const URL_MOVIES_BEST_RATE = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}language=es&page=3`
     
     URL_IMG = `https://image.tmdb.org/t/p/original`
+    URL_IMG_POSTER = `https://image.tmdb.org/t/p/w780`
   
     const options = {
       method: 'GET',
@@ -86,7 +88,7 @@
       genres={data?.genres}
       language={data?.spoken_languages}
       overview={data?.overview}
-      poster_img={URL_IMG + (path ?? "")}
+      poster_img={URL_IMG_POSTER + (path ?? "")}
       production_companies={data?.production_companies}
       date={data?.release_date}
       duration={data?.runtime}
@@ -97,12 +99,12 @@
     />
     <div class="absolute w-full h-[500px] xl:h-full">
       <Image
-      class={"absolute max-w-full h-full object-cover object-center"}
+      class={"absolute w-full h-full object-cover object-center"}
       src={URL_IMG + (backdrop_path ?? "")}
       alt={title ?? ""}
-      width={3600}
-      height={2160}
-      quality="mid"
+      width={1500}
+      height={1260}
+      quality={45}
       />
       <div class="absolute inset-0 bg-gradient-to-t from-black"></div>
       <div class="absolute inset-0 bg-black/50"></div>

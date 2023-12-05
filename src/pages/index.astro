@@ -1,17 +1,12 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import Header from '@/components/astro/Header.astro';
+import Header from '@/components/react/Header';
 import MovieHomePreview from '@/components/astro/MovieHomePreview.astro';
 import MoviesDataBase from '@/components/astro/MoviesDataBase.astro';
 ---
 
 <Layout title="Crisop | Un espacio donde puedes ver lo que te gusta">
 	<div class="relative w-full h-full flex flex-col">
-		<div class="fixed top-0 left-0 w-full h-24 z-50 backdrop-blur-sm">
-			<header class="w-full h-24 flex justify-between items-center px-9 ">
-				<Header/>
-			</header>
-		</div>
 		<div class="relative w-full h-full overflow-hidden">
 			<MovieHomePreview/>
 		</div>
