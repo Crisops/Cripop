@@ -1,9 +1,10 @@
 ---
-  import Layout from '@/layouts/Layout.astro'
+  import Layout from "@/layouts/Layout.astro"
 
   const {serie} = Astro.params
 
-  let nameSerie: string
+  let nameSerie: string | undefined
+  
   if (serie) {
     const params = serie?.split("/")
     const [id, name] = params
@@ -11,10 +12,6 @@
     nameSerie = name
 
   }
-
-
-  
-
 ---
 
 <Layout title={`Cripop | ${nameSerie}`}>

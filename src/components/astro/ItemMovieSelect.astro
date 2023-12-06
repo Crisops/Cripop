@@ -1,23 +1,22 @@
 ---
+  import type { Genre, ProductionCompany, Result, SpokenLanguage} from "@/types/dataIdMovieSelect"
+  import { Image } from "astro:assets"
+  import ItemInfoMovie from "./ItemInfoMovie.astro"
 
-import type { Genre, ProductionCompany, Result, SpokenLanguage} from '@/types/dataIdMovieSelect'
-import { Image } from 'astro:assets'
-import ItemInfoMovie from './ItemInfoMovie.astro'
-
-interface Props {
-  id: number | undefined
-  title: string | undefined
-  genres?: Genre[]
-  language?: SpokenLanguage[]
-  overview?: string
-  poster_img: string | undefined
-  production_companies?: ProductionCompany[]
-  date?: Date
-  duration?: number
-  tagline?: string
-  video?: Result[]
-  rate?: number
-}
+  interface Props {
+    id: number | undefined
+    title: string | undefined
+    genres?: Genre[]
+    language?: SpokenLanguage[]
+    overview?: string
+    poster_img: string | undefined
+    production_companies?: ProductionCompany[]
+    date?: Date
+    duration?: number
+    tagline?: string
+    video?: Result[]
+    rate?: number
+  }
 
   const { id, title, genres, language, overview, poster_img, production_companies, date, duration, tagline, video, rate } = Astro.props
   
@@ -43,7 +42,7 @@ interface Props {
       />
     </div>
     <div class="flex-grow flex items-end justify-center pl-0 h-[500px] md:max-xl:pl-10 xl:pl-0 md:max-xl:justify-start xl:h-full xl:items-center">
-      <div class="relative min-[300px]:max-xl:w-[200px] w-[500px] xl:max-2xl:w-[430px] rounded-lg">
+      <div class="relative min-[300px]:max-xl:w-[200px] w-[500px] xl:max-2xl:w-[430px] rounded-lg" transition:name=`movie box ${id}`>
         <Image
         transition:name=`movie image ${id}`
         class={"rounded-lg"}

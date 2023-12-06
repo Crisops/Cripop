@@ -1,17 +1,16 @@
 ---
+  import { Image } from "astro:assets"
 
-interface Props {
-  id: number
-  name: string
-  url_image: string
-  overview: string,
-}
+  interface Props {
+    id: number
+    name: string
+    url_image: string
+    overview: string
+  }
 
-const { name, url_image, overview, id } = Astro.props
+  const { name, url_image, overview, id } = Astro.props
 
-const urlName = name?.replace(/\s/g, "-")
-
-import { Image } from "astro:assets";
+  const urlName = name?.replace(/\s/g, "-")
 
 ---
 

@@ -1,10 +1,8 @@
 ---
-  
-  import { Image } from "astro:assets";
-  import {type Movies } from '@/types/dataMovie'
-
-  import MovieHome from '@/components/astro/MovieHome.astro'
-  import {getDetailsMovie} from '@/services/get_details_movie'
+  import type { Movies } from "@/types/dataMovie"
+  import MovieHome from "@/components/astro/MovieHome.astro"
+  import {getDetailsMovie} from "@/services/get_details_movie"
+  import { Image } from "astro:assets"
 
 
   const API_KEY = import.meta.env.SECRET_API_KEY
@@ -12,7 +10,7 @@
 
   const URL_TOP_RATED:string  = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}language=en-US&page=1`
 
-  const URL_IMG: string = `https://image.tmdb.org/t/p/original/`
+  const URL_IMG: string = 'https://image.tmdb.org/t/p/original/'
 
   const options = {
     method: 'GET',

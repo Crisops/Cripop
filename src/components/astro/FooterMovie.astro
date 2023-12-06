@@ -1,16 +1,15 @@
 ---
-import GendersMovie from './GendersMovie.astro';
-import RateMovie from './RateMovie.astro';
+  import GendersMovie from "./GendersMovie.astro"
+  import RateMovie from "./RateMovie.astro"
+  import {type MovieWithGenders } from "@/types/Genders"
 
-import  {type MovieWithGenders } from "@/types/Genders";
+  interface Props {
+    genders: MovieWithGenders
+    rate: number
+    index: number 
+  }
 
-interface Props {
-  genders: MovieWithGenders
-  rate: number
-  index: number 
-}
-
-const {rate, index, genders} = Astro.props
+  const {rate, index, genders} = Astro.props
 
 ---
 

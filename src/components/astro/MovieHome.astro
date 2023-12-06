@@ -1,33 +1,30 @@
 ---
+  import IconLanguage from "@/icons/IconLanguage.astro"
+  import IconClaqueta from "@/icons/IconClaqueta.astro"
+  import IconTime from "@/icons/IconTime.astro"
+  import type { Genre } from "@/types/DetailsMovieId"
 
-interface Props {
-  title?: string,
-  language?: string,
-  genders?: Genre[],
-  overview?: string,
-  date?: Date,
-  rate?: number,
-  time?: number,
-}
+  interface Props {
+    title?: string,
+    language?: string,
+    genders?: Genre[],
+    overview?: string,
+    date?: Date,
+    rate?: number,
+    time?: number,
+  }
 
+  const {title, language, genders, overview, date, rate, time} = Astro.props
 
-import IconLanguage from "@/icons/IconLanguage.astro";
-import IconClaqueta from "@/icons/IconClaqueta.astro";
-import IconTime from "@/icons/IconTime.astro";
-import { type Genre } from "@/types/DetailsMovieId";
+    let hour
+    let minutes
+    let seconds
 
-
-const {title, language, genders, overview, date, rate, time} = Astro.props
-
-  let hour
-  let minutes
-  let seconds
-
-if (time) {
-  hour = Math.floor(time / 60) 
-  minutes =  Math.floor(time % 60) 
-  seconds = Math.floor(minutes / 60) 
-}
+  if (time) {
+    hour = Math.floor(time / 60) 
+    minutes =  Math.floor(time % 60) 
+    seconds = Math.floor(minutes / 60) 
+  }
 
 
 ---

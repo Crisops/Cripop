@@ -101,6 +101,30 @@ export const optionsGenders: SelectOptionFilters[] = [
   },
   {
     valueOption: "war", 
-    valueText: "Guerra"
+    valueText: "Bélica"
+  },
+  {
+    valueOption: "tv movie", 
+    valueText: "Película de TV"
+  },
+  {
+    valueOption: "thriller", 
+    valueText: "Suspenso"
+  },
+  {
+    valueOption: "documentary", 
+    valueText: "Documental"
+  },
+  {
+    valueOption: "history", 
+    valueText: "Historia"
+  },
+  {
+    valueOption: "music", 
+    valueText: "Música"
+  },
+  {
+    valueOption: "mystery", 
+    valueText: "Misterio"
   },
 ]

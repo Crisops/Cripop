@@ -1,6 +1,5 @@
 
-
-import { type DetailsMovieID } from '@/types/DetailsMovieId'
+import type { DetailsMovieID } from "@/types/DetailsMovieId"
 
 
 type ErrorFetch = {

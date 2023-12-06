@@ -1,4 +1,4 @@
-import { type Genders } from "@/types/Genders"
+import type { Genders } from "@/types/Genders"
 
 export const getGendersMovies = async (moviesGendersList: number[][], gendersList: Genders) => {
 

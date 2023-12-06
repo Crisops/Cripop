@@ -1,29 +1,29 @@
 ---
-import IconClaqueta from '@/icons/IconClaqueta.astro';
-import IconLanguage from '@/icons/IconLanguage.astro';
-import IconTime from '@/icons/IconTime.astro';
-import type { Genre, ProductionCompany, Result, SpokenLanguage } from '@/types/dataIdMovieSelect';
+  import IconClaqueta from "@/icons/IconClaqueta.astro"
+  import IconLanguage from "@/icons/IconLanguage.astro"
+  import IconTime from "@/icons/IconTime.astro"
+  import type { Genre, ProductionCompany, Result, SpokenLanguage } from "@/types/dataIdMovieSelect"
 
-interface Props {
-  id: number | undefined
-  title: string | undefined
-  genres?: Genre[]
-  language?: SpokenLanguage[]
-  overview?: string
-  production_companies?: ProductionCompany[]
-  date?: Date
-  duration?: number
-  tagline?: string
-  video?: Result[]
-  rate?: number
-}
+  interface Props {
+    id: number | undefined
+    title: string | undefined
+    genres?: Genre[]
+    language?: SpokenLanguage[]
+    overview?: string
+    production_companies?: ProductionCompany[]
+    date?: Date
+    duration?: number
+    tagline?: string
+    video?: Result[]
+    rate?: number
+  }
 
-const {title, tagline, language, genres, date, rate, overview, duration, video, production_companies} = Astro.props
+  const {title, tagline, language, genres, date, rate, overview, duration, video, production_companies} = Astro.props
 
 
-let hour
-let minutes
-let seconds
+  let hour
+  let minutes
+  let seconds
 
   if (duration) {
     hour = Math.floor(duration / 60) 
@@ -59,7 +59,7 @@ let seconds
     <span class="text-white font-Noto_Sans font-light">Rate: {rate?.toFixed(1).toString()}</span>
   </div>
   <div class="max-w-lg xl:max-2xl:max-w-xl">
-    <p class="text-white font-Noto_Sans font-light line-clamp-5">{overview}</p>
+    <p class="text-white font-Noto_Sans font-light line-clamp-5">{overview || "Lo siento. No se encontro algún resumen"}</p>
   </div>
   <div class="flex gap-2">
     <IconTime/>

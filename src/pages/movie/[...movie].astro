@@ -1,33 +1,24 @@
 ---
-
-  import Layout from "@/layouts/Layout.astro";
-  import {type MovieIDSelect} from '@/types/dataIdMovieSelect'
-  import { Image } from "astro:assets";
-
-  import ItemMovieSelect from '@/components/astro/ItemMovieSelect.astro'
-  import type { Movies, Result } from "@/types/dataMovie";
-  import { getPosterPath } from "@/services/get_poster_img";
+  import Layout from "@/layouts/Layout.astro"
+  import type { MovieIDSelect} from "@/types/dataIdMovieSelect"
+  import { Image } from "astro:assets"
+  import ItemMovieSelect from "@/components/astro/ItemMovieSelect.astro"
+  import { getPosterPath } from "@/services/get_poster_img"
   
-  const {movie} = Astro.params
+  const { movie } = Astro.params
   
   let idMovie: number | undefined
   let title: string | undefined
   let data
   let URL_IMG: string | undefined
   let URL_IMG_POSTER: string | undefined
-  let pathImgPreview
-  let path: string | undefined
-  let movies: Result[]
   let img
   let imgUrl: string | undefined
   let chooseURL: string = Astro.url.pathname.split("/")[1]
-
   let backdrop_path: string | undefined
 
-  
   const API_KEY = import.meta.env.SECRET_API_KEY
   const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
-
 
   if (movie) {
     const [id, name] = movie?.split("/") 
@@ -35,11 +26,6 @@
     title = name;
 
     const URL_MOVIE_DETAILS = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&append_to_response=videos&language=es`
-
-    // La utilizamos para que nos devuelva el Path de la imagen real
-    const URL_NOW_PLAYING = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}language=es&page=1`
-    const URL_MOVIES_POPULARITY = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}language=es&page=2`
-    const URL_MOVIES_BEST_RATE = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}language=es&page=3`
     
     URL_IMG = `https://image.tmdb.org/t/p/original`
     URL_IMG_POSTER = `https://image.tmdb.org/t/p/w780`
@@ -55,25 +41,6 @@
     const response = await fetch(URL_MOVIE_DETAILS, options)
 
     const movie_details = await response.json() as MovieIDSelect
-
-    
-    const [now_playing, popularity, best_rate] = await Promise.all(
-      [fetch(URL_NOW_PLAYING, options),fetch(URL_MOVIES_POPULARITY, options),fetch(URL_MOVIES_BEST_RATE, options)
-    ])
-
-    const movies_now = await now_playing.json() as Movies
-    const movies_popularity = await popularity.json() as Movies
-    const movies_best_rate = await best_rate.json() as Movies
-
-    const now_render = movies_now.results
-    const popularity_render = movies_popularity.results
-    const rate_render = movies_best_rate.results
-    
-    movies = [...now_render,...popularity_render, ...rate_render]
-
-    pathImgPreview = movies.find(movie => movie?.id === idMovie) 
-
-    path = pathImgPreview?.poster_path
  
     data = movie_details
 
@@ -88,7 +55,7 @@
 
 ---
 
-<Layout title={`Cripop | ${title}`}>
+<Layout title={`Cripop | ${(title ?? "")}`}>
   <main class="relative h-screen">
     <ItemMovieSelect
       id={idMovie}

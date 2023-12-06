@@ -1,14 +1,11 @@
 ---
-
-  // Renderiza todas las peliculas que hay en cartelera
-
-
-  import Filters from "../react/Filters";
+  import Filters from "@/components/react/Filters"
   import type { Genders, MovieWithGenders } from "@/types/Genders"
-  import type { Movies } from "@/types/dataMovie";
-  import { getGendersMoviesList } from "@/services/get_genders";
-  import { getGendersMovies } from "@/services/get_genders_list";
-  import ShowMovie from "./ShowMovie.astro";
+  import type { Movies } from "@/types/dataMovie"
+  import { getGendersMoviesList } from "@/services/get_genders"
+  import { getGendersMovies } from "@/services/get_genders_list"
+  import ShowMovie from "./ShowMovie.astro"
+import { getPosterPath } from "@/services/get_poster_img"
 
 
   const API_KEY = import.meta.env.SECRET_API_KEY
@@ -16,8 +13,7 @@
 
 
 
-  const URL_NOW_PLAYING: string = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}language=es&page=2`
-  const URL_IMG: string = 'https://image.tmdb.org/t/p/w780'
+  const URL_NOW_PLAYING: string = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}language=es&page=3`
 
   const options = {
     method: 'GET',
@@ -37,10 +33,9 @@
 
   const listIdWithGender = await getGendersMovies(movie_gendersId, gendersList) as MovieWithGenders
 
+  const img = await Promise.all(movies.results.map((movie) => getPosterPath(ACCESS_TOKEN, movie.id, "movie")));
 
-  
 ---
-
 
 <main class="relative w-full overflow-hidden pt-40">
   <div class="relative px-10 flex items-center flex-col xl:flex-row justify-between">
@@ -55,7 +50,7 @@
         movies.results.map((movie, index) =>(
           <ShowMovie
             id={movie.id}
-            url_image={URL_IMG + movie.poster_path}
+            url_image={img[index]?.file_path}
             title={movie.title}
             widht={400}
             height={500}

@@ -1,11 +1,8 @@
 
-
-
 type ErrorFetch = {
   statusCode: number,
   message: string
 }
-
 
 export const getGendersMoviesList = async (token: string) => {
 

@@ -1,44 +1,50 @@
 ---
+  import  type { MovieWithGenders } from "@/types/Genders"
+  import { Image } from "astro:assets"
+  import FooterMovie from "./FooterMovie.astro"
 
-import  type { MovieWithGenders } from "@/types/Genders";
-import { Image } from 'astro:assets';
-import FooterMovie from './FooterMovie.astro';
+  interface Props {
+    id: number
+    url_image: string | undefined
+    title?: string
+    name?: string 
+    widht: number
+    height: number
+    genders: MovieWithGenders
+    rate: number
+    index: number
+  }
 
-interface Props {
-  id: number
-  url_image: string
-  title?: string
-  name?: string 
-  widht: number
-  height: number
-  genders: MovieWithGenders
-  rate: number
-  index: number
-}
+  const URL_IMG: string = 'https://image.tmdb.org/t/p/w780'
 
+  const {id, url_image, title, name, widht, height, genders, rate, index} = Astro.props
 
-
-const {id, url_image, title, name, widht, height, genders, rate, index} = Astro.props
-
-  
-
-const urlTitle = title?.replace(/\s/g, "-") // Se cambia los espacios en blanco por -
-const urlName = name?.replace(/\s/g, "-") // Se cambia los espacios en blanco por -
+  const urlTitle = title?.replace(/\s/g, "-")
+  const urlName = name?.replace(/\s/g, "-")
 
 ---
 
 
 
-<article id={`${id}`} class="relative min-w-[300px] group rounded-lg overflow-hidden" transition:name=`movie image ${id}`>
+<article class="relative min-w-[300px] h-full group rounded-lg overflow-hidden" transition:name=`movie image ${id}`>
   <a href=`${id}/${urlTitle ?? urlName}`>
-    <Image
-    class="cursor-pointer transition-transform duration-500 rounded-lg group-hover:scale-105"
-    src={url_image}
-    alt={`${title ?? name}`}
-    width={widht}
-    height={height}
-    quality={"low"}
-    />
+    {
+      (url_image)
+      ?
+      <Image
+      class="cursor-pointer transition-transform duration-500 rounded-lg group-hover:scale-105"
+      src={URL_IMG + url_image}
+      alt={`${title ?? name}`}
+      width={widht}
+      height={height}
+      quality={"low"}
+      />
+      :
+      <div class="w-full h-full flex justify-center items-center">
+        <span class="text-white font-Ubuntu text-xl font-bold text-center">Lo sentimos, no se encuentra una imagen para esta película.</span>
+      </div>
+    }
+
     <FooterMovie genders={genders} index={index} rate={rate}/>
     <div class="absolute inset-0 top-0 right-0 bg-gradient-to-t from-black translate-y-full transition-all duration-300 ease-linear group-hover:translate-y-0 cursor-pointer"></div>
   </a>
