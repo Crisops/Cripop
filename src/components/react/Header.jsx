@@ -22,10 +22,12 @@ const Header = () => {
 
   return (
     <div className='fixed top-0 left-0 w-full h-24 z-50'>
-      <header className={`w-full h-full flex justify-between items-center px-9 ${header ? 'backdrop-blur-sm' : ''}`}>
-        <div className='relative'>
-          <span id='text-title' className='text-white text-3xl md:text-4xl lg:text-5xl font-bold font-Ubuntu'>Cripop</span>
-        </div>
+      <header className={`w-full h-full flex justify-between items-center px-5 md:px-10 ${header ? 'backdrop-blur-sm' : ''}`}>
+        <a href='/'>
+          <div className='relative'>
+            <span id='text-title' className='text-white text-3xl md:text-4xl lg:text-5xl font-bold font-Ubuntu'>Cripop</span>
+          </div>
+        </a>
         <div className='relative flex justify-evenly items-center gap-8 [&>div>a]:font-Noto_Sans'>
           <div className='flex items-center justify-evenly'>
             <IconSearch />

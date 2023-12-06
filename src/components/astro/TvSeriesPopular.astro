@@ -11,7 +11,7 @@
   const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
 
   const URL_SERIES_POPULARITY = `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}language=es&page=10`
-  const URL_IMG: string = 'https://image.tmdb.org/t/p/original'
+  const URL_IMG: string = 'https://image.tmdb.org/t/p/w500'
 
   const options = {
     method: 'GET',
@@ -28,7 +28,7 @@
   const serieTv_gendersId = series_tv.results.map(serie => serie.genre_ids)
 
   const gendersList = await getGendersSeriesList(ACCESS_TOKEN) as Genders
- 
+  
   const listIdWithGender = await getGendersSeries(serieTv_gendersId, gendersList) as MovieWithGenders
 
   const series_render = series_tv.results.slice(-6,19)
@@ -52,8 +52,8 @@
           id={serie.id}
           url_image={URL_IMG + img[index]?.file_path}
           name={serie.name}
-          widht={400}
-          height={200}
+          widht={500}
+          height={700}
           genders={genders}
           rate={serie.vote_average}
           index={index}

@@ -1,0 +1,11 @@
+---
+  import Layout from "@/layouts/Layout.astro"
+  import ShowMoreMovies from "@/components/astro/ShowMoreMovies.astro";
+
+  const API_KEY = import.meta.env.SECRET_API_KEY
+  const URL_MOVIES_TOP = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}language=es&page=1`
+---
+
+<Layout title="Cripop | Top de películas mejores calificadas">
+  <ShowMoreMovies url={URL_MOVIES_TOP} title="Disfruta las películas mas vistas"/>
+</Layout>

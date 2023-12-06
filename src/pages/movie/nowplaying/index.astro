@@ -1,9 +1,12 @@
 ---
-import Layout from "@/layouts/Layout.astro"
-import ShowMoreMovies from "@/components/astro/ShowMoreMovies.astro"
+  import Layout from "@/layouts/Layout.astro"
+  import ShowMoreMovies from "@/components/astro/ShowMoreMovies.astro"
+
+  const API_KEY = import.meta.env.SECRET_API_KEY
+  const URL_NOW_PLAYING: string = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}language=es&page=3`
 
 ---
 
 <Layout title="Cripop | Películas en cartelera">
-  <ShowMoreMovies/>
+  <ShowMoreMovies url={URL_NOW_PLAYING} title="¿Ya te viste alguna?"/>
 </Layout>

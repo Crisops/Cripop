@@ -41,15 +41,15 @@
         rate={rate}
       />
     </div>
-    <div class="flex-grow flex items-end justify-center pl-0 h-[500px] md:max-xl:pl-10 xl:pl-0 md:max-xl:justify-start xl:h-full xl:items-center">
-      <div class="relative min-[300px]:max-xl:w-[200px] w-[500px] xl:max-2xl:w-[430px] rounded-lg" transition:name=`movie box ${id}`>
+    <div class="flex-grow flex items-end justify-start pl-5 h-[500px] md:max-xl:pl-10 xl:pl-0 md:max-xl:justify-start xl:h-full xl:items-center xl:justify-center">
+      <div class="relative min-[300px]:max-sm:w-[150px] sm:w-[200px] xl:max-2xl:w-[430px] 2xl:w-[500px] rounded-lg" transition:name=`movie box ${id}`>
         <Image
         transition:name=`movie image ${id}`
         class={"rounded-lg"}
         src={poster_img ?? ""}
         alt={title ?? "Sin titulo"}
-        width={900}
-        height={500}
+        width={500}
+        height={700}
         quality={"low"}
         />
       </div>

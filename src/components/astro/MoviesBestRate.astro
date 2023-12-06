@@ -11,7 +11,7 @@
   const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
 
   const URL_MOVIES_BEST_RENDER = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}language=es&page=3`
-  const URL_IMG: string = 'https://image.tmdb.org/t/p/original'
+  const URL_IMG: string = 'https://image.tmdb.org/t/p/w500'
 
   const options = {
     method: 'GET',
@@ -54,8 +54,8 @@
           id={movie.id}
           url_image={URL_IMG + img[index]?.file_path}
           title={movie.title}
-          widht={400}
-          height={200}
+          widht={500}
+          height={700}
           genders={genders}
           rate={movie.vote_average}
           index={index}
@@ -65,7 +65,7 @@
       }
     </div>
     <div class="absolute top-0 right-0 bg-gradient-to-l from-black from-30% w-96 h-full flex justify-center items-center">
-      <a href="#" class="border border-zinc-500 px-3 py-2 font-Noto_Sans text-white font-medium text-sm transition-colors duration-300 hover:bg-white hover:text-black">Ver Más</a>
+      <a href="movie/top" class="border border-zinc-500 px-3 py-2 font-Noto_Sans text-white font-medium text-sm transition-colors duration-300 hover:bg-white hover:text-black">Ver Más</a>
     </div>
   </div>
 </div>

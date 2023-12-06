@@ -1,19 +1,23 @@
 ---
+
+  interface Props {
+    url: string
+    title: string
+  }
+
+  const{ url, title } = Astro.props
+
   import Filters from "@/components/react/Filters"
   import type { Genders, MovieWithGenders } from "@/types/Genders"
   import type { Movies } from "@/types/dataMovie"
   import { getGendersMoviesList } from "@/services/get_genders"
   import { getGendersMovies } from "@/services/get_genders_list"
   import ShowMovie from "./ShowMovie.astro"
-import { getPosterPath } from "@/services/get_poster_img"
+  import { getPosterPath } from "@/services/get_poster_img"
 
 
-  const API_KEY = import.meta.env.SECRET_API_KEY
   const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
 
-
-
-  const URL_NOW_PLAYING: string = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}language=es&page=3`
 
   const options = {
     method: 'GET',
@@ -23,7 +27,7 @@ import { getPosterPath } from "@/services/get_poster_img"
     }
   };
 
-  const response = await fetch(URL_NOW_PLAYING, options)
+  const response = await fetch(url, options)
 
   const movies = await response.json() as Movies
 
@@ -39,7 +43,7 @@ import { getPosterPath } from "@/services/get_poster_img"
 
 <main class="relative w-full overflow-hidden pt-40">
   <div class="relative px-10 flex items-center flex-col xl:flex-row justify-between">
-    <h1 class="text-white font-Libre_Franklin text-3xl text-center sm:text-left lg:max-xl:text-center xl:text-left md font-bold">Películas recientes</h1>
+    <h1 class="text-white font-Libre_Franklin text-3xl text-center sm:text-left lg:max-xl:text-center xl:text-left md font-bold">{title}</h1>
     <div class="flex flex-wrap items-center pt-10 gap-10 justify-start lg:max-xl:justify-center xl:justify-start px-10 xl:pt-0">
       <Filters/>
     </div>
@@ -52,8 +56,8 @@ import { getPosterPath } from "@/services/get_poster_img"
             id={movie.id}
             url_image={img[index]?.file_path}
             title={movie.title}
-            widht={400}
-            height={500}
+            widht={500}
+            height={700}
             genders={listIdWithGender}
             rate={movie.vote_average}
             index={index}

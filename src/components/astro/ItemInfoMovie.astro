@@ -35,13 +35,13 @@
 ---
 
 
-<div class="relative flex flex-col gap-5 px-10 xl:max-2xl:pr-0">
+<div class="relative flex flex-col gap-5 px-5 md:px-10 xl:max-2xl:pr-0">
   <h1 class=`font-Ubuntu ${title !== undefined && title.length >= 20 ? 'text-[3rem] leading-[45px] md:text-7xl' : 'text-5xl sm:max-xl:text-7xl xl:max-2xl:text-8xl 2xl:text-9xl '} font-semibold text-white max-w-2xl m-0 uppercase`>{title}</h1>
   <div class="flex">
     <span class="text-zinc-400/50 font-bold font-Libre_Franklin text-xs ">{tagline}</span>
   </div>
   <div class="flex flex-wrap items-center gap-4">
-    <div class="inline-flex items-center gap-2">
+    <div class="flex flex-wrap max-w-sm items-center gap-2">
       <IconLanguage/>
       <div class="flex flex-wrap gap-2">
         {language?.map(lang =>
