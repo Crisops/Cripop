@@ -43,13 +43,13 @@ let seconds
   <div class="flex flex-wrap items-center gap-4">
     <div class="inline-flex items-center gap-2">
       <IconLanguage/>
-      <div class="flex gap-2">
+      <div class="flex flex-wrap gap-2">
         {language?.map(lang =>
           <span class="text-white uppercase font-Noto_Sans font-light"> {lang.name}</span>
          )}
       </div>
     </div>
-    <div class="inline-flex gap-2">
+    <div class="flex flex-wrap gap-2">
       <IconClaqueta/>
       {genres?.map(gender => (<span class="text-white font-Noto_Sans font-light">{gender.name}</span>))}
     </div>
