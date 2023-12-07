@@ -1,0 +1,67 @@
+---
+  import type { Genre, Videos, SpokenLanguage, Season} from "@/types/dataDetailsSeries"
+  import { Image } from "astro:assets"
+  import ItemInfoSerie from "./ItemInfoSerie.astro"
+
+  interface Props {
+    id: number | undefined
+    name: string | undefined
+    genres?: Genre[]
+    language?: SpokenLanguage[]
+    overview?: string
+    poster_img: string | undefined
+    dateStart?: Date
+    dateEnd?: Date
+    tagline?: string
+    video?: Videos
+    rate?: number
+    numberSeasons?: number
+    numberEpisodes?: number
+    seasons?: Season[]
+  }
+
+  const { 
+    id, name, genres, language, overview,
+    poster_img, dateStart, dateEnd,
+    tagline, video, rate , numberSeasons,
+    numberEpisodes, seasons
+  } = Astro.props
+  
+
+---
+
+
+<section class="absolute w-full xl:h-full z-10">
+  <div class="flex flex-col-reverse gap-5 xl:flex-row xl:gap-0 h-full">
+    <div class="flex-grow flex flex-col justify-center mt-5 py-10 xl:mt-0 xl:py-0">
+      <ItemInfoSerie
+        id={id}
+        name={name}
+        genres={genres}
+        language={language}
+        overview={overview}
+        dateStart={dateStart}
+        dateEnd={dateEnd}
+        tagline={tagline}
+        numberEpisodes={numberEpisodes}
+        numberSeasons={numberSeasons}
+        video={video}
+        rate={rate}
+        seasons={seasons}
+      />
+    </div>
+    <div class="flex-grow flex items-end justify-start pl-5 h-[500px] md:max-xl:pl-10 xl:pl-0 md:max-xl:justify-start xl:h-full xl:items-center xl:justify-center">
+      <div class="relative min-[300px]:max-sm:w-[150px] sm:w-[200px] xl:max-2xl:w-[300px] 2xl:w-[500px] rounded-lg" transition:name=`movie box ${id}`>
+        <Image
+        transition:name=`movie image ${id}`
+        class={"rounded-lg"}
+        src={poster_img ?? ""}
+        alt={name ?? "Sin titulo"}
+        width={500}
+        height={700}
+        quality={"low"}
+        />
+      </div>
+    </div>
+  </div>
+</section>
