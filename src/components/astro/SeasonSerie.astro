@@ -1,0 +1,44 @@
+---
+  import IconArrowRight from '@/icons/IconArrowRight.astro'
+  import { Image } from 'astro:assets';
+  import img1 from '../../img/naruto.png'
+
+  // interface Props {
+
+  //   season: string,
+  //   overview: string,
+  //   url: string,
+  //   seasonNumber: number
+
+  // }
+
+
+---
+
+
+<div class="relative w-full h-auto transition duration-500 bg-[#000105] xl:bg-zinc-900/80"> <!-- faq-container first -->
+  <div class="w-full h-24 flex justify-between items-center px-10 py-5 overflow-hidden cursor-pointer border-b border-zinc-900/80"> <!-- faq-collapse -->
+    <div class="relative flex flex-col justify-center gap-1 flex-grow">
+      <h3 class="text-2xl font-semibold text-white font-Libre_Franklin">Temporada 1</h3>
+      <p class="text-xs max-w-xs line-clamp-2 text-white/40">Bryan Cranston, ganador de un Emmy, interpreta a Walter White, un profesor de química venido a menos que lucha por llegar a fin de mes y mantener a su esposa (Anna Gunn) y a un hijo incapacitado (RJ Mitte). Todo cambia cuando a Walter le diagnostican un cáncer terminal de pulmón. Como sólo le quedan unos cuantos años de vida y no tiene nada que perder, Walter usa sus conocimientos de química para fabricar y vender metanfetamina a uno de sus antiguos estudiantes (Aaron Paul). A medida que el negocio crece, también lo hacen las mentiras, pero Walt hará lo que sea para asegurar el futuro de su familia aunque para ello tenga que arriesgar sus vidas.</p>
+    </div>
+    <!--Line Collapse -->
+    <IconArrowRight/>
+    <!--Line Collapse -->
+  </div>
+  <div class="overflow-hidden transition duration-500 h-auto "> <!-- faq-answer -->
+    <article class="relative w-full h-auto hover:bg-[#000112] xl:hover:bg-black/40">
+      <a href="/movie/1396/season/1/episode/1/" class="relative flex items-center gap-4 hover:bg-black/20 overflow-hidden px-10 py-2">
+        <Image src={img1} alt={"aasa"} class="rounded-md object-cover aspect-square w-10"/>
+        <div class="flex flex-auto flex-col">
+          <h4 class="text-base text-white font-Libre_Franklin font-semibold">
+            Piloto
+          </h4>
+          <span class="text-[10px] text-gray-200 line-clamp-2 font-Noto_Sans max-w-xs">Walter White, profesor de química en un instituto, descubre que tiene cáncer de pulmón y decide trabajar junto con un ex-alumno elaborando metanfetamina de alta calidad para poder ganar dinero para que su familia se mantenga.</span>
+        </div>
+      </a>
+    </article>
+  </div>
+</div> 
+
+<!-- max-h-56 overflow-y-scroll -->

@@ -5,7 +5,8 @@
   import IconTime from "@/icons/IconTime.astro"
   import SeasonSeries from "@/components/astro/SeasonsSeries.astro"
   import type { Genre, Videos, SpokenLanguage, Season} from "@/types/dataDetailsSeries"
-
+  import ButtonViewTrailer from "@/components/react/ButtonViewTrailer"
+  import ButtonViewSeasons from "@/components/react/ButtonViewSeasons"
   interface Props {
     id: number | undefined
     name: string | undefined
@@ -23,6 +24,14 @@
   }
 
   const {name, genres, language, overview, dateStart, dateEnd, tagline, numberEpisodes, numberSeasons, video, rate} = Astro.props
+
+  let episodes: number | undefined
+  let seasons: number | undefined
+
+  if (numberEpisodes && numberSeasons) {
+    episodes = numberEpisodes
+    seasons = numberSeasons
+  }
 
 
   // let hour
@@ -69,14 +78,9 @@
     </div>
     <div class="flex gap-4 [&>div>span]:text-sm ">
       <div>
-        <button class="border border-zinc-500 px-5 py-2 font-Noto_Sans text-white font-medium text-sm transition-colors duration-300 hover:bg-white hover:text-black">Ver Trailer</button>
+        <ButtonViewTrailer client:visible/>
       </div>
-      <div class="flex items-center gap-2 px-5 py-2 bg-zinc-950 cursor-pointer text-white transition-colors duration-300 ease-in-out hover:bg-zinc-200
-      hover:text-zinc-950 [&>span]:hover:text-zinc-950 ">
-        <span class="text-white font-Noto_Sans font-medium">Temporadas: {numberSeasons} | </span>
-        <span class="text-white font-Noto_Sans font-medium">Episodios: {numberEpisodes}</span>
-        <IconEye/>
-      </div>
+      <ButtonViewSeasons numberSeasons={seasons} numberEpisodes={episodes} client:visible />
     </div>
   </div>
 </div>
