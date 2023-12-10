@@ -41,7 +41,7 @@
     const response = await fetch(URL_SERIE_DETAILS, options)
     data = await response.json() as DetailsSeries
 
-    console.log(data);
+    // console.log(data);
     
 
     img = await getPosterPath(ACCESS_TOKEN, idSerie, chooseURL)
