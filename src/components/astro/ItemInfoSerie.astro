@@ -23,32 +23,22 @@
     seasons?: Season[]
   }
 
-  const {name, genres, language, overview, dateStart, dateEnd, tagline, numberEpisodes, numberSeasons, video, rate} = Astro.props
+  const {id, name, genres, language, overview, dateStart, dateEnd, tagline, numberEpisodes, numberSeasons, video, rate, seasons} = Astro.props
 
   let episodes: number | undefined
-  let seasons: number | undefined
+  let idSerie: number | undefined
+  let season: Season[] | undefined
 
   if (numberEpisodes && numberSeasons) {
     episodes = numberEpisodes
-    seasons = numberSeasons
+    season = seasons
+    idSerie = id
   }
-
-
-  // let hour
-  // let minutes
-  // let seconds
-
-  // if (duration) {
-  //   hour = Math.floor(duration / 60) 
-  //   minutes =  Math.floor(duration % 60) 
-  //   seconds = Math.floor(duration / 60) 
-  // }
-
 
 ---
 
 <div class="relative flex flex-col-reverse gap-10 xl:flex-row xl:gap-0">
-  <SeasonSeries/>
+  <SeasonSeries idSerie={idSerie} seasons={season}/>
   <div class="relative flex flex-grow flex-col gap-5 px-5 md:px-10 xl:max-2xl:pr-0">
     <h1 class=`font-Ubuntu ${name !== undefined && name.length >= 20 ? 'text-[3rem] leading-[45px] md:text-7xl' : 'text-5xl sm:max-xl:text-7xl xl:max-2xl:text-7xl 2xl:text-9xl '} font-semibold text-white max-w-2xl m-0 uppercase`>{name}</h1>
     <div class="flex">
@@ -80,7 +70,7 @@
       <div>
         <ButtonViewTrailer client:visible/>
       </div>
-      <ButtonViewSeasons numberSeasons={seasons} numberEpisodes={episodes} client:visible />
+      <ButtonViewSeasons numberSeasons={numberSeasons} numberEpisodes={episodes} client:visible />
     </div>
   </div>
 </div>

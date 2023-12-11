@@ -1,0 +1,27 @@
+---
+  import { Image } from 'astro:assets';
+
+  interface Props {
+    name: string,
+    overview: string,
+    path_image: string
+  }
+
+  const {name, overview, path_image} = Astro.props
+---
+
+<article class="relative w-full h-auto hover:bg-[#000112] xl:hover:bg-black/40">
+  <a href="#" class="relative flex items-center gap-4 hover:bg-black/20 overflow-hidden px-10 py-2">
+    <Image
+    class="rounded-md object-cover aspect-square w-10"
+    src={path_image}
+    width={92} height={92}
+    alt={name}/>
+    <div class="flex flex-auto flex-col">
+      <h4 class="text-base text-white font-Libre_Franklin font-semibold">
+        {name}
+      </h4>
+      <span class="text-[10px] text-gray-200 line-clamp-2 font-Noto_Sans max-w-xs">{overview}</span>
+    </div>
+  </a>
+</article>

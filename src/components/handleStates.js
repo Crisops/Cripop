@@ -2,5 +2,9 @@ import { create } from 'zustand'
 
 export const useViewSeasons = create((set) => ({
   isView: false,
-  setIsView: (isView) => set({ isView })
+  isViewEpisodes: false,
+  viewSeason: { season: null },
+  setIsView: (isView) => set({ isView }),
+  setIsViewEpisodes: (isViewEpisodes) => set({ isViewEpisodes }),
+  setViewSeason: (viewSeason) => set({ viewSeason })
 }))

@@ -1,9 +1,27 @@
 ---
-import SeasonSerie from "./SeasonSerie.astro";
-import BoxSeasonSeries from "../react/BoxSeasonSeries";
+  import SeasonSerie from "./SeasonSerie.astro";
+  import BoxSeasonSeries from "../react/BoxSeasonSeries";
+  import type { Season } from "@/types/dataDetailsSeries";
+
+  interface Props {
+    idSerie?: number,
+    seasons?: Season[]
+  }
+
+  const {idSerie, seasons} = Astro.props
+  
+  const seasons_render = seasons?.filter(season => season.name !== "Especiales")
+
+  
+  
 ---
 
 <BoxSeasonSeries client:idle>
-  <SeasonSerie/>
+  {
+    seasons_render?.map(season =>(
+    <SeasonSerie id={idSerie} title={season.name} overview={season.overview} seasonNumber={season.season_number}/>
+    ))
+  }
+
 </BoxSeasonSeries>
 
