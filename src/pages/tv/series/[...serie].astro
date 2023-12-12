@@ -1,5 +1,8 @@
 ---
   import ItemSerieSelect from "@/components/astro/ItemSerieSelect.astro"
+import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro"
+import BoxMain from "@/components/react/BoxMain"
+import BoxSearch from "@/components/react/BoxSearch"
   import Layout from "@/layouts/Layout.astro"
   import { getPosterPath } from "@/services/get_poster_img"
   import type {DetailsSeries} from "@/types/dataDetailsSeries"
@@ -55,36 +58,40 @@
 ---
 
 <Layout title={`Cripop | ${nameSerie}`}>
-  <main class="relative h-screen">
-    <ItemSerieSelect
-      id={idSerie}
-      name={data?.name}
-      genres={data?.genres}
-      language={data?.spoken_languages}
-      overview={data?.overview}
-      poster_img={URL_IMG_POSTER + (imgUrl ?? "")}
-      dateStart={data?.first_air_date}
-      dateEnd={data?.last_air_date}
-      tagline={data?.tagline}
-      video={data?.videos}
-      rate={data?.vote_average}
-      numberSeasons={data?.number_of_seasons}
-      numberEpisodes={data?.number_of_episodes}
-      seasons={data?.seasons}
-    />
-    <div class="absolute w-full h-[500px] xl:h-full">
-      <Image
-      class={"absolute w-full h-full object-cover object-center"}
-      src={URL_IMG + (backdrop_path ?? "")}
-      alt={nameSerie ?? ""}
-      width={1280}
-      height={720}
-      quality={60}
+  <BoxMain client:idle>
+    <main class="relative h-screen">
+      <ItemSerieSelect
+        id={idSerie}
+        name={data?.name}
+        genres={data?.genres}
+        language={data?.spoken_languages}
+        overview={data?.overview}
+        poster_img={URL_IMG_POSTER + (imgUrl ?? "")}
+        dateStart={data?.first_air_date}
+        dateEnd={data?.last_air_date}
+        tagline={data?.tagline}
+        video={data?.videos}
+        rate={data?.vote_average}
+        numberSeasons={data?.number_of_seasons}
+        numberEpisodes={data?.number_of_episodes}
+        seasons={data?.seasons}
       />
-      <div class="absolute inset-0 bg-gradient-to-t from-[#000105]"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-[#000105]"></div>
-      <div class="absolute inset-0 bg-[#000105]/30"></div>
-    </div>
-  </main>
-
+      <div class="absolute w-full h-[500px] xl:h-full">
+        <Image
+        class={"absolute w-full h-full object-cover object-center"}
+        src={URL_IMG + (backdrop_path ?? "")}
+        alt={nameSerie ?? ""}
+        width={1280}
+        height={720}
+        quality={60}
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-[#000105]"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-[#000105]"></div>
+        <div class="absolute inset-0 bg-[#000105]/30"></div>
+      </div>
+    </main>
+  </BoxMain>
+  <BoxSearch client:idle>
+    <SearchMovieAndSeries/>
+  </BoxSearch>
 </Layout>

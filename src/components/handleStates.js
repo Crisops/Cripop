@@ -8,3 +8,8 @@ export const useViewSeasons = create((set) => ({
   setIsViewEpisodes: (isViewEpisodes) => set({ isViewEpisodes }),
   setViewSeason: (viewSeason) => set({ viewSeason })
 }))
+
+export const useBoxSearch = create(set => ({
+  isBoxSearch: false,
+  setBoxSearch: (isBoxSearch) => set({ isBoxSearch })
+}))

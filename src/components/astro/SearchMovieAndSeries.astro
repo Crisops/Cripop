@@ -1,0 +1,21 @@
+---
+import ButtonCloseBoxSearch from "../react/ButtonCloseBoxSearch";
+import SearchMovie from "../react/SearchMovie";
+
+---
+
+<div class="fixed w-screen h-screen bg-[#000105] grid grid-rows-5 grid-cols-5 xl:grid-rows-2 xl:grid-cols-2 z-50 overflow-hidden">
+  <aside class="col-span-5 xl:row-span-2 xl:col-span-1">
+    <div class="flex flex-grow px-4 py-20">
+      <SearchMovie client:visible/>
+    </div>
+  </aside>
+  <section class="flex flex-col col-span-5 row-span-4 xl:row-span-2 xl:col-span-1">
+      <div class="flex items-center justify-end py-5 px-5">
+        <ButtonCloseBoxSearch client:visible/>
+      </div>
+      <div class="flex-grow">
+        <span class="text-white">Renderizar peliculas</span>
+      </div>
+  </section>
+</div>

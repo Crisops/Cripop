@@ -1,5 +1,6 @@
-import { IconSearch, IconGitHub } from '@/components/react/Icons'
+import { IconGitHub } from '@/components/react/Icons'
 import { useEffect, useState } from 'react'
+import ButtonSearch from './ButtonSearch'
 
 const Header = () => {
   const [header, setHeader] = useState(false)
@@ -29,10 +30,7 @@ const Header = () => {
           </div>
         </a>
         <div className='relative flex justify-evenly items-center gap-8 [&>div>a]:font-Noto_Sans'>
-          <div className='flex items-center justify-evenly'>
-            <IconSearch />
-            <a href='#' id='text-github' className='py-3 px-2 text-white hidden md:block text-base 2xl:text-lg'>Buscar</a>
-          </div>
+          <ButtonSearch />
           <div className='flex items-center justify-evenly'>
             <IconGitHub />
             <a href='https://github.com/Crisops/Cripop' id='text-exitDoor' className='py-3 px-2 text-white  hidden md:block text-base 2xl:text-lg' target='_blank' rel='noreferrer'>GitHub</a>

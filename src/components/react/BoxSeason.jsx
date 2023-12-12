@@ -33,7 +33,7 @@ const BoxSeason = ({ seasonNumber, idMovie, token, title, overview }) => {
   return (
     <div onClick={handleViewEpisodes} className='w-full h-24 flex justify-between items-center px-10 py-5 overflow-hidden transition-colors duration-300 cursor-pointer xl:hover:bg-zinc-950'>
       <div className='relative flex flex-col justify-center gap-1'>
-        <h3 className='text-2xl font-semibold text-white font-Libre_Franklin'>{title}</h3>
+        <h3 className={`${title.length >= 15 ? 'text-lg' : 'text-2xl'} font-semibold text-white font-Libre_Franklin`}>{title}</h3>
         <p className='text-xs max-w-xs line-clamp-2 text-white/40'>{overview}</p>
       </div>
       {isSeasonPreview ? <IconArrowDown /> : <IconArrowRight />}
