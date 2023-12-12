@@ -51,7 +51,7 @@ export const IconEye = () => (
 )
 
 export const IconArrowRight = () => (
-  <svg class='w-6 h-6 text-white' width='64px' height='64px' viewBox='0 0 24 24' fill='none'>
+  <svg className='w-6 h-6 text-white' width='64px' height='64px' viewBox='0 0 24 24' fill='none'>
 
     <g id='SVGRepo_bgCarrier' strokeWidth='0' />
 
@@ -63,7 +63,7 @@ export const IconArrowRight = () => (
 )
 
 export const IconArrowDown = () => (
-  <svg class='w-6 h-6 text-white' width='64px' height='64px' viewBox='0 0 24 24' fill='none' transform='matrix(1, 0, 0, 1, 0, 0)rotate(90)'>
+  <svg className='w-6 h-6 text-white' width='64px' height='64px' viewBox='0 0 24 24' fill='none' transform='matrix(1, 0, 0, 1, 0, 0)rotate(90)'>
 
     <g id='SVGRepo_bgCarrier' strokeWidth='0' />
 
