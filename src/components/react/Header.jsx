@@ -32,8 +32,8 @@ const Header = () => {
         <div className='relative flex justify-evenly items-center gap-8 [&>div>a]:font-Noto_Sans'>
           <ButtonSearch />
           <div className='flex items-center justify-evenly'>
-            <IconGitHub />
-            <a href='https://github.com/Crisops/Cripop' id='text-exitDoor' className='py-3 px-2 text-white  hidden md:block text-base 2xl:text-lg' target='_blank' rel='noreferrer'>GitHub</a>
+            <a href='https://github.com/Crisops/Cripop' target='_blank' rel='noreferrer'><IconGitHub /></a>
+            <a href='https://github.com/Crisops/Cripop' className='py-3 px-2 text-white hidden md:block text-base 2xl:text-lg' target='_blank' rel='noreferrer'>GitHub</a>
           </div>
         </div>
       </header>

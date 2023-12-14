@@ -10,7 +10,7 @@ const ButtonSearch = () => {
 
   return (
     <div className='flex items-center justify-evenly'>
-      <IconSearch />
+      <IconSearch handleClick={handleClick} />
       <button onClick={handleClick} id='text-github' className='py-3 px-2 text-white hidden md:block text-base 2xl:text-lg'>Buscar</button>
     </div>
   )
