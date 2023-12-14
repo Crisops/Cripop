@@ -14,20 +14,14 @@
     genders: MovieWithGenders
     rate: number
     index: number
-    url: string
+    url?: string
   }
+  
 
   const {id, url_image, title, name, widht, height, genders, rate, index, url} = Astro.props
 
   const urlTitle = title?.replace(/\s/g, "-") // Se cambia los espacios en blanco por -
   const urlName = name?.replace(/\s/g, "-") // Se cambia los espacios en blanco por -
-
-  console.log(url_image);
-  
-  if (/undefined/ig.test(url_image)) {
-    console.log("true");
-    
-  }
 
 ---
 

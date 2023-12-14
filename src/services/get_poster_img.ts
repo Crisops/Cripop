@@ -5,7 +5,7 @@ type ErrorFetch = {
   message: string
 }
 
-export const getPosterPath = async (token: string, id_movie: number, url: string) => {
+export const getPosterPath = async (token: string, id_movie: number, url: string | null) => {
 
   try {
 

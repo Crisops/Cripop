@@ -13,21 +13,30 @@
     genders: MovieWithGenders
     rate: number
     index: number
+    url?: string
   }
 
   const URL_IMG: string = 'https://image.tmdb.org/t/p/w500'
 
-  const {id, url_image, title, name, widht, height, genders, rate, index} = Astro.props
+  const {id, url_image, title, name, widht, height, genders, rate, index, url} = Astro.props
 
   const urlTitle = title?.replace(/\s/g, "-")
   const urlName = name?.replace(/\s/g, "-")
+
+  let endPoint
+
+  if (url) {
+    endPoint = `${url === "movie" ? `/movie`: 'tv/series'}/${id}/${urlTitle ?? urlName}`
+  }else{
+    endPoint = `${id}/${urlTitle ?? urlName}` 
+  }
 
 ---
 
 
 
-<article class="relative min-w-[300px] h-full group rounded-lg overflow-hidden" transition:name=`movie image ${id}`>
-  <a href=`${id}/${urlTitle ?? urlName}`>
+<article class="relative min-w-[300px] h-[500px] group rounded-lg overflow-hidden" transition:name=`movie image ${id}`>
+  <a href=`${endPoint}`>
     {
       (url_image)
       ?

@@ -1,0 +1,16 @@
+---
+  import Layout from "@/layouts/Layout.astro"
+  import Search from "@/components/astro/Search.astro"
+
+  const data = Astro.url.searchParams
+  const search = data.get("search")
+  const view = data.get("choose")
+  const query = search?.toLocaleLowerCase()
+      
+  const URL_SEARCH = `https://api.themoviedb.org/3/search/${view}?query=${query}&include_adult=true&language=es`
+
+---
+
+<Layout title={`(${search}) | Cripop`}>
+  <Search url={URL_SEARCH} choose={view} title={`Resultados de ${search}`}/>
+</Layout>
