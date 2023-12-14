@@ -22,7 +22,7 @@ const Header = () => {
   }
 
   return (
-    <div className='fixed top-0 left-0 w-full h-24 z-50'>
+    <div className='fixed top-0 left-0 w-full h-24 z-40'>
       <header className={`w-full h-full flex justify-between items-center px-5 md:px-10 ${header ? 'backdrop-blur-sm' : ''}`}>
         <a href='/'>
           <div className='relative'>

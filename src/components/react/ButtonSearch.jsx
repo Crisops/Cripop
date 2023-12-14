@@ -5,7 +5,7 @@ const ButtonSearch = () => {
   const { setBoxSearch } = useBoxSearch(state => state)
 
   const handleClick = () => {
-    setBoxSearch(state => !state)
+    setBoxSearch(true)
   }
 
   return (

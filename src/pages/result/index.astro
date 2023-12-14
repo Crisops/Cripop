@@ -1,6 +1,9 @@
 ---
   import Layout from "@/layouts/Layout.astro"
   import Search from "@/components/astro/Search.astro"
+  import SearchMovieAndSeries from '@/components/astro/SearchMovieAndSeries.astro';
+  import BoxMain from '@/components/react/BoxMain';
+  import BoxSearch from '@/components/react/BoxSearch';
 
   const data = Astro.url.searchParams
   const search = data.get("search")
@@ -11,6 +14,11 @@
 
 ---
 
-<Layout title={`(${search}) | Cripop`}>
-  <Search url={URL_SEARCH} choose={view} title={`Resultados de ${search}`}/>
+<Layout title={`(${search}) - Cripop`}>
+  <BoxMain client:idle>
+    <Search url={URL_SEARCH} choose={view} title={`Resultados de ${search}`}/>
+  </BoxMain>
+  <BoxSearch client:idle>
+    <SearchMovieAndSeries/>
+  </BoxSearch>  
 </Layout>

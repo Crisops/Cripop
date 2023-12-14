@@ -4,7 +4,7 @@ const BoxSearch = ({ children }) => {
   const { isBoxSearch } = useBoxSearch(state => state)
 
   return (
-    <div className={` ${isBoxSearch ? 'block' : 'hidden'}`}>
+    <div className={` fixed ${isBoxSearch ? 'block' : 'hidden'} h-screen`}>
       {children}
     </div>
   )

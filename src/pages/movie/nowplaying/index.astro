@@ -1,12 +1,20 @@
 ---
   import Layout from "@/layouts/Layout.astro"
   import ShowMoreMovies from "@/components/astro/ShowMoreMovies.astro"
+  import BoxMain from "@/components/react/BoxMain";
+  import BoxSearch from "@/components/react/BoxSearch";
+  import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro";
 
   const API_KEY = import.meta.env.SECRET_API_KEY
   const URL_NOW_PLAYING: string = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}language=es&page=3`
 
 ---
 
-<Layout title="Cripop | Películas en cartelera">
-  <ShowMoreMovies url={URL_NOW_PLAYING} title="¿Ya te viste alguna?"/>
+<Layout title="Cripop - Películas en cartelera">
+  <BoxMain client:idle>
+    <ShowMoreMovies url={URL_NOW_PLAYING} title="¿Ya te viste alguna?"/>
+  </BoxMain>
+  <BoxSearch client:idle>
+    <SearchMovieAndSeries/>
+  </BoxSearch>
 </Layout>

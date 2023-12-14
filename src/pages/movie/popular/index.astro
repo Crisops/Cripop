@@ -1,6 +1,9 @@
 ---
   import ShowMoreMovies from "@/components/astro/ShowMoreMovies.astro";
   import Layout from "@/layouts/Layout.astro"
+  import BoxMain from "@/components/react/BoxMain";
+  import BoxSearch from "@/components/react/BoxSearch";
+  import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro";
 
   const API_KEY = import.meta.env.SECRET_API_KEY
   const URL_MOVIES_POPULARITY = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}language=es&page=4`
@@ -8,6 +11,11 @@
 ---
 
 
-<Layout title="Cripop | Disfruta de las películas más populares del entretenimiento">
-  <ShowMoreMovies url={URL_MOVIES_POPULARITY} title="Películas populares"/>
+<Layout title="Cripop - Disfruta de las películas más populares del entretenimiento">
+  <BoxMain client:idle>
+    <ShowMoreMovies url={URL_MOVIES_POPULARITY} title="Películas populares"/>
+  </BoxMain>
+  <BoxSearch client:idle>
+    <SearchMovieAndSeries/>
+  </BoxSearch>
 </Layout>

@@ -1,14 +1,5 @@
 ---
-  import { getResultSearch } from '@/services/get_search'
-  import ShowMovie from './ShowMovie.astro'
-  import { getGendersMoviesList, getGendersSeriesList } from '@/services/get_genders'
-  import type { Genders, MovieWithGenders } from '@/types/Genders'
-  import { getGendersMovies, getGendersSeries } from '@/services/get_genders_list'
-  import { getPosterPath } from '@/services/get_poster_img'
-  import type { Movies } from '@/types/dataMovie'
-  import type { SearchSeries } from '@/types/dataSearchSeries'
-import Movie from './Movie.astro'
-
+  import ResultSearch from './ResultSearch.astro';
 
   interface Props {
     url: string
@@ -17,38 +8,6 @@ import Movie from './Movie.astro'
   }
 
   const{ url, title, choose } = Astro.props
-
-  const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS;
-
-  let resultSearchMovies: Movies | undefined;
-  let resultSearchSeries: SearchSeries | undefined;
-
-  let data: Movies | SearchSeries
-
-
-  // const result = await getResultSearch(ACCESS_TOKEN,) as Movies;
-
-  let listIdWithGender: MovieWithGenders
-
-
-  if (choose === "movie") {
-    resultSearchMovies = await getResultSearch(ACCESS_TOKEN, url, choose) as Movies
-    data = resultSearchMovies
-    const gendersList = await getGendersMoviesList(ACCESS_TOKEN) as Genders
-    const movie_gendersId = resultSearchMovies.results.map(search => search.genre_ids)
-    listIdWithGender = await getGendersMovies(movie_gendersId, gendersList) as MovieWithGenders;
-  }else{
-    resultSearchSeries = await getResultSearch(ACCESS_TOKEN, url, choose) as SearchSeries
-    data = resultSearchSeries
-    const gendersList = await getGendersSeriesList(ACCESS_TOKEN) as Genders
-    const movie_gendersId = resultSearchSeries.results.map(search => search.genre_ids)
-    listIdWithGender = await getGendersSeries(movie_gendersId, gendersList) as MovieWithGenders;
-  }
-  
-  const img = await Promise.all(data.results.map((search) => getPosterPath(ACCESS_TOKEN, search.id, choose)));
-
-  
-  
 
 ---
 
@@ -59,60 +18,9 @@ import Movie from './Movie.astro'
       <!-- <Filters/> -->
     </div>
   </div>
-  <div id="containerMovies" class="relative h-full mt-10">
-    <div class="relative grid place-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 px-10 pb-20">
-      {
-        choose === "movie"
-        ?
-        resultSearchMovies?.results.map((movie, index) =>(
-          <ShowMovie
-            id={movie.id}
-            url_image={img[index]?.file_path ?? ""}
-            title={movie.title}
-            widht={500}
-            height={700}
-            genders={listIdWithGender}
-            rate={movie.vote_average}
-            index={index}
-            url='movie'
-          />
-        ))
-        :
-        resultSearchSeries?.results.map((movie, index) =>(
-          <ShowMovie
-            id={movie.id}
-            url_image={img[index]?.file_path ?? ""}
-            name={movie.name}
-            widht={500}
-            height={700}
-            genders={listIdWithGender}
-            rate={movie.vote_average}
-            index={index}
-            url='tv'
-          />
-        ))
-      }
-    </div>
-  </div>
+  <ResultSearch choose={choose} url={url} />
 </main>
 
-
-<style>
-  
-  #containerMovies::-webkit-scrollbar{
-    width: 5px;
-  }
-
-  #containerMovies::-webkit-scrollbar-thumb{
-    background-color: #003B07;
-    border-radius: 10px;
-  }
-
-  #containerMovies::-webkit-scrollbar-track{
-    background-color: #000105;
-  }
-
-</style>
 
 
 
