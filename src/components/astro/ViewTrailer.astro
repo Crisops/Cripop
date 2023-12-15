@@ -1,0 +1,23 @@
+---
+
+  import VideoTrailer from '@/components/react/VideoTrailer'
+import ButtonCloseTrailer from '../react/ButtonCloseTrailer';
+  const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
+
+  interface Props {
+    idMovie: number | undefined
+  }
+
+  const {idMovie} = Astro.props
+
+  
+---
+
+<section class="relative flex justify-center items-center w-screen h-screen bg-[#000105]/90">
+  <div class="relative flex flex-col gap-3">
+    <div>
+     <ButtonCloseTrailer client:visible/>
+    </div>
+      <VideoTrailer client:idle id={idMovie} token={ACCESS_TOKEN} view="movie"/>
+  </div>
+</section>

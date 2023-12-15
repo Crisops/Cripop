@@ -24,12 +24,10 @@
 
   let hour
   let minutes
-  let seconds
 
   if (duration) {
     hour = Math.floor(duration / 60) 
     minutes =  Math.floor(duration % 60) 
-    seconds = Math.floor(duration / 60) 
   }
 
 
@@ -69,8 +67,7 @@
   <div class="flex gap-2">
     <IconTime/>
     <span class="text-white font-Noto_Sans font-light">
-      {hour}h {minutes?.toString().padStart(2,'0')}m {seconds?.toString().padStart(2, '0')}
-      segundos
+      {hour}h {minutes?.toString().padStart(2,'0')} minutos
     </span>
   </div>
   <div>

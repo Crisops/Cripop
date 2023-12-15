@@ -7,6 +7,8 @@
   import BoxMain from "@/components/react/BoxMain"
   import BoxSearch from "@/components/react/BoxSearch"
   import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro"
+  import BoxViewTrailer from "@/components/react/BoxViewTrailer"
+  import ViewTrailer from "@/components/astro/ViewTrailer.astro"
   
   const { movie } = Astro.params
   
@@ -89,6 +91,9 @@
         <div class="absolute inset-0 bg-gradient-to-r from-[#000105]"></div>
         <div class="absolute inset-0 bg-[#000105]/0"></div>
       </div>
+      <BoxViewTrailer client:idle>
+        <ViewTrailer idMovie={idMovie}/>
+      </BoxViewTrailer>
     </main>
   </BoxMain>
   <BoxSearch client:idle>

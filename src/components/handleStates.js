@@ -13,3 +13,8 @@ export const useBoxSearch = create(set => ({
   isBoxSearch: false,
   setBoxSearch: (isBoxSearch) => set({ isBoxSearch })
 }))
+
+export const useBoxViewTrailer = create(set => ({
+  isBoxViewTrailer: false,
+  setBoxViewTrailer: (isBoxViewTrailer) => set({ isBoxViewTrailer })
+}))
