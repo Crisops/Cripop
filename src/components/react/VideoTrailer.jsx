@@ -38,7 +38,7 @@ const VideoTrailer = ({ id, token, view }) => {
           setVideo(videoTrailers)
         } else {
           videoTrailers = await getVideoEn(urlEn, options)
-          const trailers = videoTrailers.results.find(trailer => /Official Trailer/i.test(trailer.name))
+          const trailers = videoTrailers.results.find(trailer => /Official.*Trailer/i.test(trailer.name))
           setVideo(trailers)
         }
       } catch (error) {
