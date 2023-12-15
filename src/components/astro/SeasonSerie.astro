@@ -40,7 +40,7 @@
   <BoxSeasonEpisodes seasonNumber={seasonNumber} client:idle>
     {
       seasons_detatils.episodes.map(episode =>(
-        <SeasonEpisode name={episode.name} overview={episode.overview} path_image={URL_IMG_POSTER + episode.still_path}/>
+        <SeasonEpisode slot="episodes" name={episode.name} overview={episode.overview} path_image={URL_IMG_POSTER + episode.still_path}/>
       ))
     }
   </BoxSeasonEpisodes>
