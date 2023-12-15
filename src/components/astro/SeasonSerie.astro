@@ -37,13 +37,11 @@
 
 <div class="relative flex-grow w-full h-auto transition duration-500 bg-[#000105] xl:bg-zinc-900/80"> <!-- faq-container first -->
   <BoxSeason seasonNumber={seasonNumber} idMovie={id} token={ACCESS_TOKEN} title={title} overview={overview} client:idle/>
-  <BoxSeasonEpisodes seasonNumber={seasonNumber} client:idle>
+  <BoxSeasonEpisodes seasonNumber={seasonNumber} client:visible>
     {
       seasons_detatils.episodes.map(episode =>(
-        <SeasonEpisode name={episode.name} overview={episode.overview} path_image={URL_IMG_POSTER + episode.still_path}/>
+        <SeasonEpisode name={episode.name} numberEpisode={episode.episode_number} overview={episode.overview} path_image={URL_IMG_POSTER + episode.still_path}/>
       ))
     }
   </BoxSeasonEpisodes>
 </div> 
-
-<!-- max-h-56 overflow-y-scroll -->

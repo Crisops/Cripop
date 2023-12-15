@@ -4,14 +4,18 @@
   interface Props {
     name: string,
     overview: string,
-    path_image: string
+    path_image: string,
+    numberEpisode: number
   }
 
-  const {name, overview, path_image} = Astro.props
+  const {name, overview, path_image, numberEpisode} = Astro.props
+
+  
 ---
 
 <article class="relative w-full h-auto hover:bg-[#000112] xl:hover:bg-black/40">
   <a href="#" class="relative flex items-center gap-4 hover:bg-black/20 overflow-hidden px-10 py-2">
+    <span class="text-xs text-gray-600 font-medium">{numberEpisode}</span>
     <Image
     class="rounded-md object-cover aspect-square w-10"
     src={path_image}
