@@ -40,7 +40,7 @@
   <BoxSeasonEpisodes seasonNumber={seasonNumber} client:visible>
     {
       seasons_detatils.episodes.map(episode =>(
-        <SeasonEpisode name={episode.name} numberEpisode={episode.episode_number} overview={episode.overview} path_image={URL_IMG_POSTER + episode.still_path}/>
+        <SeasonEpisode id={id} name={episode.name} numberEpisode={episode.episode_number} numberSeason={episode.season_number} overview={episode.overview} path_image={URL_IMG_POSTER + episode.still_path}/>
       ))
     }
   </BoxSeasonEpisodes>

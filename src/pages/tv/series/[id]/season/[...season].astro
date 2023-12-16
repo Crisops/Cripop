@@ -1,0 +1,81 @@
+---
+  import Layout from "@/layouts/Layout.astro"
+  import Episode from "@/components/astro/Episode.astro"
+  import type {DetailsSeriesSeason} from "@/types/dataSeriesSeasons"
+  import type {EpisodeData} from "@/types/dataEpisodeSeason"
+  import { getEpisodesOfSeasons } from "@/services/get_episodesOfSeasons_tv"
+  import { getDetailsEpisode } from "@/services/get_data_episodes_tv"
+  import type { DetailsSeries } from "@/types/dataDetailsSeries"
+  import {getPosterEpisode} from "@/services/get_images_episodesSeasons"
+  import { Image } from "astro:assets"
+  import { getPosterPath } from "@/services/get_poster_img"
+
+
+  const {season} = Astro.params
+
+  const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
+  const URL_IMG_STILL_PATH = `https://image.tmdb.org/t/p/w500`
+  const URL_IMG = `https://image.tmdb.org/t/p/w1280`
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${ACCESS_TOKEN}`
+    }
+  }
+
+
+  let idSerie: string | undefined = Astro.url.pathname.split("/")[3]
+  let seasonNumber: string | undefined = season?.split("/")[0]
+  let episodeNumber: string | undefined = season?.split("/")[2]
+  let nameEpisode: string | undefined = season?.split("/")[3]
+  
+  let seasonsInfo: DetailsSeriesSeason | undefined // Se utilizara para mostrar los demas episodios de esa temporada
+  let episodeData: EpisodeData | undefined // Información de los episodios
+
+  seasonsInfo = await getEpisodesOfSeasons(ACCESS_TOKEN,idSerie,seasonNumber)
+  episodeData = await getDetailsEpisode({token:ACCESS_TOKEN, idSerie, seasonNumber, episodeNumber }) 
+
+
+  const URL_SERIE_DETAILS = `https://api.themoviedb.org/3/tv/${idSerie}&language=es` // traer serie
+  const response = await fetch(URL_SERIE_DETAILS, options)
+  const serie = await response.json() as DetailsSeries
+  const backdrop_path = serie.backdrop_path // extraer la imagen de fondo
+
+  const imgSerie = await getPosterPath(ACCESS_TOKEN, parseInt(idSerie), "tv")
+  const imgUrlSerie = imgSerie?.file_path
+
+  const imgEpisode = await getPosterEpisode(ACCESS_TOKEN, idSerie, seasonNumber, episodeNumber)
+  const imgUrlEpisode = imgEpisode?.file_path // imagén del episodeo
+  
+
+  
+
+---
+
+<Layout title={`Cripop - ${nameEpisode}`}>
+  <main class="relative h-screen">
+    <Episode
+    id={idSerie}
+    name={episodeData?.name}
+    poster_img={URL_IMG_STILL_PATH + imgUrlSerie}
+    overview={episodeData?.overview}
+    rate={episodeData?.vote_average}
+    duration={episodeData?.runtime}
+    dateStart={episodeData?.air_date}
+    />
+    <div class="absolute w-full h-[500px] xl:h-full">
+      <Image
+      class={"absolute w-full h-full object-cover object-center"}
+      src={URL_IMG + (backdrop_path ?? "")}
+      alt={nameEpisode ?? ""}
+      width={1280}
+      height={720}
+      quality={60}
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-[#000105]"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-[#000105]"></div>
+      <div class="absolute inset-0 bg-[#000105]/30"></div>
+    </div>
+  </main>
+</Layout>@/services/get_episodesOfSeasons_tv
