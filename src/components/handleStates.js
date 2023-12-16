@@ -18,3 +18,8 @@ export const useBoxViewTrailer = create(set => ({
   isBoxViewTrailer: false,
   setBoxViewTrailer: (isBoxViewTrailer) => set({ isBoxViewTrailer })
 }))
+
+export const useBoxViewEpisodes = create(set => ({
+  isBoxViewEpisodes: false,
+  setBoxViewEpisodes: (isBoxViewEpisodes) => set({ isBoxViewEpisodes })
+}))

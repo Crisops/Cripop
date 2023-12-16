@@ -1,8 +1,10 @@
 ---
   import { Image } from "astro:assets";
-import ItemEpisodeInfo from "./ItemEpisodeInfo.astro";
+  import ItemEpisodeInfo from "./ItemEpisodeInfo.astro";
+  import BoxMoreEpisodesSeason from "@/components/react/BoxMoreEpisodesSeason"
+  import EpisodesOfSeason from '@/components/astro/EpisodesOfSeason.astro'
 
-interface Props {
+  interface Props {
     id: string | undefined
     name: string | undefined
     overview?: string
@@ -19,7 +21,7 @@ interface Props {
 ---
 
 
-<section class="absolute w-full xl:h-full z-10">
+<section class="absolute w-full xl:h-full z-10 xl:overflow-hidden">
   <div class="flex flex-col-reverse gap-5 xl:flex-row xl:gap-0 h-full">
     <div class="flex-grow flex flex-col justify-center mt-5 py-10 xl:mt-0 xl:py-0">
       <ItemEpisodeInfo
@@ -44,4 +46,7 @@ interface Props {
       </div>
     </div>
   </div>
+  <BoxMoreEpisodesSeason client:idle>
+    <EpisodesOfSeason/>
+  </BoxMoreEpisodesSeason>
 </section>
