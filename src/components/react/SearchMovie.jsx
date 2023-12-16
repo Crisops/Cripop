@@ -13,7 +13,7 @@ const SearchMovie = () => {
   return (
     <form className='relative flex-grow' action='/result' method='GET'>
       <div className='relative flex flex-col items-center gap-7'>
-        <div className='relative flex flex-col gap-8 sm:flex-row sm:gap-4 items-center'>
+        <div className='relative flex flex-col gap-8 sm:flex-row sm:gap-4 sm:items-center'>
           <div className='hidden sm:block'>
             <IconSearch />
           </div>
@@ -37,12 +37,12 @@ const SearchMovie = () => {
           </div>
           <button
             type='submit'
-            className={`border border-zinc-500 px-5 py-2 font-Noto_Sans text-white font-medium text-sm transition-colors duration-300 hover:bg-white hover:text-black ${(!form.search.trim() || error.search) && 'bg-red-600 cursor-not-allowed pointer-events-none hover:bg-red-800 hover:text-white border border-red-600'}`}
+            className={`border border-zinc-900 px-5 py-2 font-Noto_Sans text-white font-medium text-sm transition-colors duration-300 hover:bg-white hover:text-black ${(!form.search.trim() || error.search) && 'bg-red-800 cursor-not-allowed pointer-events-none hover:bg-red-800 hover:text-white border border-red-800'}`}
           >Buscar
           </button>
         </div>
         <div className='flex justify-center w-full items-center gap-4'>
-          <div className='flex items-center gap-2'>
+          <div className='flex flex-grow sm:flex-grow-0 sm:items-center gap-2'>
             <input
               className='hidden peer/movie'
               type='radio'
@@ -52,9 +52,9 @@ const SearchMovie = () => {
               onChange={handleChange}
               defaultChecked
             />
-            <label className='relative flex items-center gap-2 text-[#00ad76] text-sm font-Noto_Sans font-normal border border-[#00ad76] rounded-md px-3 py-2 before:content-[""] before:w-4 before:h-4 before:border-2 before:border-[#00ad76] before:rounded-full peer-checked/movie:bg-[#00ad76]/20 peer-checked/movie:before:border-white peer-checked/movie:before:w-3 peer-checked/movie:before:h-3 peer-checked/movie:text-white cursor-pointer' htmlFor='movie'>Películas</label>
+            <label className='relative flex flex-grow items-center justify-center sm:flex-grow-0 gap-2 text-white text-sm font-Noto_Sans font-normal border border-zinc-900 rounded-md px-3 py-2 before:content-[""] before:w-4 before:h-4 before:border-2 before:border-white before:rounded-full peer-checked/movie:bg-white peer-checked/movie:before:border-black peer-checked/movie:before:w-3 peer-checked/movie:before:h-3 peer-checked/movie:text-black cursor-pointer' htmlFor='movie'>Películas</label>
           </div>
-          <div className='flex items-center gap-2'>
+          <div className='flex flex-grow sm:flex-grow-0 sm:items-center gap-2'>
             <input
               className='hidden peer/tv'
               type='radio'
@@ -63,7 +63,7 @@ const SearchMovie = () => {
               onChange={handleChange}
               value='tv'
             />
-            <label className='relative flex items-center gap-2 text-[#00ad76] text-sm font-Noto_Sans font-normal border border-[#00ad76] rounded-md px-3 py-2 before:content-[""] before:w-4 before:h-4 before:border-2 before:border-[#00ad76] before:rounded-full peer-checked/tv:bg-[#00ad76]/20 peer-checked/tv:before:border-white peer-checked/tv:before:w-3 peer-checked/tv:before:h-3 peer-checked/tv:text-white cursor-pointer' htmlFor='series'>Series</label>
+            <label className='relative flex flex-grow items-center justify-center sm:flex-grow-0 gap-2 text-white text-sm font-Noto_Sans font-normal border border-zinc-900  rounded-md px-3 py-2 before:content-[""] before:w-4 before:h-4 before:border-2 before:border-white before:rounded-full peer-checked/tv:bg-white peer-checked/tv:before:border-black peer-checked/tv:before:w-3 peer-checked/tv:before:h-3 peer-checked/tv:text-black cursor-pointer' htmlFor='series'>Series</label>
           </div>
         </div>
       </div>
