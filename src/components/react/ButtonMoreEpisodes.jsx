@@ -1,7 +1,12 @@
 import { useBoxViewEpisodes } from '../handleStates'
+import { useEffect } from 'react'
 
 const ButtonMoreEpisodes = () => {
   const { isBoxViewEpisodes, setBoxViewEpisodes } = useBoxViewEpisodes(state => state)
+
+  useEffect(() => {
+    setBoxViewEpisodes(false)
+  }, [])
 
   const handleViewMoreEpisodes = () => {
     if (isBoxViewEpisodes) {

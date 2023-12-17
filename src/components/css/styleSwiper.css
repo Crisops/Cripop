@@ -18,10 +18,22 @@
   overflow: hidden;
 }
 
+.swiper-slide-active #episode{
+  transform: translateY(0);
+}
+
+.swiper-slide-active #episodeImg{
+  filter: grayscale(40);
+}
+
 .swiper-pagination-bullet-active {
   width: 15px;
   border-radius: 10px;
   transition: width 0.3s ease;
+}
+
+.swiper-button-disabled {
+  display: none;
 }
 
 
@@ -42,3 +54,9 @@
     max-width: 400px;
   }
 }
+
+/*Elimina la paginación*/
+.swiper-pagination { 
+  display: none;
+}
+

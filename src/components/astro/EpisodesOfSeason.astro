@@ -3,14 +3,15 @@
   import SwiperContainer from "../react/SwiperContainer";
 
   interface Props {
+    idSerie: string | undefined
     episodesSeason: DetailsSeriesSeason | undefined
     episodeNumber: (number | string) | undefined
   }
 
   const URL_IMG_STILL_PATH = `https://image.tmdb.org/t/p/w300`
-  const { episodesSeason, episodeNumber } = Astro.props
+  const { episodesSeason, episodeNumber, idSerie } = Astro.props
 
   
   
 ---
-  <SwiperContainer URL_IMG={URL_IMG_STILL_PATH} episodeNumber={episodeNumber} episodes={episodesSeason} client:idle/>
+  <SwiperContainer idSerie={idSerie} URL_IMG={URL_IMG_STILL_PATH} episodeNumber={episodeNumber} episodes={episodesSeason} client:idle/>
