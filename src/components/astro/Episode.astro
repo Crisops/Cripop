@@ -17,7 +17,7 @@
     episodeNumber: (number | string) | undefined
   }
 
-  const { id, name, overview, poster_img,rate, dateStart, episodesSeason, episodeNumber} = Astro.props
+  const { id, name, overview, poster_img,rate,duration, dateStart, episodesSeason, episodeNumber} = Astro.props
   
   
 
@@ -31,6 +31,7 @@
         id={id}
         name={name}
         overview={overview}
+        duration={duration}
         dateStart={dateStart}
         rate={rate}
       />
