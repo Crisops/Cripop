@@ -17,8 +17,6 @@ type EpisodesOfSeason = {
 }
 
 const SwiperContainer = ({URL_IMG, episodeNumber, episodes}: EpisodesOfSeason ) => {
-
-  console.log(episodeNumber);
   
   const episodesRest = episodes?.episodes.filter(episode => episode.episode_number != episodeNumber)
 
