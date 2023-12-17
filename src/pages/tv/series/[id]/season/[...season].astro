@@ -12,6 +12,8 @@
 import BoxMain from "@/components/react/BoxMain"
 import BoxSearch from "@/components/react/BoxSearch"
 import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro"
+import ViewTrailerEpisode from "@/components/astro/ViewTrailerEpisode.astro"
+import BoxViewTrailer from "@/components/react/BoxViewTrailer"
 
 
 
@@ -85,6 +87,9 @@ import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro"
         <div class="absolute inset-0 bg-gradient-to-r from-[#000105]"></div>
         <div class="absolute inset-0 bg-[#000105]/30"></div>
       </div>
+      <BoxViewTrailer client:idle>
+        <ViewTrailerEpisode idSerie={idSerie} numberSeason={seasonNumber} numberEpisode={episodeNumber}/>
+      </BoxViewTrailer>
     </main>
   </BoxMain>
   <BoxSearch client:idle>

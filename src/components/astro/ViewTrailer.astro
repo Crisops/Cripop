@@ -1,14 +1,14 @@
 ---
 
   import VideoTrailer from '@/components/react/VideoTrailer'
-import ButtonCloseTrailer from '../react/ButtonCloseTrailer';
-  const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
-
+  import ButtonCloseTrailer from '../react/ButtonCloseTrailer';
+  
   interface Props {
     idMovie: number | undefined
     view: string
   }
-
+  
+  const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
   const {idMovie, view} = Astro.props
 
   

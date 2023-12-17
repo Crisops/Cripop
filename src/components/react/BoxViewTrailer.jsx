@@ -1,10 +1,11 @@
-import { useBoxViewTrailer } from '../handleStates.js'
+import { useBoxViewTrailer, useBoxViewTrailerEpisodes } from '../handleStates.js'
 
 const BoxViewTrailer = ({ children }) => {
   const { isBoxViewTrailer } = useBoxViewTrailer(state => state)
+  const { isBoxViewTrailerEpisodes } = useBoxViewTrailerEpisodes(state => state)
 
   return (
-    <div className={` fixed ${isBoxViewTrailer ? 'block' : 'hidden'} h-screen z-50`}>
+    <div className={` fixed ${isBoxViewTrailer || isBoxViewTrailerEpisodes ? 'block' : 'hidden'} h-screen z-50`}>
       {children}
     </div>
   )

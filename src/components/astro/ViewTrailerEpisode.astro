@@ -1,0 +1,26 @@
+---
+
+  import ButtonCloseTrailerEpisode from '../react/ButtonCloseTrailerEpisode';
+  import VideoTrailerEpisodes from '../react/VideoTrailerEpisodes';
+
+  interface Props {
+    idSerie: string | undefined
+    numberSeason: string | undefined
+    numberEpisode: string | undefined
+  }
+
+  const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
+
+  const {idSerie, numberSeason, numberEpisode} = Astro.props
+
+  
+---
+
+<section class="relative flex justify-center items-center w-screen h-screen bg-[#000105]/90">
+  <div class="relative flex flex-col gap-3">
+    <div>
+     <ButtonCloseTrailerEpisode client:visible/>
+    </div>
+      <VideoTrailerEpisodes client:idle id={idSerie} token={ACCESS_TOKEN} numberSeason={numberSeason} numberEpisode={numberEpisode}/>
+  </div>
+</section>

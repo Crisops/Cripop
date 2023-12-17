@@ -1,7 +1,7 @@
 ---
   import IconTime from "@/icons/IconTime.astro"
-  import ButtonViewTrailer from "@/components/react/ButtonViewTrailer"
   import ButtonMoreEpisodes from "../react/ButtonMoreEpisodes"
+  import ButtonViewTrailerEpisode from "../react/ButtonViewTrailerEpisode"
 
   interface Props {
     id: string | undefined
@@ -40,7 +40,7 @@
     </div>
     <div class="flex w-80 gap-4 [&>div>span]:text-sm z-30">
       <div>
-        <ButtonViewTrailer client:visible/>
+        <ButtonViewTrailerEpisode client:visible/>
       </div>
       <div class="hidden xl:block">
         <ButtonMoreEpisodes client:visible/>
