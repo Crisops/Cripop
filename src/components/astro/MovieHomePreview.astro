@@ -8,7 +8,7 @@
   const API_KEY = import.meta.env.SECRET_API_KEY
   const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
 
-  const URL_TOP_RATED:string  = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}language=en-US&page=1`
+  const URL_TOP_RATED:string  = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}language=en-US&page=1`
 
   const URL_IMG: string = 'https://image.tmdb.org/t/p/original/'
 
@@ -24,6 +24,7 @@
 
   const top_movies = await response.json() as Movies
 
+  
   const top_movie = top_movies.results[0]
 
   const {id} = top_movie
