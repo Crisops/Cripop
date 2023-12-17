@@ -28,13 +28,14 @@
 
   let idSerie: string | undefined = Astro.url.pathname.split("/")[3]
   let seasonNumber: string | undefined = season?.split("/")[0]
-  let episodeNumber: string | undefined = season?.split("/")[2]
+  let episodeNumber: (number | string) | undefined = season?.split("/")[2]
   let nameEpisode: string | undefined = season?.split("/")[3]
   
-  let seasonsInfo: DetailsSeriesSeason | undefined // Se utilizara para mostrar los demas episodios de esa temporada
+  let episodesSeason: DetailsSeriesSeason | undefined // Se utilizara para mostrar los demas episodios de esa temporada
   let episodeData: EpisodeData | undefined // Información de los episodios
 
-  seasonsInfo = await getEpisodesOfSeasons(ACCESS_TOKEN,idSerie,seasonNumber)
+  episodesSeason = await getEpisodesOfSeasons(ACCESS_TOKEN,idSerie,seasonNumber)
+  
   episodeData = await getDetailsEpisode({token:ACCESS_TOKEN, idSerie, seasonNumber, episodeNumber }) 
 
 
@@ -64,6 +65,8 @@
     rate={episodeData?.vote_average}
     duration={episodeData?.runtime}
     dateStart={episodeData?.air_date}
+    episodesSeason={episodesSeason}
+    episodeNumber={episodeNumber}
     />
     <div class="absolute w-full h-[500px] xl:h-full">
       <Image

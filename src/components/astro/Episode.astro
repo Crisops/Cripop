@@ -3,6 +3,7 @@
   import ItemEpisodeInfo from "./ItemEpisodeInfo.astro";
   import BoxMoreEpisodesSeason from "@/components/react/BoxMoreEpisodesSeason"
   import EpisodesOfSeason from '@/components/astro/EpisodesOfSeason.astro'
+  import type { DetailsSeriesSeason } from "@/types/dataSeriesSeasons";
 
   interface Props {
     id: string | undefined
@@ -12,9 +13,11 @@
     rate?: number,
     duration?: number
     dateStart: Date | undefined
+    episodesSeason: DetailsSeriesSeason | undefined
+    episodeNumber: (number | string) | undefined
   }
 
-  const { id, name, overview, poster_img,rate, dateStart} = Astro.props
+  const { id, name, overview, poster_img,rate, dateStart, episodesSeason, episodeNumber} = Astro.props
   
   
 
@@ -47,6 +50,6 @@
     </div>
   </div>
   <BoxMoreEpisodesSeason client:idle>
-    <EpisodesOfSeason/>
+    <EpisodesOfSeason episodeNumber={episodeNumber} episodesSeason={episodesSeason}/>
   </BoxMoreEpisodesSeason>
 </section>

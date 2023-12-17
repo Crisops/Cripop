@@ -1,8 +1,16 @@
 ---
-import SwiperSlider from "../react/SwiperSlider";
+  import type { DetailsSeriesSeason } from "@/types/dataSeriesSeasons";
+  import SwiperContainer from "../react/SwiperContainer";
 
+  interface Props {
+    episodesSeason: DetailsSeriesSeason | undefined
+    episodeNumber: (number | string) | undefined
+  }
+
+  const URL_IMG_STILL_PATH = `https://image.tmdb.org/t/p/w300`
+  const { episodesSeason, episodeNumber } = Astro.props
+
+  
+  
 ---
-
-<div>
-  <SwiperSlider client:idle/>
-</div>
+  <SwiperContainer URL_IMG={URL_IMG_STILL_PATH} episodeNumber={episodeNumber} episodes={episodesSeason} client:idle/>
