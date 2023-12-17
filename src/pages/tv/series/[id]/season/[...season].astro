@@ -9,6 +9,9 @@
   import {getPosterEpisode} from "@/services/get_images_episodesSeasons"
   import { Image } from "astro:assets"
   import { getPosterPath } from "@/services/get_poster_img"
+import BoxMain from "@/components/react/BoxMain"
+import BoxSearch from "@/components/react/BoxSearch"
+import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro"
 
 
 
@@ -56,30 +59,35 @@
 ---
 
 <Layout title={`Cripop - ${nameEpisode}`}>
-  <main class="relative h-screen">
-    <Episode
-    id={idSerie}
-    name={episodeData?.name}
-    poster_img={URL_IMG_STILL_PATH + imgUrlSerie}
-    overview={episodeData?.overview}
-    rate={episodeData?.vote_average}
-    duration={episodeData?.runtime}
-    dateStart={episodeData?.air_date}
-    episodesSeason={episodesSeason}
-    episodeNumber={episodeNumber}
-    />
-    <div class="absolute w-full h-[500px] xl:h-full">
-      <Image
-      class={"absolute w-full h-full object-cover object-center"}
-      src={URL_IMG + (backdrop_path ?? "")}
-      alt={nameEpisode ?? ""}
-      width={1280}
-      height={720}
-      quality={60}
+  <BoxMain client:idle>
+    <main class="relative h-screen">
+      <Episode
+      id={idSerie}
+      name={episodeData?.name}
+      poster_img={URL_IMG_STILL_PATH + imgUrlSerie}
+      overview={episodeData?.overview}
+      rate={episodeData?.vote_average}
+      duration={episodeData?.runtime}
+      dateStart={episodeData?.air_date}
+      episodesSeason={episodesSeason}
+      episodeNumber={episodeNumber}
       />
-      <div class="absolute inset-0 bg-gradient-to-t from-[#000105]"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-[#000105]"></div>
-      <div class="absolute inset-0 bg-[#000105]/30"></div>
-    </div>
-  </main>
+      <div class="absolute w-full h-[500px] xl:h-full">
+        <Image
+        class={"absolute w-full h-full object-cover object-center"}
+        src={URL_IMG + (backdrop_path ?? "")}
+        alt={nameEpisode ?? ""}
+        width={1280}
+        height={720}
+        quality={60}
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-[#000105]"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-[#000105]"></div>
+        <div class="absolute inset-0 bg-[#000105]/30"></div>
+      </div>
+    </main>
+  </BoxMain>
+  <BoxSearch client:idle>
+    <SearchMovieAndSeries/>
+  </BoxSearch>
 </Layout>
