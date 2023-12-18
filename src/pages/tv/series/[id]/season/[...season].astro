@@ -9,11 +9,11 @@
   import {getPosterEpisode} from "@/services/get_images_episodesSeasons"
   import { Image } from "astro:assets"
   import { getPosterPath } from "@/services/get_poster_img"
-import BoxMain from "@/components/react/BoxMain"
-import BoxSearch from "@/components/react/BoxSearch"
-import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro"
-import ViewTrailerEpisode from "@/components/astro/ViewTrailerEpisode.astro"
-import BoxViewTrailer from "@/components/react/BoxViewTrailer"
+  import BoxMain from "@/components/react/BoxMain"
+  import BoxSearch from "@/components/react/BoxSearch"
+  import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro"
+  import ViewTrailerEpisode from "@/components/astro/ViewTrailerEpisode.astro"
+  import BoxViewTrailer from "@/components/react/BoxViewTrailer"
 
 
 
@@ -73,6 +73,7 @@ import BoxViewTrailer from "@/components/react/BoxViewTrailer"
       dateStart={episodeData?.air_date}
       episodesSeason={episodesSeason}
       episodeNumber={episodeNumber}
+      seasonNumber={seasonNumber}
       />
       <div class="absolute w-full h-[500px] xl:h-full">
         <Image

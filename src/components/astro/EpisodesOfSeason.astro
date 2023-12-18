@@ -6,12 +6,20 @@
     idSerie: string | undefined
     episodesSeason: DetailsSeriesSeason | undefined
     episodeNumber: (number | string) | undefined
+    seasonNumber: string | undefined
   }
 
   const URL_IMG_STILL_PATH = `https://image.tmdb.org/t/p/w300`
-  const { episodesSeason, episodeNumber, idSerie } = Astro.props
+  const { episodesSeason, episodeNumber, idSerie, seasonNumber } = Astro.props
 
   
   
 ---
-  <SwiperContainer idSerie={idSerie} URL_IMG={URL_IMG_STILL_PATH} episodeNumber={episodeNumber} episodes={episodesSeason} client:idle/>
+  <SwiperContainer
+  client:idle
+  idSerie={idSerie}
+  URL_IMG={URL_IMG_STILL_PATH}
+  episodeNumber={episodeNumber}
+  seasonNumber={seasonNumber}
+  episodes={episodesSeason}
+  />

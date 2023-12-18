@@ -14,59 +14,65 @@ type EpisodesOfSeason = {
   idSerie: string | undefined,
   URL_IMG: string,
   episodeNumber: (string | number) | undefined,
-  episodes: DetailsSeriesSeason | undefined
+  episodes: DetailsSeriesSeason | undefined,
+  seasonNumber: string | undefined
 }
 
-const SwiperContainer = ({idSerie, URL_IMG, episodeNumber, episodes}: EpisodesOfSeason ) => {
+const SwiperContainer = ({idSerie, URL_IMG, episodeNumber, episodes, seasonNumber}: EpisodesOfSeason ) => {
   
   const episodesRest = episodes?.episodes.filter(episode => episode.episode_number != episodeNumber)
 
   return (
-    <Swiper
-      modules={[EffectCoverflow, Navigation, Pagination]}
-      navigation={{
-        prevEl: '#buttonPrev',
-        nextEl: '#buttonNext'
-      }}
-      pagination={{ clickable: true }}
-      speed={1000}
-      slidesPerView='auto'
-      centeredSlides
-      effect='coverflow'
-      coverflowEffect={{
-        rotate: 50,
-        stretch: 0,
-        depth: 100,
-        modifier: 1,
-        slideShadows: true
-      }}
-    >
-      {
-      episodes &&
-      episodesRest?.map((episode, index) => {
-        
-        const urlName = episode.name?.replace(/\s/g, "-").replace(/[.()]/g,"")
+    <div className='flex flex-col h-44 gap-1'>
+      <div className='flex justify-end pr-5 xl:pr-0 xl:justify-center'>
+        <p className='text-white/25 font-Noto_Sans font-extralight text-xs'>Otros episodios de la <span className='text-sky-600 font-semibold font-Noto_Sans uppercase'>temporada {seasonNumber}</span></p>
+      </div>
+      <Swiper
+        modules={[EffectCoverflow, Navigation, Pagination]}
+        navigation={{
+          prevEl: '#buttonPrev',
+          nextEl: '#buttonNext'
+        }}
+        pagination={{ clickable: true }}
+        speed={1000}
+        slidesPerView='auto'
+        centeredSlides
+        effect='coverflow'
+        coverflowEffect={{
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true
+        }}
+      >
+        {
+        episodes &&
+        episodesRest?.map((episode, index) => {
+          
+          const urlName = episode.name?.replace(/\s/g, "-").replace(/[.()]/g,"")
 
-        return (
-          <SwiperSlide key={index} className='swiper-slide'>
-          <a href={`/tv/series/${idSerie}/season/${episode.season_number}/episode/${episode.episode_number}/${urlName}`}>
-            <img id='episodeImg' className='w-full h-full object-cover transition-colors duration-200' src={URL_IMG + episode.still_path} alt='asas' loading='lazy' />
-            <div id="episode" className='absolute p-2 flex flex-col justify-center gap-3 inset-0 bg-gradient-to-t from-black translate-y-full transition-transform duration-200 ease-in'>
-              <span className='text-base uppercase text-white font-Noto_Sans font-bold line-clamp-2'>{episode.name}</span>
-              <span className='text-xs text-zinc-400 font-Noto_Sans line-clamp-2'>{episode.overview}</span>
-            </div>
-          </a>
-        </SwiperSlide>
-        )
-      })
-      }
-      <div id='buttonPrev' className='absolute flex justify-center items-center top-1/2 left-2 w-12 p-1 sm:p-2 rounded-lg bg-none -translate-y-1/2 cursor-pointer z-10 hover:bg-white/10'>
-        <IconArrowLeft />
-      </div>
-      <div id='buttonNext' className='absolute flex justify-center items-center top-1/2 right-2 w-12 p-1 sm:p-2 rounded-lg  -translate-y-1/2 cursor-pointer z-10 bg-none hover:bg-white/10'>
-        <IconArrowRight />
-      </div>
-    </Swiper>
+          return (
+            <SwiperSlide key={index} className='swiper-slide'>
+            <a href={`/tv/series/${idSerie}/season/${episode.season_number}/episode/${episode.episode_number}/${urlName}`}>
+              <img id='episodeImg' className='w-full h-full object-cover transition-colors duration-200' src={URL_IMG + episode.still_path} alt='asas' loading='lazy' />
+              <div id="episode" className='absolute p-2 flex flex-col justify-center gap-3 inset-0 bg-gradient-to-t from-black translate-y-full transition-transform duration-200 ease-in'>
+                <span className='text-base uppercase text-white font-Noto_Sans font-bold line-clamp-2'>{episode.name}</span>
+                <span className='text-xs text-zinc-400 font-Noto_Sans line-clamp-2'>{episode.overview}</span>
+              </div>
+            </a>
+          </SwiperSlide>
+          )
+        })
+        }
+        <div id='buttonPrev' className='absolute flex justify-center items-center top-1/2 left-2 w-12 p-1 sm:p-2 rounded-lg bg-none -translate-y-1/2 cursor-pointer z-10 hover:bg-white/10'>
+          <IconArrowLeft />
+        </div>
+        <div id='buttonNext' className='absolute flex justify-center items-center top-1/2 right-2 w-12 p-1 sm:p-2 rounded-lg  -translate-y-1/2 cursor-pointer z-10 bg-none hover:bg-white/10'>
+          <IconArrowRight />
+        </div>
+      </Swiper>
+    </div>
 
   )
 }

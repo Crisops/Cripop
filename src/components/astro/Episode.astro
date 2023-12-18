@@ -15,9 +15,10 @@
     dateStart: Date | undefined
     episodesSeason: DetailsSeriesSeason | undefined
     episodeNumber: (number | string) | undefined
+    seasonNumber: string | undefined
   }
 
-  const { id, name, overview, poster_img,rate,duration, dateStart, episodesSeason, episodeNumber} = Astro.props
+  const { id, name, overview, poster_img,rate,duration, dateStart, episodesSeason, episodeNumber, seasonNumber} = Astro.props
   
   
 
@@ -51,6 +52,6 @@
     </div>
   </div>
   <BoxMoreEpisodesSeason client:idle>
-    <EpisodesOfSeason idSerie={id} episodeNumber={episodeNumber} episodesSeason={episodesSeason}/>
+    <EpisodesOfSeason idSerie={id} episodeNumber={episodeNumber} seasonNumber={seasonNumber} episodesSeason={episodesSeason}/>
   </BoxMoreEpisodesSeason>
 </section>
