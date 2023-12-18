@@ -26,7 +26,7 @@ const SwiperContainer = ({idSerie, URL_IMG, episodeNumber, episodes, seasonNumbe
   return (
     <div className='flex flex-col h-44 gap-1'>
       <div className='flex justify-end pr-5 xl:pr-0 xl:justify-center'>
-        <p className='text-white/25 font-Noto_Sans font-extralight text-xs'>Otros episodios de la <span className='text-sky-600 font-semibold font-Noto_Sans uppercase'>temporada {seasonNumber}</span></p>
+        <p className='text-white/25 font-Noto_Sans font-extralight text-xs'>Otros episodios de la <span className='text-sky-950 font-semibold font-Noto_Sans uppercase'>temporada {seasonNumber}</span></p>
       </div>
       <Swiper
         modules={[EffectCoverflow, Navigation, Pagination]}
