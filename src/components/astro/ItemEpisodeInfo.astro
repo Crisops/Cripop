@@ -2,17 +2,18 @@
   import IconTime from "@/icons/IconTime.astro"
   import ButtonMoreEpisodes from "../react/ButtonMoreEpisodes"
   import ButtonViewTrailerEpisode from "../react/ButtonViewTrailerEpisode"
+  import IconArrowLeft from "@/icons/IconArrowLeft.astro"
 
   interface Props {
-    id: string | undefined
+    idSerie: string | undefined
     name: string | undefined
     overview?: string
     dateStart?: Date | undefined
     rate?: number
     duration: number | undefined
   }
-
-  const {id, name, overview, dateStart, rate, duration} = Astro.props
+  
+  const {idSerie, name, overview, dateStart, rate, duration} = Astro.props
 
     let hour
     let minutes
@@ -26,10 +27,11 @@
 
 <div class="relative flex flex-col-reverse gap-10 xl:flex-row xl:gap-0">
   <div class="relative flex flex-grow flex-col gap-5 px-5 md:px-10 xl:max-2xl:pr-0">
+    <a href=`/tv/series/${idSerie}`><IconArrowLeft/></a>
     <h1 class=`font-Ubuntu ${name !== undefined && name.length >= 20 ? 'text-[3rem] leading-[45px] md:text-7xl xl:text-6xl' : 'text-5xl sm:max-xl:text-7xl xl:text-7xl min-[1700px]:text-8xl'} font-semibold text-white max-w-2xl m-0 uppercase`>{name}</h1>
     <div class="flex flex-col gap-1 py-1 [&>span]:text-sm [&>span]:2xl:text-base">
       <span class="text-white font-Noto_Sans font-light">Fecha de estreno: {dateStart}</span>
-      <span class="text-white font-Noto_Sans font-light">Rate: {rate?.toFixed(1).toString()}</span>
+      <span class="text-white font-Noto_Sans font-light">Rate: {rate !== 10 ? rate?.toFixed(1).toString() : rate}</span>
     </div>
     <div class="max-w-lg xl:max-2xl:max-w-xl">
       <p class="text-white font-Noto_Sans font-light text-sm 2xl:text-base">{overview || "Lo siento. No se encontro algún resumen"}</p>
