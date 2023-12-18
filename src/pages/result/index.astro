@@ -16,7 +16,7 @@
 
 <Layout title={`(${search}) - Cripop`}>
   <BoxMain client:idle>
-    <Search url={URL_SEARCH} choose={view} title={`Resultados de ${search}`}/>
+    <Search url={URL_SEARCH} choose={view} title={search}/>
   </BoxMain>
   <BoxSearch client:idle>
     <SearchMovieAndSeries/>

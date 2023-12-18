@@ -7,6 +7,7 @@
   import type { Movies } from '@/types/dataMovie'
   import type { SearchSeries } from '@/types/dataSearchSeries'
   import ShowMovie from './ShowMovie.astro'
+import NotFoundMovieOrSerie from './NotFoundMovieOrSerie.astro'
 
 
   interface Props {
@@ -40,14 +41,30 @@
   const movie_gendersId = resultSearchSeries.results.map(search => search.genre_ids)
   listIdWithGender = await getGendersSeries(movie_gendersId, gendersList) as MovieWithGenders;
   }
-
+  
   const img = await Promise.all(data.results.map((search) => getPosterPath(ACCESS_TOKEN, search.id, choose)));
+
+  let resultsSearch
+
+  if (choose === "movie") {
+    resultsSearch = resultSearchMovies?.total_results
+  }else{
+    resultsSearch = resultSearchSeries?.total_results
+  }  
 
 ---
 
 <div id="containerMovies" class="relative h-full mt-10">
-  <div class="relative grid place-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 px-10 pb-20">
+  <div class:list={[
+    "px-5 md:px-10 pb-20",
     {
+      "grid place-items-center grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5": resultsSearch,
+      "block": !resultsSearch
+    }
+
+  ]}>
+    {
+      resultsSearch ?
       choose === "movie"
       ?
       resultSearchMovies?.results.map((movie, index) =>(
@@ -77,6 +94,8 @@
           url='tv'
         />
       ))
+      :
+      <NotFoundMovieOrSerie/>
     }
   </div>
 </div>
