@@ -49,13 +49,8 @@
   }
 }
 
-@media ((min-width:400px) and (max-width: 680px)){
-  .swiper {
-    max-width: 400px;
-  }
-}
 
-@media (max-width: 399px){
+@media ((min-width:350px) and (max-width: 680px)){
   .swiper {
     max-width: 100vw;
   }

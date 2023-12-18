@@ -59,7 +59,7 @@ import BoxViewTrailer from "@/components/react/BoxViewTrailer"
 
 ---
 
-<Layout title={`Cripop - ${nameSerie}`}>
+<Layout title={`Cripop - ${nameSerie || data?.name}`}>
   <BoxMain client:idle>
     <main class="relative h-screen">
       <ItemSerieSelect

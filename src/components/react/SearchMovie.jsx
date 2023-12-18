@@ -13,11 +13,11 @@ const SearchMovie = () => {
   return (
     <form className='relative flex-grow' action='/result' method='GET'>
       <div className='relative flex flex-col items-center gap-7'>
-        <div className='relative flex flex-col gap-8 sm:flex-row sm:gap-4 sm:items-center'>
+        <div className='relative w-full flex flex-col gap-8 sm:flex-row sm:gap-4 sm:items-center sm:justify-center'>
           <div className='hidden sm:block'>
             <IconSearch />
           </div>
-          <div className='relative flex items-center w-80 sm:w-96 h-5 py-5 border-b border-zinc-600'>
+          <div className='relative flex items-center w-full sm:w-96 h-5 py-5 border-b border-zinc-600'>
             <input
               className='absolute w-full h-full outline-none text-white font-Noto_Sans text-sm bg-transparent px-1 placeholder:text-zinc-300 placeholder:font-Libre_Franklin placeholder:text-sm'
               id='search'
@@ -37,7 +37,7 @@ const SearchMovie = () => {
           </div>
           <button
             type='submit'
-            className={`border border-zinc-900 px-5 py-2 font-Noto_Sans text-white font-medium text-sm transition-colors duration-300 hover:bg-white hover:text-black ${(!form.search.trim() || error.search) && 'bg-red-800 cursor-not-allowed pointer-events-none hover:bg-red-800 hover:text-white border border-red-800'}`}
+            className={`border border-zinc-900 px-5 py-3 sm:py-2 font-Noto_Sans text-white font-medium text-sm transition-colors duration-300 hover:bg-white hover:text-black ${(!form.search.trim() || error.search) && 'bg-red-800 cursor-not-allowed pointer-events-none hover:bg-red-800 hover:text-white border border-red-800'}`}
           >Buscar
           </button>
         </div>

@@ -26,18 +26,18 @@ const ButtonViewSeasons = ({ numberSeasons, numberEpisodes }: Seasons) => {
   }
 
   return (
-    <button onClick={handleViewSeasons} className='flex items-center gap-2 px-3 xl:px-5 py-2 bg-zinc-950 cursor-pointer text-white transition-colors duration-300 ease-in-out hover:bg-zinc-200
-    hover:text-zinc-950 [&>span]:hover:text-zinc-950 [&>span]:text-xs [&>span]:xl:text-sm'
+    <button onClick={handleViewSeasons} className='flex items-center justify-center gap-2 px-3 xl:px-5 py-3 sm:py-2 bg-zinc-950 cursor-pointer text-white transition-colors duration-300 ease-in-out hover:bg-zinc-200
+    hover:text-zinc-950 [&>span]:hover:text-zinc-950'
     >
       {
         !isView 
         ? 
         <>
-        <span className='text-white font-Noto_Sans font-medium'>Temporadas</span>
+        <span className='text-white font-Noto_Sans font-medium text-sm'>Temporadas</span>
         <IconEye />
         </>
         :
-        <span className='text-white font-Noto_Sans font-medium'>Cerrar</span>
+        <span className='text-white font-Noto_Sans font-medium text-sm'>Cerrar</span>
       }
       
     </button>

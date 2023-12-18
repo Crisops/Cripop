@@ -68,11 +68,9 @@
     <div class="max-w-lg xl:max-2xl:max-w-xl">
       <p class="text-white font-Noto_Sans font-light line-clamp-5 text-sm 2xl:text-base">{overview || "Lo siento. No se encontro algún resumen"}</p>
     </div>
-    <div class="flex gap-4 [&>div>span]:text-sm ">
-      <div>
+    <div class="flex flex-col sm:flex-row gap-4 [&>div>span]:text-sm ">
         <ButtonViewTrailer client:visible/>
-      </div>
-      <ButtonViewSeasons numberSeasons={numberSeasons} numberEpisodes={episodes} client:visible />
+        <ButtonViewSeasons numberSeasons={numberSeasons} numberEpisodes={episodes} client:visible />
     </div>
   </div>
 </div>
