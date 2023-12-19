@@ -30,6 +30,6 @@
     "text-yellow-500": rate >=5 && rate < 8,
     "text-green-600": rate >= 8
     }
-  ]}>{rate.toFixed(1)}
+  ]}>{rate !== 10 ? rate?.toFixed(1).toString() : rate}
   </span>
 </div>

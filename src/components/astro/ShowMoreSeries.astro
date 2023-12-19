@@ -1,0 +1,72 @@
+---
+  import type { TvSeriesTop } from "@/types/dataTvSeriesTop"
+  import { getGendersSeriesList } from "@/services/get_genders"
+  import { getGendersSeries} from "@/services/get_genders_list"
+  import type {Genders, MovieWithGenders } from "@/types/Genders"
+  import Movie from "./Movie.astro"
+  import { getPosterPath } from "@/services/get_poster_img"
+  import Filters from "../react/Filters"
+  import Footer from "./Footer.astro"
+import ShowMovie from "./ShowMovie.astro"
+
+  interface Props {
+    url: string,
+    title: string
+  }
+
+  const { url, title } = Astro.props
+
+  const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
+
+  const URL_IMG: string = 'https://image.tmdb.org/t/p/w500'
+
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${ACCESS_TOKEN}`
+    }
+  }
+
+  const response = await fetch(url, options)
+
+  const series_tv = await response.json() as TvSeriesTop 
+
+  const serieTv_gendersId = series_tv.results.map(serie => serie.genre_ids)
+
+  const gendersList = await getGendersSeriesList(ACCESS_TOKEN) as Genders
+ 
+  const listIdWithGender = await getGendersSeries(serieTv_gendersId, gendersList) as MovieWithGenders
+
+  const img = await Promise.all(series_tv.results.map((serie) => getPosterPath(ACCESS_TOKEN, serie.id, "tv")));
+  
+---
+
+<div class="flex flex-col gap-4 pt-40">
+  <div class="relative px-5 md:px-10 flex items-center flex-col xl:flex-row justify-between">
+    <h1 class="text-white/50 flex-grow w-[500px] font-Noto_Sans text-3xl self-start font-light">{title}</h1>
+    <div class="flex flex-grow w-full flex-wrap items-center pt-10 gap-10 justify-start lg:max-xl:justify-center xl:justify-start xl:pt-0">
+      <Filters/>
+    </div>
+  </div>
+  <div id="containerMovies" class="relative h-full mt-10">
+    <div class="relative grid place-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 px-5 md:px-10 pb-20 overflow-hidden">
+      {
+        series_tv.results.map((serie, index) =>(
+          <ShowMovie
+            id={serie.id}
+            url_image={URL_IMG + img[index]?.file_path}
+            title={serie.name}
+            widht={500}
+            height={700}
+            genders={listIdWithGender}
+            rate={serie.vote_average}
+            index={index}
+            url="tv"
+          />
+        ))
+      }
+    </div>
+  </div>
+  <Footer/>
+</div>

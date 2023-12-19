@@ -1,18 +1,17 @@
 ---
   import Layout from "@/layouts/Layout.astro"
-  import ShowMoreMovies from "@/components/astro/ShowMoreMovies.astro";
+  import ShowMoreSeries from "@/components/astro/ShowMoreSeries.astro";
   import BoxMain from "@/components/react/BoxMain";
   import BoxSearch from "@/components/react/BoxSearch";
   import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro";
 
   const API_KEY = import.meta.env.SECRET_API_KEY
-  const URL_MOVIES_TOP = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}language=es&page=1`
-  
+  const URL_SERIES_TOP = `https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}language=es&page=1`
 ---
 
-<Layout title="Cripop - Top de películas mejores calificadas">
+<Layout title="Cripop - Las mejores series calificadas por el público">
   <BoxMain client:idle>
-    <ShowMoreMovies url={URL_MOVIES_TOP} title="Disfruta las películas mas vistas"/>
+    <ShowMoreSeries url={URL_SERIES_TOP} title="¿Que esperas?"/>
   </BoxMain>
   <BoxSearch client:idle>
     <SearchMovieAndSeries/>

@@ -5,7 +5,10 @@
   import type { Genre, Videos, SpokenLanguage, Season} from "@/types/dataDetailsSeries"
   import ButtonViewTrailer from "@/components/react/ButtonViewTrailer"
   import ButtonViewSeasons from "@/components/react/ButtonViewSeasons"
-import IconArrowLeft from "@/icons/IconArrowLeft.astro"
+  import IconArrowLeft from "@/icons/IconArrowLeft.astro"
+
+  
+
   interface Props {
     id: number | undefined
     name: string | undefined
@@ -39,7 +42,6 @@ import IconArrowLeft from "@/icons/IconArrowLeft.astro"
 <div class="relative flex flex-col-reverse gap-10 xl:flex-row xl:gap-0">
   <SeasonSeries idSerie={idSerie} seasons={season}/>
   <div class="relative flex flex-grow flex-col gap-5 px-5 md:px-10 xl:max-2xl:pr-0">
-    <a href=`/` class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8"><IconArrowLeft/></a>
     <h1 class=`font-Ubuntu ${name !== undefined && name.length >= 20 ? 'text-[3rem] leading-[45px] md:text-7xl xl:text-6xl' : 'text-5xl sm:max-xl:text-7xl xl:text-7xl min-[1700px]:text-8xl'} font-semibold text-white max-w-2xl m-0 uppercase`>{name}</h1>
     {
       tagline
@@ -65,7 +67,7 @@ import IconArrowLeft from "@/icons/IconArrowLeft.astro"
     <div class="flex flex-col gap-1 py-1 [&>span]:text-sm [&>span]:2xl:text-base">
       <span class="text-white font-Noto_Sans font-light">Fecha de estreno: {dateStart}</span>
       <span class="text-white font-Noto_Sans font-light">Finalización: {dateEnd}</span>
-      <span class="text-white font-Noto_Sans font-light">Rate: {rate?.toFixed(1).toString()}</span>
+      <span class="text-white font-Noto_Sans font-light">Rate: {rate !== 10 ? rate?.toFixed(1).toString() : rate}</span>
     </div>
     <div class="max-w-lg xl:max-2xl:max-w-xl">
       <p class="text-white font-Noto_Sans font-light line-clamp-5 text-sm 2xl:text-base">{overview || "Lo siento. No se encontro algún resumen"}</p>

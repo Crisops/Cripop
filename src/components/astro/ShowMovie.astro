@@ -26,7 +26,7 @@
   let endPoint
 
   if (url) {
-    endPoint = `${url === "movie" ? `/movie`: 'tv/series'}/${id}/${urlTitle ?? urlName}`
+    endPoint = `${url === "movie" ? `/movie`: 'series'}/${id}/${urlTitle ?? urlName}`
   }else{
     endPoint = `${id}/${urlTitle ?? urlName}` 
   }
@@ -35,12 +35,13 @@
 
 
 
-<article class="relative group rounded-lg overflow-hidden border border-zinc-900" transition:name=`movie image ${id}`>
+<article class="relative group rounded-lg overflow-hidden border border-zinc-900" transition:name=`movie box ${id}`>
   <a href=`${endPoint}`>
     {
       (url_image)
       ?
       <Image
+      transition:name={`movie image ${id}`}
       class="cursor-pointer transition-transform duration-500 rounded-lg group-hover:scale-105"
       src={URL_IMG + url_image}
       alt={`${title ?? name}`}
