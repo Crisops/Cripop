@@ -1,0 +1,19 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import ShowMoreSeries from "@/components/astro/ShowMoreSeries.astro";
+import BoxMain from "@/components/react/BoxMain";
+import BoxSearch from "@/components/react/BoxSearch";
+import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro";
+
+const API_KEY = import.meta.env.SECRET_API_KEY
+const URL_SERIES_POPULARITY = `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}language=es&page=1`
+---
+
+<Layout title="Cripop - Series populares que no te puedes verder">
+<BoxMain client:idle>
+  <ShowMoreSeries url={URL_SERIES_POPULARITY} title="Encuentra la que te guste"/>
+</BoxMain>
+<BoxSearch client:idle>
+  <SearchMovieAndSeries/>
+</BoxSearch>
+</Layout>

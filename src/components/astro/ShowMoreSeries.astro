@@ -3,11 +3,10 @@
   import { getGendersSeriesList } from "@/services/get_genders"
   import { getGendersSeries} from "@/services/get_genders_list"
   import type {Genders, MovieWithGenders } from "@/types/Genders"
-  import Movie from "./Movie.astro"
   import { getPosterPath } from "@/services/get_poster_img"
   import Filters from "../react/Filters"
   import Footer from "./Footer.astro"
-import ShowMovie from "./ShowMovie.astro"
+  import ShowMovie from "./ShowMovie.astro"
 
   interface Props {
     url: string,
@@ -17,8 +16,6 @@ import ShowMovie from "./ShowMovie.astro"
   const { url, title } = Astro.props
 
   const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
-
-  const URL_IMG: string = 'https://image.tmdb.org/t/p/w500'
 
   const options = {
     method: 'GET',
@@ -55,7 +52,7 @@ import ShowMovie from "./ShowMovie.astro"
         series_tv.results.map((serie, index) =>(
           <ShowMovie
             id={serie.id}
-            url_image={URL_IMG + img[index]?.file_path}
+            url_image={img[index]?.file_path}
             title={serie.name}
             widht={500}
             height={700}
