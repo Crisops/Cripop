@@ -1,7 +1,7 @@
 export const validateFormData = (form) => {
   const error = {}
 
-  const regexString = /^[a-zA-Z\sñáéíóúÁÉÍÓÚüÜÑ]+$/
+  const regexString = /^[a-zA-Z\sñáéíóúÁÉÍÓÚüÜÑ\d]+$/
 
   if (!form.search.trim()) {
     error.search = 'El campo no puede quedar vacío'
