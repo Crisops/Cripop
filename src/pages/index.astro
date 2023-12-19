@@ -5,6 +5,7 @@ import MoviesDataBase from "@/components/astro/MoviesDataBase.astro"
 import BoxSearch from "@/components/react/BoxSearch"
 
 import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro";
+import Footer from "@/components/astro/Footer.astro";
 
 ---
 
@@ -15,14 +16,14 @@ import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro"
 		</div>
 		<main class="relative">
 			<div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black"></div>
-			<div class="relative h-52 flex items-center px-10">
-				<h2 class="text-white font-Libre_Franklin text-3xl font-semibold uppercase">Disfruta de tus peliculas y series favoritas</h2>
+			<div class="relative h-52 flex items-center px-5 md:px-10">
+				<h2 class="text-white font-Libre_Franklin text-2xl sm:text-3xl font-semibold uppercase">Disfruta de tus peliculas y series favoritas</h2>
 			</div>
 			<MoviesDataBase/>
+			<Footer/>
 		</main>
 		<BoxSearch client:idle>
 			<SearchMovieAndSeries/>
 		</BoxSearch>
-		<!-- <footer class="">footer</footer> -->
 	</div>
 </Layout>

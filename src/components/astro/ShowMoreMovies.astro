@@ -14,6 +14,7 @@
   import { getGendersMovies } from "@/services/get_genders_list"
   import ShowMovie from "./ShowMovie.astro"
   import { getPosterPath } from "@/services/get_poster_img"
+  import Footer from "@/components/astro/Footer.astro";
 
 
   const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
@@ -49,7 +50,7 @@
     </div>
   </div>
   <div id="containerMovies" class="relative h-full mt-10">
-    <div class="relative grid place-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 px-10 pb-20 overflow-hidden">
+    <div class="relative grid place-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 px-5 md:px-10 pb-20 overflow-hidden">
       {
         movies.results.map((movie, index) =>(
           <ShowMovie
@@ -66,6 +67,7 @@
       }
     </div>
   </div>
+  <Footer/>
 </main>
 
 
