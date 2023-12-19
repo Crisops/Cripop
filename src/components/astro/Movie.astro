@@ -27,7 +27,7 @@
 
 
 
-<article class="relative min-w-[300px] group rounded-lg overflow-hidden" transition:name=`movie box ${id}`>
+<article class="relative min-w-[300px] group rounded-lg overflow-hidden border border-zinc-900" transition:name=`movie box ${id}`>
   <a href=`${url === "movie" ? 'movie': 'tv/series'}/${id}/${urlTitle ?? urlName}`>
     {
       (!/undefined/i.test(url_image))
