@@ -39,13 +39,13 @@
 
 
 
-<article class="relative group rounded-lg overflow-hidden border border-zinc-900" transition:name=`movie box ${id}`>
+<article class="relative group rounded-lg overflow-hidden border border-zinc-900" transition:name=`box ${id}`>
   <a href=`${endPoint}`>
     {
       (url_image)
       ?
       <Image
-      transition:name={`movie image ${id}`}
+      transition:name={`image ${id}`}
       class="cursor-pointer transition-transform duration-500 rounded-lg group-hover:scale-105"
       src={URL_IMG + url_image}
       alt={`${title ?? name}`}

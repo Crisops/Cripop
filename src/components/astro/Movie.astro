@@ -6,7 +6,7 @@
 
   interface Props {
     id: number
-    url_image: string
+    url_image: string | undefined
     title?: string
     name?: string 
     widht: number
@@ -16,6 +16,8 @@
     index: number
     url?: string
   }
+
+  const URL_IMG: string = 'https://image.tmdb.org/t/p/w500'
   
 
   const {id, url_image, title, name, widht, height, genders, rate, index, url} = Astro.props
@@ -27,15 +29,15 @@
 
 
 
-<article class="relative min-w-[300px] group rounded-lg overflow-hidden border border-zinc-900" transition:name=`movie box ${id}`>
+<article class="relative min-w-[300px] group rounded-lg overflow-hidden border border-zinc-900" transition:name=`box ${id}`>
   <a href=`${url === "movie" ? 'movie': 'tv/series'}/${id}/${urlTitle ?? urlName}`>
     {
-      (!/undefined/i.test(url_image))
+      (url_image)
       ?
       <Image
-      transition:name={`movie image ${id}`}
+      transition:name={`image ${id}`}
       class="cursor-pointer transition-transform duration-500 rounded-lg group-hover:scale-105"
-      src={url_image}
+      src={URL_IMG + url_image}
       alt={`${title ?? name}`}
       width={widht}
       height={height}
