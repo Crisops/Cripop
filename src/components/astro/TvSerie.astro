@@ -10,7 +10,7 @@
 
   const { name, url_image, overview, id } = Astro.props
 
-  const urlName = name?.replace(/[()\s:]/g, "").replace(/\s/g, "-")
+  const urlName = name?.replace(/\s/g, "-").replace(/[.()]/g,"")
   
 
 ---
@@ -19,13 +19,13 @@
 
 
 <article
-class="relative w-[500px] h-[500px] flex-1 transition-all duration-1000 ease-in-out overflow-hidden group hover:flex-grow-[7] md:hover:flex-grow-[2]" 
+class="relative w-[500px] h-[500px] flex-grow flex-1 transition-all duration-1000 ease-in-out overflow-hidden group hover:flex-grow-[3] md:hover:flex-grow-[2]" 
 transition:name=`movie box ${id}`>
   <Image
   transition:name=`movie image ${id}`
   class={"absolute w-full h-full object-cover"}
-  width={500}
-  height={700}
+  width={780}
+  height={500}
   src={url_image}
   alt={name}
   quality={"low"}

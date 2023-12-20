@@ -20,16 +20,20 @@
 
   const {id, url_image, title, name, widht, height, genders, rate, index, url} = Astro.props
 
-  const urlTitle = title?.replace(/\s/g, "-")
-  const urlName = name?.replace(/\s/g, "-")
+  const urlTitle = title?.replace(/\s/g, "-").replace(/[.():]/g,"")
+  const urlName = name?.replace(/\s/g, "-").replace(/[.():]/g,"")
 
   let endPoint
 
-  if (url) {
-    endPoint = `${url === "movie" ? `/movie`: 'series'}/${id}/${urlTitle ?? urlName}`
-  }else{
-    endPoint = `${id}/${urlTitle ?? urlName}` 
-  }
+  if(!url) endPoint = `${id}/${urlTitle ?? urlName}` // Component Show More Movies
+
+  if(url === "search") endPoint = `tv/series/${id}/${urlTitle ?? urlName}` // Page Result Search
+
+  if (url === "movie") endPoint = `movie/${id}/${urlTitle ?? urlName}` // Page Result Search
+
+  if (url === "tv") endPoint = `series/${id}/${urlTitle ?? urlName}` // Component Show More Movies
+  
+
 
 ---
 

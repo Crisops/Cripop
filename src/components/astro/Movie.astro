@@ -20,8 +20,8 @@
 
   const {id, url_image, title, name, widht, height, genders, rate, index, url} = Astro.props
 
-  const urlTitle = title?.replace(/\s/g, "-") // Se cambia los espacios en blanco por -
-  const urlName = name?.replace(/\s/g, "-") // Se cambia los espacios en blanco por -
+  const urlTitle = title?.replace(/\s/g, "-").replace(/[.():]/g,"") // Se cambia los espacios en blanco por -
+  const urlName = name?.replace(/\s/g, "-").replace(/[.()]/g,"") // Se cambia los espacios en blanco por -
 
 ---
 
