@@ -22,6 +22,7 @@ export const getPosterPath = async (token: string, id_movie: number, url: string
     if(!res.ok) throw {statusCode: res.status, message: res.statusText || "Hubo un error en la solicitud" } as ErrorFetch
     
     const listPath = await res.json() as ImagesMovies
+
   
     return listPath.posters[0]
 

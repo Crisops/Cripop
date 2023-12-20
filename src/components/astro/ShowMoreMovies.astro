@@ -7,7 +7,7 @@
   import ShowMovie from "./ShowMovie.astro"
   import { getPosterPath } from "@/services/get_poster_img"
   import Footer from "@/components/astro/Footer.astro";
-  import type { ResultFilters } from "@/types/dataFilters"
+  import type {  ResultFiltersMovie, ResultErrorFilters } from "@/types/dataFilters"
   import type { Backdrop } from "@/types/imagesMovies"
 
   interface Props {
@@ -28,24 +28,31 @@
     }
   };
 
-  let resultFilters: ResultFilters | undefined
+  let resultFilters: ResultFiltersMovie | undefined
   let imgMovieFilter: Backdrop[]
   let listGenders: MovieWithGenders
+  let errorRequest: ResultErrorFilters | undefined
   
 
-  if (Astro.request.method === "POST") {
+  if (Astro.request.method === "GET") {
     try {
-      const data = await Astro.request.formData();
+      const data = Astro.url.searchParams;
       const rate = data.get("vote_average.gte");
       const sort = data.get("sort_by");
       const genre = data.get("with_genres");
       const viewUser = data.get("choose");
       
+      
       const URL_DISCOVER = `https://api.themoviedb.org/3/discover/${viewUser}?include_adult=false&language=es&page=1&sort_by=${sort}&vote_average.gte=${rate}&with_genres=${genre}`
 
       const response = await fetch(URL_DISCOVER, options)
-      resultFilters = await response.json() as ResultFilters
 
+      if (!response.ok) {
+        throw {statusCode: response.status, statusMessage: response.statusText}
+      }
+
+      resultFilters = await response.json() as ResultFiltersMovie
+      
       const movie_gendersId = resultFilters.results.map(movie => movie.genre_ids)
 
       const gendersList = await getGendersMoviesList(ACCESS_TOKEN) as Genders
@@ -56,9 +63,7 @@
 
       
     } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.message);
-      }
+      errorRequest = error as ResultErrorFilters
     }
   }
 
@@ -86,21 +91,8 @@
   <div id="containerMovies" class="relative h-full mt-10">
     <div class="relative grid place-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 px-5 md:px-10 pb-20 overflow-hidden">
       {
-        resultFilters != undefined
+        errorRequest?.statusCode === 404 || resultFilters == undefined
         ?
-        resultFilters.results.map((movie, index) =>(
-          <ShowMovie
-            id={movie.id}
-            url_image={imgMovieFilter[index]?.file_path}
-            title={movie.title}
-            widht={500}
-            height={700}
-            genders={listGenders}
-            rate={movie.vote_average}
-            index={index}
-          />
-        ))
-        :
         movies.results.map((movie, index) =>(
           <ShowMovie
             id={movie.id}
@@ -109,6 +101,19 @@
             widht={500}
             height={700}
             genders={listIdWithGender}
+            rate={movie.vote_average}
+            index={index}
+          />
+        ))
+        :
+        resultFilters.results.map((movie, index) =>(
+          <ShowMovie
+            id={movie.id}
+            url_image={imgMovieFilter[index]?.file_path}
+            title={movie.title}
+            widht={500}
+            height={700}
+            genders={listGenders}
             rate={movie.vote_average}
             index={index}
           />

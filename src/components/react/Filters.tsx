@@ -8,7 +8,7 @@ const Filters = ({choose}: {choose: string}) => {
 
   return (
 
-    <form className='relative flex-grow' method='POST'>
+    <form className='relative flex-grow' method='GET'>
       <div className='flex flex-wrap flex-grow gap-10 items-center justify-center'>
         <FilterItem iconFilter={<IconFilter />} typeFilter='Rate' options={optionsRate} select="vote_average.gte"/>
         <FilterItem iconFilter={<IconFilter />} typeFilter='Ordenar por' options={optionsPopularity} select="sort_by"/>
