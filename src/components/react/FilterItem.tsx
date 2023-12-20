@@ -11,8 +11,7 @@ const FilterItem: React.FC<Filters> = ({ iconFilter, typeFilter, options, select
       </div>
       <div className='flex-grow'>
         <select className='outline-none w-full text-center px-4 bg-transparent border-b border-zinc-600 text-white cursor-pointer [&>option]:bg-[#000105]'
-         name={select}
-          id='rate'>
+          name={select}>
             {
               options.map(({valueOption, valueText}) => (
                 <option key={optionId} value={valueOption}>{valueText}</option>

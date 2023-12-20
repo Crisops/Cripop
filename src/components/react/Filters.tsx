@@ -4,14 +4,14 @@ import { optionsPopularity} from '@/types/Filters'
 import { optionsRate} from '@/types/Filters'
 import { optionsGenders } from '@/types/Filters'
 
-const Filters = () => {
+const Filters = ({choose}: {choose: string}) => {
 
   return (
 
-    <form className='relative flex-grow'>
+    <form className='relative flex-grow' method='POST'>
       <div className='flex flex-wrap flex-grow gap-10 items-center justify-center'>
-        <FilterItem iconFilter={<IconFilter />} typeFilter='Rate' options={optionsRate} select="vote_average"/>
-        <FilterItem iconFilter={<IconFilter />} typeFilter='Popularidad' options={optionsPopularity} select="sort_by"/>
+        <FilterItem iconFilter={<IconFilter />} typeFilter='Rate' options={optionsRate} select="vote_average.gte"/>
+        <FilterItem iconFilter={<IconFilter />} typeFilter='Ordenar por' options={optionsPopularity} select="sort_by"/>
         <FilterItem iconFilter={<IconFilter />} typeFilter='Género' options={optionsGenders} select="with_genres"/>
         <button
           type='submit'
@@ -19,6 +19,7 @@ const Filters = () => {
         >Aplicar
         </button>
       </div>
+      <input type="hidden" name='choose' value={choose} />
     </form>
 
   )

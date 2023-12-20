@@ -14,11 +14,19 @@ interface SelectOptionFilters {
 export const optionsPopularity: SelectOptionFilters[] = [
   {
     valueOption: "popularity.desc",
-    valueText: "Alta"
+    valueText: "Popularidad Alta"
   },
   {
     valueOption: "popularity.asc",
-    valueText: "Baja"
+    valueText: "Popularidad Baja"
+  },
+  {
+    valueOption: "vote_average.desc",
+    valueText: "Rate Alto"
+  },
+  {
+    valueOption: "vote_average.asc",
+    valueText: "Rate Bajo"
   }
 ]
 
@@ -54,6 +62,14 @@ export const optionsRate: SelectOptionFilters[] = [
   {
     valueOption: "8",
     valueText: "8"
+  },
+  {
+    valueOption: "9",
+    valueText: "9"
+  },
+  {
+    valueOption: "10",
+    valueText: "10"
   },
 ]
 

@@ -7,13 +7,15 @@
   import Filters from "../react/Filters"
   import Footer from "./Footer.astro"
   import ShowMovie from "./ShowMovie.astro"
+import type { ResultFilters } from "@/types/dataFilters"
 
   interface Props {
     url: string,
     title: string
+    choose: string
   }
 
-  const { url, title } = Astro.props
+  const { url, title, choose } = Astro.props
 
   const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
 
@@ -25,17 +27,45 @@
     }
   }
 
-  const response = await fetch(url, options)
+  if (Astro.request.method === "POST") {
+    try {
+      const data = await Astro.request.formData();
+      const rate = data.get("vote_average.gte");
+      const sort = data.get("sort_by");
+      const genre = data.get("with_genres");
+      const viewUser = data.get("choose");
+      
+      const URL_DISCOVER = `https://api.themoviedb.org/3/discover/${viewUser}?include_adult=true&language=es&page=1&sort_by=${sort}&vote_average.gte=${rate}&with_genres=${genre}`
 
-  const series_tv = await response.json() as TvSeriesTop 
+      console.log(URL_DISCOVER);
+      
 
-  const serieTv_gendersId = series_tv.results.map(serie => serie.genre_ids)
+      const response = await fetch(URL_DISCOVER, options)
+      const resultFilters = await response.json() as ResultFilters
+      
+      console.log(resultFilters);
+      
+      
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
+    }
+  }
 
-  const gendersList = await getGendersSeriesList(ACCESS_TOKEN) as Genders
+
+
+  // const response = await fetch(url, options)
+
+  // const series_tv = await response.json() as TvSeriesTop 
+
+  // const serieTv_gendersId = series_tv.results.map(serie => serie.genre_ids)
+
+  // const gendersList = await getGendersSeriesList(ACCESS_TOKEN) as Genders
  
-  const listIdWithGender = await getGendersSeries(serieTv_gendersId, gendersList) as MovieWithGenders
+  // const listIdWithGender = await getGendersSeries(serieTv_gendersId, gendersList) as MovieWithGenders
 
-  const img = await Promise.all(series_tv.results.map((serie) => getPosterPath(ACCESS_TOKEN, serie.id, "tv")));
+  // const img = await Promise.all(series_tv.results.map((serie) => getPosterPath(ACCESS_TOKEN, serie.id, "tv")));
   
 ---
 
@@ -43,12 +73,12 @@
   <div class="relative px-5 md:px-10 flex items-center flex-col xl:flex-row justify-between">
     <h1 class="text-white/50 font-Noto_Sans text-3xl xl:text-xl self-start font-light">{title}</h1>
     <div class="flex flex-grow w-full xl:w-fit xl:flex-grow-0 flex-wrap items-center pt-10 gap-10 justify-start lg:max-xl:justify-center xl:justify-start xl:pt-0">
-      <Filters/>
+      <Filters choose={choose}/>
     </div>
   </div>
   <div id="containerMovies" class="relative h-full mt-10">
     <div class="relative grid place-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 px-5 md:px-10 pb-20 overflow-hidden">
-      {
+      <!-- {
         series_tv.results.map((serie, index) =>(
           <ShowMovie
             id={serie.id}
@@ -62,7 +92,7 @@
             url="tv"
           />
         ))
-      }
+      } -->
     </div>
   </div>
   <Footer/>

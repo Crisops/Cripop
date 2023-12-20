@@ -11,7 +11,7 @@ const URL_SERIES_POPULARITY = `https://api.themoviedb.org/3/tv/popular?api_key=$
 
 <Layout title="Cripop - Series populares que no te puedes verder">
 <BoxMain client:idle>
-  <ShowMoreSeries url={URL_SERIES_POPULARITY} title="Encuentra la que te guste"/>
+  <ShowMoreSeries url={URL_SERIES_POPULARITY} title="Encuentra la que te guste" choose="tv"/>
 </BoxMain>
 <BoxSearch client:idle>
   <SearchMovieAndSeries/>
