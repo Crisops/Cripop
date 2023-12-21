@@ -60,7 +60,7 @@
 
 ---
 
-<Layout title={`Cripop - ${(title ?? "")}`}>
+<Layout title={`Cripop - ${(title ?? data?.title)}`}>
   <BoxMain client:load>
     <main class="relative h-screen">
       <ItemMovieSelect
