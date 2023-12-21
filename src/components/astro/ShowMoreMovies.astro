@@ -43,7 +43,7 @@
       const viewUser = data.get("choose");
       
       
-      const URL_DISCOVER = `https://api.themoviedb.org/3/discover/${viewUser}?include_adult=false&language=es&page=1&sort_by=${sort}&vote_average.gte=${rate}&with_genres=${genre}`
+      const URL_DISCOVER = `https://api.themoviedb.org/3/discover/${viewUser}?include_adult=false&include_video=true&language=es&page=1&sort_by=${sort}&vote_average.gte=${rate}&with_genres=${genre}`
 
       const response = await fetch(URL_DISCOVER, options)
 
