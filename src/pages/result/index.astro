@@ -9,14 +9,23 @@
   const search = data.get("search")
   const view = data.get("choose")
   const query = search?.toLocaleLowerCase()
+
+  let page: string | null
+
+  if (Astro.url.searchParams.get("page") != null) {
+    page = Astro.url.searchParams.get("page")
+  }else{
+    page = "1"
+  }
+
       
-  const URL_SEARCH = `https://api.themoviedb.org/3/search/${view}?query=${query}&include_adult=true&language=es`
+  const URL_SEARCH = `https://api.themoviedb.org/3/search/${view}?query=${query}&include_adult=true&language=es&page=${page}`
 
 ---
 
 <Layout title={`(${search}) - Cripop`}>
   <BoxMain client:idle>
-    <Search url={URL_SEARCH} choose={view} title={search}/>
+    <Search url={URL_SEARCH} choose={view} title={search} page={page} component="search"/>
   </BoxMain>
   <BoxSearch client:idle>
     <SearchMovieAndSeries/>

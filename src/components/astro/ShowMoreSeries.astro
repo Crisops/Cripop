@@ -127,7 +127,7 @@ import Pagination from "../react/Pagination"
     </div>
   </div>
   <div>
-    <Pagination client:visible page={page}/>
+    <Pagination client:visible page={(page ?? "1")} totalPages={20}/>
   </div>
   <Footer/>
 </div>
