@@ -5,15 +5,24 @@
   import BoxSearch from "@/components/react/BoxSearch";
   import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro";
 
+  let page: string | null
+
+  if (Astro.url.searchParams.get("page") != null) {
+    page = Astro.url.searchParams.get("page")
+  }else{
+    page = "1"
+  }
+
+
   const API_KEY = import.meta.env.SECRET_API_KEY
-  const URL_MOVIES_POPULARITY = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}language=es&page=1`
+  const URL_MOVIES_POPULARITY = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}language=es&page=${page}`
 
 ---
 
 
 <Layout title="Cripop - Disfruta de las películas más populares del entretenimiento">
   <BoxMain client:idle>
-    <ShowMoreMovies url={URL_MOVIES_POPULARITY} title="Películas populares"  choose="movie"/>
+    <ShowMoreMovies url={URL_MOVIES_POPULARITY} title="Películas populares"  choose="movie" page={page}/>
   </BoxMain>
   <BoxSearch client:idle>
     <SearchMovieAndSeries/>
