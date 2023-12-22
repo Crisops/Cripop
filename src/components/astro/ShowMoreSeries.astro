@@ -9,14 +9,16 @@
   import ShowMovie from "./ShowMovie.astro"
 import type {  ResultErrorFilters, ResultFiltersSerie } from "@/types/dataFilters"
 import type { Backdrop } from "@/types/imagesMovies"
+import Pagination from "../react/Pagination"
 
   interface Props {
     url: string,
     title: string
     choose: string
+    page: string | null
   }
 
-  const { url, title, choose } = Astro.props
+  const { url, title, choose, page } = Astro.props
 
   const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
 
@@ -41,7 +43,7 @@ import type { Backdrop } from "@/types/imagesMovies"
       const genre = data.get("with_genres");
       const viewUser = data.get("choose");
       
-      const URL_DISCOVER = `https://api.themoviedb.org/3/discover/${viewUser}?include_adult=false&include_video=true&language=es&page=1&sort_by=${sort}&vote_average.gte=${rate}&with_genres=${genre}`
+      const URL_DISCOVER = `https://api.themoviedb.org/3/discover/${viewUser}?include_adult=false&include_video=true&language=es&sort_by=${sort}&vote_average.gte=${rate}&with_genres=${genre}`
 
       const response = await fetch(URL_DISCOVER, options)
 
@@ -123,6 +125,9 @@ import type { Backdrop } from "@/types/imagesMovies"
         ))
       }
     </div>
+  </div>
+  <div>
+    <Pagination client:visible page={page}/>
   </div>
   <Footer/>
 </div>
