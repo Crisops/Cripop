@@ -1,7 +1,7 @@
 import { IconSearch } from './Icons'
 import { useBoxSearch } from '../handleStates.js'
 
-const ButtonSearch = ({ icon, text }) => {
+const ButtonSearch = ({ icon, text, styles }) => {
   const { setBoxSearch } = useBoxSearch(state => state)
 
   const handleClick = () => {
@@ -11,7 +11,7 @@ const ButtonSearch = ({ icon, text }) => {
   return (
     <div className='flex items-center justify-evenly'>
       {icon && <IconSearch handleClick={handleClick} />}
-      <button onClick={handleClick} id='text-github' className={`px-2 ${icon ? 'text-white bg-none flex-grow-0 py-3 hidden md:block text-base 2xl:text-lg' : 'text-zinc-950 bg-white transition-colors hover:bg-white/50 flex-grow 1 py-2 text-sm'}`}>{text}</button>
+      <button onClick={handleClick} className={`px-2 ${icon ? styles : styles}`}>{text}</button>
     </div>
   )
 }

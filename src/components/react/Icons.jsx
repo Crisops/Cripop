@@ -39,7 +39,7 @@ export const IconFilterClose = () => (
 )
 
 export const IconEye = () => (
-  <svg className='w-5 h-5 text-current' width='64px' height='64px' viewBox='0 0 24 24' fill='none'>
+  <svg className='w-5 h-5 text-current z-10' width='64px' height='64px' viewBox='0 0 24 24' fill='none'>
 
     <g id='SVGRepo_bgCarrier' strokeWidth='0' />
 

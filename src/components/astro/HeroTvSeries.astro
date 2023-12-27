@@ -4,6 +4,7 @@
   import IconSearch from "@/icons/IconSearch.astro"
   import TvSerie from "./TvSerie.astro"
   import { getPosterPath } from "@/services/get_poster_img"
+  import ButtonSearch from "../react/ButtonSearch"
 
 
   const API_KEY = import.meta.env.SECRET_API_KEY
@@ -34,8 +35,8 @@
 
 <div class="flex flex-col gap-4 mt-16">
   <div class="inline-flex gap-2 py-2">
-    <span class="text-zinc-400 font-Noto_Sans text-md px-1 py-1"><IconSearch/></span>
-    <a href="#" class="font-Libre_Franklin text-white font-bold text-2xl hover:underline">Busca tus series favoritas</a>
+    <!-- <a href="#" class="font-Libre_Franklin text-white font-bold text-2xl hover:underline">Busca tus series favoritas</a> -->
+    <ButtonSearch client:visible icon text="Busca tus series favoritas" styles='font-Libre_Franklin text-white font-bold text-2xl hover:underline'/>
   </div>
   <div class="relative flex pr-5 md:pr-10 gap-1 overflow-hidden">
     {

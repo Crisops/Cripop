@@ -22,7 +22,7 @@ const Header = () => {
   }
 
   return (
-    <div className='fixed top-0 left-0 w-full h-24 z-40'>
+    <div className='fixed top-0 left-0 w-full h-16 md:h-20 lg:h-24 z-40'>
       <header className={`w-full h-full flex justify-between items-center px-5 md:px-10 ${header ? 'backdrop-blur-sm' : ''}`}>
         <a href='/'>
           <div className='relative'>
@@ -30,7 +30,7 @@ const Header = () => {
           </div>
         </a>
         <div className='relative flex justify-evenly items-center gap-8 [&>div>a]:font-Noto_Sans'>
-          <ButtonSearch icon text='Buscar' />
+          <ButtonSearch icon text='Buscar' styles='text-white bg-none flex-grow-0 py-3 hidden md:block text-base 2xl:text-lg' />
           <div className='flex items-center justify-evenly'>
             <a href='https://github.com/Crisops/Cripop' target='_blank' rel='noreferrer'><IconGitHub /></a>
             <a href='https://github.com/Crisops/Cripop' className='py-3 px-2 text-white hidden md:block text-base 2xl:text-lg' target='_blank' rel='noreferrer'>GitHub</a>

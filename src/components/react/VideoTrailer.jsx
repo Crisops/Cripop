@@ -69,17 +69,22 @@ const VideoTrailer = ({ id, token, view }) => {
   }
 
   return (
-    <div className={`relative ${isBoxViewTrailer ? 'block' : 'hidden'} w-[350px] min-[500px]:w-[450px] h-[300px] sm:max-md:w-[630px] sm:max-md:h-[450px] md:w-[740px] md:h-[500px] xl:w-[1280px] xl:h-[720px]`}>
+    <div className={`relative ${isBoxViewTrailer ? 'block' : 'hidden'} w-[350px] min-[500px]:w-[450px] h-[300px] sm:max-md:w-[630px] sm:max-md:h-[450px] md:w-[740px] md:h-[500px] xl:w-[900px] xl:h-[500px]`}>
       {
-      (video.key && isBoxViewTrailer) &&
-        (
+      (isBoxViewTrailer && video)
+        ? (
           <YouTube
             className='absolute w-full h-full'
             iframeClassName='absolute w-full h-full'
             opts={optsYoutube}
             videoId={video.key}
           />
-        )
+          )
+        : (
+          <div className='absolute flex justify-center items-center w-full h-full bg-[#000105]'>
+            <span className='text-xl text-white font-Ubuntu font-medium'>Lo siento, no se encontro un trailer</span>
+          </div>
+          )
     }
     </div>
   )

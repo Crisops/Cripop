@@ -1,0 +1,100 @@
+---
+  import NotFound from "@/layouts/NotFound.astro";
+---
+
+
+<NotFound title="404 not Found">
+  <section id="page" class="relative w-full h-screen flex justify-center items-center px-5 md:px-10">
+    <div class="h-full flex flex-col justify-center items-center">
+        <div class="flex justify-center">
+          <h1 id="title" class="font-Ubuntu font-bold uppercase ">404</h1>
+        </div>
+        <div class="flex flex-col items-center gap-10">
+          <h3 id="message" class="text-2xl sm:text-3xl font-Ubuntu text-center font-semibold uppercase">Creo que te has perdido</h3>
+          <p id="content_message" class="text-center font-Ubuntu text-lg max-w-sm ">La página que acabas de solicitar no se encuentra disponible</p>
+          <a id="btn_back" href="/" class="px-5 py-2 font-Ubuntu text-lg font-bold">Regresar</a>
+        </div>
+    </div>
+  </section>
+</NotFound>
+
+
+<style>
+
+  #page{
+    background: linear-gradient(to top, #000105, #001F3F);
+  }
+
+  #title{
+    text-shadow: -1px -1px 0 #4682B4,
+    1px 1px 0 #001F3F;
+    font-size: 8rem;
+  }
+
+  #message{
+    text-shadow: 1px 1px 10px #003366,
+      1px 1px 50px #003366;
+  }
+  
+  #content_message {
+    color: #007BA7;
+    opacity: 50%;
+  }
+
+  #btn_back{
+    background: #000105;
+    color: #001F3F;
+  }
+
+  @media (min-width: 400px) {
+
+    #title{
+      font-size: 12rem;
+    }
+
+  }
+
+  @media (min-width: 640px) {
+
+    #title{
+      font-size: 14rem;
+    }
+
+  }  
+
+  @media (min-width: 780px) {
+
+    #title{
+      font-size: 16rem;
+    }
+
+  }  
+
+
+  @media (min-width: 1024px) {
+
+  #title{
+    font-size: 18rem;
+  }
+
+  }  
+
+  @media (min-width: 1280px) {
+
+  #title{
+    font-size: 20rem;
+  }
+
+}  
+
+/* 
+  @media (max-width: 600px) {
+
+    #title{
+    font-size: 15rem;
+    }
+
+  } */
+
+
+</style>

@@ -20,7 +20,7 @@ import IconTMDB from "@/icons/IconTMDB.astro"
           <span class="font-Ubuntu text-white font-bold text-xl lg:self-start">Cripop</span>
           <p class="text-zinc-500 font-Noto_Sans text-xs">Un espacio donde puedes ver lo que te gusta de una manera rápida, sencilla y eficaz.</p>
           <p class="text-zinc-500 font-Noto_Sans text-xs">Busca tu serie y película favorita. ¿Te perderás alguna?</p>
-          <ButtonSearch client:visible icon={false} text={'Comenzar'}/>
+          <ButtonSearch client:visible icon={false} text={'Comenzar'} styles="text-zinc-950 bg-white transition-colors hover:bg-white/50 flex-grow 1 py-2 text-sm"/>
         </div>
       </div>
       <div class="flex flex-col justify-center items-center lg:items-start max-w-md lg:max-w-lg col-span-1 sm:col-span-2">
@@ -41,10 +41,10 @@ import IconTMDB from "@/icons/IconTMDB.astro"
       <div class="max-w-lg">
         <InfoTMDB/>
       </div>
-      <div class="flex justify-center items-center gap-3 px-5 md:px-10">
-        <a href="https://github.com/Crisops" target="_blank" rel="noopener"><IconGitHub/></a>
-        <a href="https://instagram.com/cris.alejo13" target="_blank" rel="noopener"><IconInstagram/></a>
-        <a href="https://www.linkedin.com/in/cristian-perez-5b306a239/" target="_blank" rel="noopener"><IconLinkedin/></a>
+      <div class="flex justify-center items-center gap-3 px-5 md:px-10 [&>a]:transition-colors [&>a]:hover:text-[#00f815]">
+        <a class="hover:text-[#00f815]" href="https://github.com/Crisops" target="_blank" rel="noopener"><IconGitHub/></a>
+        <a class="hover:text-[#00f815]" href="https://instagram.com/cris.alejo13" target="_blank" rel="noopener"><IconInstagram/></a>
+        <a class="hover:fill-[#00f815]" href="https://www.linkedin.com/in/cristian-perez-5b306a239/" target="_blank" rel="noopener"><IconLinkedin/></a>
       </div>
     </div>
   </div>
