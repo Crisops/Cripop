@@ -1,18 +1,6 @@
 ---
-	import "@fontsource/ubuntu/300.css"
-	import "@fontsource/ubuntu/400.css"
-	import "@fontsource/ubuntu/500.css"
-	import "@fontsource/ubuntu/700.css"
-	import "@fontsource/noto-sans/100.css"
-	import "@fontsource/noto-sans/200.css"
-	import "@fontsource/noto-sans/300.css"
-	import "@fontsource/noto-sans/400.css"
-	import "@fontsource/noto-sans/500.css"
-	import "@fontsource/noto-sans/600.css"
-	import "@fontsource/noto-sans/700.css"
-	import "@fontsource/noto-sans/800.css"
-	import "@fontsource/noto-sans/900.css"
-	import { ViewTransitions } from "astro:transitions"
+	import "@/styles/global.css"
+	import { ClientRouter } from "astro:transitions"
 
 	interface Props {
 		title: string;
@@ -30,7 +18,7 @@
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/Cripop/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<ViewTransitions fallback='none'/>
+		<ClientRouter fallback='none'/>
 		<title>{title}</title>
 	</head>
 	<body>

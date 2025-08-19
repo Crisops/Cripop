@@ -19,7 +19,7 @@
   let URL_IMG_POSTER: string | undefined
   let img
   let imgUrl: string | undefined
-  let chooseURL: string = Astro.url.pathname.split("/")[1]
+  const chooseURL: string = Astro.url.pathname.split("/")[1]
   let backdrop_path: string | undefined
 
   const API_KEY = import.meta.env.SECRET_API_KEY

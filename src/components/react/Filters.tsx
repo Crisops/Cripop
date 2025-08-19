@@ -1,8 +1,8 @@
 import { IconFilter } from './Icons'
 import FilterItem from './FilterItem'
-import { optionsPopularity} from '@/types/Filters'
-import { optionsRate} from '@/types/Filters'
-import { optionsGenders } from '@/types/Filters'
+import { optionsPopularity, optionsRate, optionsGenders } from '@/types/Filters'
+
+
 
 const Filters = ({choose}: {choose: string}) => {
 

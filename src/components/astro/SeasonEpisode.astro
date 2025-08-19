@@ -22,12 +22,12 @@
     class="rounded-md object-cover aspect-square w-10"
     src={path_image}
     width={92} height={92}
-    alt={name ? name : "Sin descripción"}/>
+    alt={name || "Sin descripción"}/>
     <div class="flex flex-auto flex-col">
       <h4 class="text-base text-white font-Libre_Franklin font-semibold">
-        {name ? name: ""}
+        {name || ""}
       </h4>
-      <span class="text-[10px] text-gray-200 line-clamp-2 font-Noto_Sans max-w-xs">{overview ? overview : ""}</span>
+      <span class="text-[10px] text-gray-200 line-clamp-2 font-Noto_Sans max-w-xs">{overview || ""}</span>
     </div>
   </a>
 </article>
