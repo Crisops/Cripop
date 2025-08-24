@@ -1,47 +1,29 @@
-import axios, {
-  AxiosError,
-  type AxiosInstance,
-  type AxiosRequestConfig,
-  type AxiosResponse,
-} from "axios";
-import type {
-  ApiClientOptions,
-  ApiError,
-  ApiResult,
-  HttpMethod,
-} from "@/types/axios";
-import { env } from "@/config/env";
+import axios, { AxiosError, type AxiosInstance, type AxiosRequestConfig, type AxiosResponse } from 'axios'
+import type { ApiClientOptions, ApiError, ApiResult, HttpMethod } from '@/types/axios'
+import { env } from '@/config/env'
 
 class AxiosClient {
-  private client: AxiosInstance;
+  private client: AxiosInstance
 
   constructor(options: ApiClientOptions = {}) {
-    const defaultURL = options.baseURL || env.TMDB_BASE_URL;
-
-    console.log("=== AXIOS CLIENT DEBUG ===");
-    console.log("Base URL:", defaultURL);
-    console.log("Token exists:", !!env.SECRET_TOKEN_ACCESS);
-    console.log(
-      "Token preview:",
-      env.SECRET_TOKEN_ACCESS?.substring(0, 20) + "..."
-    );
+    const defaultURL = options.baseURL || env.TMDB_BASE_URL
 
     this.client = axios.create({
       baseURL: defaultURL,
       timeout: options.timeout || 10000,
       headers: {
         Authorization: `Bearer ${env.SECRET_TOKEN_ACCESS}`,
-        Accept: "application/json",
+        Accept: 'application/json',
         ...options.headers,
       },
-    });
+    })
   }
 
   async request<T = any>(
     method: HttpMethod,
     url: string,
     data: any = null,
-    config: AxiosRequestConfig = {}
+    config: AxiosRequestConfig = {},
   ): Promise<ApiResult<T>> {
     try {
       const response: AxiosResponse<T> = await this.client({
@@ -49,16 +31,16 @@ class AxiosClient {
         url,
         data,
         ...config,
-      });
+      })
 
       return {
         success: true,
         data: response.data,
         status: response.status,
         message: response.statusText,
-      };
+      }
     } catch (error) {
-      return this.handleError(error as AxiosError);
+      return this.handleError(error as AxiosError)
     }
   }
 
@@ -67,54 +49,36 @@ class AxiosClient {
       return {
         success: false,
         error: {
-          message: error.message || "Error del servidor",
+          message: error.message || 'Error del servidor',
           status: error.response.status,
           data: error.response.data,
-          type: "server",
+          type: 'server',
         },
-      };
+      }
     } else if (error.request) {
       return {
         success: false,
         error: {
-          message: "Error de conexión",
-          type: "network",
+          message: 'Error de conexión',
+          type: 'network',
         },
-      };
+      }
     } else {
       return {
         success: false,
         error: {
           message: error.message,
-          type: "config",
+          type: 'config',
         },
-      };
+      }
     }
   }
 
-  async get<T = any>(
-    url: string,
-    config?: AxiosRequestConfig
-  ): Promise<ApiResult<T>> {
-    return this.request<T>("GET", url, null, config);
-  }
-
-  async post<T = any>(
-    url: string,
-    data?: any,
-    config?: AxiosRequestConfig
-  ): Promise<ApiResult<T>> {
-    return this.request<T>("POST", url, data, config);
-  }
-
-  async delete<T = any>(
-    url: string,
-    config?: AxiosRequestConfig
-  ): Promise<ApiResult<T>> {
-    return this.request<T>("DELETE", url, null, config);
+  async get<T = any>(url: string, config?: AxiosRequestConfig): Promise<ApiResult<T>> {
+    return this.request<T>('GET', url, null, config)
   }
 }
 
-export default new AxiosClient();
+export default new AxiosClient()
 
-export { AxiosClient };
+export { AxiosClient }
