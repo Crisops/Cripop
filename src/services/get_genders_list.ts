@@ -1,31 +1,17 @@
-import type { Genders } from "@/types/Genders"
+import type { ResultSearch } from '@/types/database.types'
+import type { Genders, Genre, MovieWithValidGenders } from '@/types/genders'
 
-export const getGendersMovies = async (moviesGendersList: number[][], gendersList: Genders) => {
+// Función optimizada que solo devuelve id y nombre de cada película/serie con sus géneros
+export const getOptimizedResultWithGenders = (
+  searchResult: ResultSearch,
+  genresList: Genders,
+): MovieWithValidGenders[] => {
+  const genreMap = new Map(genresList.genres.map((genre) => [genre.id, { id: genre.id, name: genre.name }]))
 
-
-  const gendersMovie = moviesGendersList.map((listIdGenders) => { 
-    const movieWithGenres = listIdGenders.map(genreId => {
-      const genre = gendersList?.genres.find(genre => genre.id === genreId)
-      return genre
-    })
-    return movieWithGenres
-  })
-  
-
-  return gendersMovie
-}
-
-export const getGendersSeries = async (seriesGendersList: number[][], gendersList: Genders) => {
-
-
-  const gendersSeries = seriesGendersList.map((listIdGenders) => { 
-    const serieWithGenres = listIdGenders.map(genreId => {
-      const genre = gendersList?.genres.find(genre => genre.id === genreId)
-      return genre
-    })
-    return serieWithGenres
-  })
-  
-
-  return gendersSeries
+  return searchResult.results.map((item) => ({
+    id: item.id,
+    genres: item.genre_ids
+      .map((genreId) => genreMap.get(genreId))
+      .filter((genre): genre is Genre => genre !== undefined),
+  }))
 }
