@@ -1,31 +1,15 @@
 ---
-  import Layout from "@/layouts/Layout.astro"
-  import ShowMoreMovies from "@/components/astro/ShowMoreMovies.astro"
-  import BoxMain from "@/components/react/BoxMain";
-  import BoxSearch from "@/components/react/BoxSearch";
-  import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro";
+import Layout from '@/layouts/Layout.astro'
+import { tmdbUrls } from '@/services/tmdb/urls'
+import ResultSearch from '@/components/astro/result-search.astro'
+import Footer from '@/components/astro/footer.astro'
 
+const page = Number(Astro.url.searchParams.get('page') ?? 1)
 
-  let page: string | null
-
-  if (Astro.url.searchParams.get("page") != null) {
-    page = Astro.url.searchParams.get("page")
-  }else{
-    page = "1"
-  }
-  
-
-
-  const API_KEY = import.meta.env.SECRET_API_KEY
-  const URL_NOW_PLAYING: string = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}language=es&page=${page}`
-
+const URL_MOVIES_NOW_PLAYING = tmdbUrls.lists.buildUrl('movie', 'now_playing', page)
 ---
 
 <Layout title="Cripop - Películas en cartelera">
-  <BoxMain client:idle>
-    <ShowMoreMovies url={URL_NOW_PLAYING} title="¿Ya te viste alguna?" choose="movie" page={page}/>
-  </BoxMain>
-  <BoxSearch client:idle>
-    <SearchMovieAndSeries/>
-  </BoxSearch>
+  <ResultSearch type="movie" url={URL_MOVIES_NOW_PLAYING} page={page} />
+  <Footer />
 </Layout>

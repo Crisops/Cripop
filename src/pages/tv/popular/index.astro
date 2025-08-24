@@ -1,27 +1,15 @@
 ---
-import Layout from "@/layouts/Layout.astro"
-import ShowMoreSeries from "@/components/astro/ShowMoreSeries.astro";
-import BoxMain from "@/components/react/BoxMain";
-import BoxSearch from "@/components/react/BoxSearch";
-import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro";
+import Layout from '@/layouts/Layout.astro'
+import { tmdbUrls } from '@/services/tmdb/urls'
+import ResultSearch from '@/components/astro/result-search.astro'
+import Footer from '@/components/astro/footer.astro'
 
-let page: string | null
+const page = Number(Astro.url.searchParams.get('page') ?? 1)
 
-if (Astro.url.searchParams.get("page") != null) {
-  page = Astro.url.searchParams.get("page")
-}else{
-  page = "1"
-}
-
-const API_KEY = import.meta.env.SECRET_API_KEY
-const URL_SERIES_POPULARITY = `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}language=es&page=${page}`
+const URL_SERIES_POPULAR = tmdbUrls.lists.buildUrl('tv', 'popular', page)
 ---
 
 <Layout title="Cripop - Series populares que no te puedes verder">
-<BoxMain client:idle>
-  <ShowMoreSeries url={URL_SERIES_POPULARITY} title="Encuentra la que te guste" choose="tv" page={page}/>
-</BoxMain>
-<BoxSearch client:idle>
-  <SearchMovieAndSeries/>
-</BoxSearch>
+  <ResultSearch type="tv" url={URL_SERIES_POPULAR} page={page} />
+  <Footer />
 </Layout>
