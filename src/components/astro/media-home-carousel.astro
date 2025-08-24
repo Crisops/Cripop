@@ -1,0 +1,49 @@
+---
+import MoviesCarousel from '@/components/astro/media-carousel.astro'
+// import HeroTvSeries from './HeroTvSeries.astro'
+---
+
+<div class="relative mt-5 flex h-full flex-col space-y-5 pl-5">
+  <h2 class="text-2xl font-semibold text-white uppercase sm:text-3xl">Disfruta de tus peliculas y series favoritas</h2>
+  <MoviesCarousel
+    title="Películas actualmente en cartelera"
+    list="now_playing"
+    page={1}
+    type="movie"
+    href={`/movie/nowplaying`}
+  />
+  <MoviesCarousel
+    title="Populares"
+    description="Descubre las películas que están conquistando a la audiencia global. ¡No te quedes fuera!"
+    list="popular"
+    page={2}
+    type="movie"
+    href="/movie/popular"
+  />
+  <MoviesCarousel
+    title="Mejores Calificadas"
+    description="El top de lo mejor"
+    list="top_rated"
+    page={1}
+    type="movie"
+    href="/movie/top"
+  />
+  <MoviesCarousel
+    title="Top Series"
+    description="Las series que todo el mundo recomienda. ¿Ya te viste alguna? Échale un vistazo a lo más premiado y aclamado"
+    list="top_rated"
+    page={1}
+    type="tv"
+    href="/tv/top"
+  />
+  <MoviesCarousel
+    title="Series Populares"
+    description="Lo que está sonando en plataformas. Las series que todo el mundo comenta y no puedes dejar de ver."
+    list="popular"
+    page={1}
+    type="tv"
+    href="/tv/popular"
+  />
+
+  <!-- <HeroTvSeries /> -->
+</div>

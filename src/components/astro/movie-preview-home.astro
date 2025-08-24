@@ -1,0 +1,49 @@
+---
+import type { Genre } from '@/types/details-movie'
+import { Languages, Clapperboard, Clock } from '@lucide/astro'
+
+interface Props {
+  title: string
+  language: string
+  genders: Genre[]
+  overview: string
+  date: Date
+  rate: number
+  time: number
+}
+
+const { title, language, genders, overview, date, rate, time } = Astro.props
+
+let runningTime: string = ''
+
+if (time) {
+  const hour = Math.floor(time / 60)
+  const minutes = Math.floor(time % 60)
+
+  runningTime =
+    hour < 2 ? `${hour} hora ${minutes} minutos` : `${hour} horas ${minutes.toString().padStart(2, '0')} minutos`
+}
+---
+
+<div class="z-10 flex flex-col gap-5 px-5 md:pr-10">
+  <h1 class="max-w-lg text-4xl font-semibold text-white uppercase sm:max-w-2xl sm:text-5xl lg:text-6xl">{title}</h1>
+  <div class="flex items-center gap-4">
+    <div class="inline-flex items-center gap-2">
+      <Languages class="size-5" color="white" />
+      <span class="text-small sm:text-medium font-light text-white uppercase">{language}</span>
+    </div>
+    <div class="inline-flex gap-2">
+      <Clapperboard class="size-5" color="white" />
+      <p class="text-small sm:text-medium font-light text-white">{genders?.map((gender) => gender.name).join(', ')}</p>
+    </div>
+  </div>
+  <div class="flex flex-col gap-1 py-1">
+    <span class="text-small sm:text-medium font-light text-white">Fecha de estreno: {date}</span>
+    <span class="text-small sm:text-medium font-light text-white">Rate: {rate?.toFixed(1).toString()}</span>
+  </div>
+  <p class="text-small sm:text-medium max-w-xs font-light text-white sm:max-w-md">{overview}</p>
+  <div class="flex items-center gap-1">
+    <Clock class="size-5" color="white" />
+    <span class="text-small sm:text-medium font-light text-white">{runningTime}</span>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets'
+import type { DetailsMovie } from '@/types/details-movie'
+import type { Movies } from '@/types/movies'
+import { tmdbUrls } from '@/services/tmdb/urls'
+import axiosClient from '@/lib/axios/client'
+import MoviePreviewHome from '@/components/astro/movie-preview-home.astro'
+
+const result = await axiosClient.get<Movies>(tmdbUrls.lists.buildUrl('movie', 'now_playing'))
+
+if (!result.success) return
+
+const { id } = result.data.results[0]
+
+const resultDetails = await axiosClient.get<DetailsMovie>(tmdbUrls.details('movie', id))
+
+if (!resultDetails.success) return
+
+const { data: movieDetails } = resultDetails
+
+const IMAGE_BACKDROP = `${tmdbUrls.images.original}${movieDetails.backdrop_path}`
+---
+
+<div class="h-screen w-full">
+  <section class="relative top-0 left-0 flex h-full w-full items-center">
+    <div
+      class="absolute h-full w-full before:absolute before:inset-0 before:bg-black/30 after:absolute after:inset-0 after:bg-gradient-to-t after:from-black"
+    >
+      <Image
+        class={'object-cover object-top w-full h-full mask-b-from-10% mask-b-to-90%'}
+        id={`${movieDetails.id}`}
+        src={IMAGE_BACKDROP}
+        alt={`${movieDetails.title}`}
+        width={1260}
+        height={760}
+        quality={'mid'}
+      />
+    </div>
+    <MoviePreviewHome
+      title={movieDetails.title}
+      language={movieDetails.original_language}
+      genders={movieDetails.genres}
+      overview={movieDetails.overview}
+      date={movieDetails.release_date}
+      rate={movieDetails.vote_average}
+      time={movieDetails.runtime}
+    />
+  </section>
+</div>

@@ -1,0 +1,35 @@
+---
+  import IconStar from "@/icons/IconStar.astro"
+
+  interface Props {
+    rate: number
+  }
+
+  const { rate } = Astro.props
+
+---
+
+
+
+<div class="flex gap-1 flex-grow">
+  <div class:list={[
+    'flex gap-2 opacity-0 group-hover:opacity-100',
+    { 
+    "text-red-600": rate < 5,
+    "text-yellow-500": rate >=5 && rate < 8,
+    "text-green-600": rate >= 8
+    }
+  ]}>
+  <span class="text-lg font-Noto_Sans font-bold text-white">Rate:</span>
+  <IconStar/>
+  </div>
+  <span class:list={[
+    'text-lg font-bold font-Noto_Sans opacity-0 group-hover:opacity-100',
+    { 
+    "text-red-600": rate < 5,
+    "text-yellow-500": rate >=5 && rate < 8,
+    "text-green-600": rate >= 8
+    }
+  ]}>{rate !== 10 ? rate?.toFixed(1).toString() : rate}
+  </span>
+</div>

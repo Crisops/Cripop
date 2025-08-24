@@ -1,0 +1,90 @@
+---
+import type { Genders } from '@/types/genders'
+import type { ImagesTMDB } from '@/types/images'
+import type { ResultSearch } from '@/types/database.types'
+import type { PreviewLists } from '@/services/tmdb/urls'
+import type { FormSearch } from '@/utils/validate-rules-form'
+import { getOptimizedResultWithGenders } from '@/services/get_genders_list'
+import { tmdbUrls } from '@/services/tmdb/urls'
+import axiosClient from '@/lib/axios/client'
+import Button from '@/components/shared/button'
+import MediaCard from '@/components/astro/media-card.astro'
+import { Link } from '@heroui/link'
+
+interface Props {
+  title: string
+  description?: string
+  list: PreviewLists
+  page?: number
+  type: FormSearch['type']
+  href: string
+}
+
+const { type, title, description, href, list, page } = Astro.props
+
+const result = await axiosClient.get<ResultSearch>(tmdbUrls.lists.buildUrl(type, list, page))
+if (!result.success || !result.data || !result.data.results) {
+  console.error('Error fetching data:', result)
+  return
+}
+
+const [imgPoster, genders] = await Promise.all([
+  Promise.all(
+    result.data.results.map((item) => axiosClient.get<ImagesTMDB>(tmdbUrls.images.includeLanguage(type, item.id))),
+  ),
+  axiosClient.get<Genders>(tmdbUrls.genres(type)),
+])
+
+if (!imgPoster) {
+  console.log(imgPoster)
+  return
+}
+if (!genders.success) {
+  console.log(genders.error)
+  return
+}
+
+const listIdWithGender = getOptimizedResultWithGenders(result.data, genders.data)
+
+const descriptionList =
+  description ??
+  ('dates' in result.data && result.data.dates
+    ? `${result.data.dates.minimum} al ${result.data.dates.maximum}`
+    : 'No hay fechas disponibles')
+---
+
+<div class="flex flex-col gap-4">
+  <div class="max-w-md space-y-1">
+    <h3 class="text-2xl font-bold text-balance text-white">{title}</h3>
+    <h5 class="text-medium text-balance text-zinc-400">{descriptionList}</h5>
+  </div>
+  <div class="relative h-full gap-2 overflow-x-hidden rounded-lg py-3">
+    <div class="flex h-[450px] gap-2">
+      <Button
+        variant="ghost"
+        radius="sm"
+        as={Link}
+        href={href}
+        className="border-small text-small absolute top-1/2 right-5 z-10 -translate-y-1/2 border-zinc-500 text-white hover:!bg-white hover:text-black"
+      >
+        Ver Más
+      </Button>
+      {
+        result.data.results.slice(0, 6).map((item, index) => (
+          <MediaCard
+            index={index}
+            item={item}
+            genders={listIdWithGender}
+            url_image={imgPoster[index].success ? imgPoster[index].data.posters[0]?.file_path : ''}
+            type={type}
+            class={{
+              base: 'max-w-75 min-w-[300px]',
+              image: 'absolute aspect-square h-full w-full',
+            }}
+          />
+        ))
+      }
+    </div>
+    <div class="absolute top-0 right-0 h-full w-96 bg-gradient-to-l from-black from-50% lg:w-xl"></div>
+  </div>
+</div>

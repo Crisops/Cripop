@@ -1,0 +1,20 @@
+---
+import MediaCardGendersDetails from '@/components/astro/media-card-genders-details.astro'
+import MediaCardRateDetails from '@/components/astro/media-card-rate-details.astro'
+import { type MovieWithValidGenders } from '@/types/genders'
+
+interface Props {
+  genders: MovieWithValidGenders[]
+  rate: number
+  index: number
+}
+
+const { rate, index, genders } = Astro.props
+---
+
+<footer
+  class="pointer-events-none absolute right-0 bottom-0 z-[2] flex w-full flex-col items-end justify-center gap-1 px-3 py-2"
+>
+  <MediaCardGendersDetails genders={genders} index={index} />
+  <MediaCardRateDetails rate={rate} />
+</footer>
