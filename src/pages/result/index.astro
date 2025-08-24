@@ -1,33 +1,36 @@
 ---
-  import Layout from "@/layouts/Layout.astro"
-  import Search from "@/components/astro/Search.astro"
-  import SearchMovieAndSeries from '@/components/astro/SearchMovieAndSeries.astro';
-  import BoxMain from '@/components/react/BoxMain';
-  import BoxSearch from '@/components/react/BoxSearch';
+import Layout from '@/layouts/Layout.astro'
+import { tmdbUrls } from '@/services/tmdb/urls'
+import { type FormSearch } from '@/utils/validate-rules-form'
+import ResultSearch from '@/components/astro/result-search.astro'
+import Footer from '@/components/astro/footer.astro'
 
-  const data = Astro.url.searchParams
-  const search = data.get("search")
-  const view = data.get("choose")
-  const query = search?.toLocaleLowerCase()
+const urlSearchParams = Astro.url.searchParams
+const query = urlSearchParams.get('search')
+const type = urlSearchParams.get('type') as FormSearch['type']
 
-  let page: string | null
+let page: number = 1
 
-  if (Astro.url.searchParams.get("page") != null) {
-    page = Astro.url.searchParams.get("page")
-  }else{
-    page = "1"
-  }
+if (Astro.url.searchParams.get('page') != null) {
+  page = Number(Astro.url.searchParams.get('page'))
+} else {
+  page = 1
+}
 
-      
-  const URL_SEARCH = `https://api.themoviedb.org/3/search/${view}?query=${query}&include_adult=true&language=es&page=${page}`
+if (!query || !type) return
 
+const URL_SEARCH = tmdbUrls.search(type, query, page)
 ---
 
-<Layout title={`(${search}) - Cripop`}>
-  <BoxMain client:idle>
-    <Search url={URL_SEARCH} choose={view} title={search} page={page} component="search"/>
-  </BoxMain>
-  <BoxSearch client:idle>
-    <SearchMovieAndSeries/>
-  </BoxSearch>  
+<Layout title={`(${query}) - Cripop`}>
+  <div class="relative mt-10 flex flex-col items-start justify-between px-5 md:px-10 xl:flex-row">
+    <h1 class="text-left text-xl font-light text-white sm:text-2xl">
+      Resultados de tu busqueda: <span
+        class="text-center text-xl font-bold text-white sm:text-left sm:text-2xl lg:max-xl:text-center xl:text-left"
+        >"{query}"</span
+      >
+    </h1>
+  </div>
+  <ResultSearch type={type} url={URL_SEARCH} page={page} />
+  <Footer />
 </Layout>

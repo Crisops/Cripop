@@ -1,29 +1,14 @@
 ---
-import Layout from "@/layouts/Layout.astro"
-import MovieHomePreview from "@/components/astro/MovieHomePreview.astro"
-import MoviesDataBase from "@/components/astro/MoviesDataBase.astro"
-import BoxSearch from "@/components/react/BoxSearch"
-
-import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro";
-import Footer from "@/components/astro/Footer.astro";
-
+import Layout from '@/layouts/Layout.astro'
+import MovieHero from '@/components/astro/movie-hero.astro'
+import MediaHomeCarousel from '@/components/astro/media-home-carousel.astro'
+import Footer from '@/components/astro/footer.astro'
 ---
 
 <Layout title="Cripop - Un espacio donde puedes ver lo que te gusta">
-	<div class="relative w-full h-full flex flex-col">
-		<div class="relative w-full h-full overflow-hidden">
-			<MovieHomePreview/>
-		</div>
-		<main class="relative">
-			<div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black"></div>
-			<div class="relative h-52 flex items-center px-5 md:px-10">
-				<h2 class="text-white font-Libre_Franklin text-2xl sm:text-3xl font-semibold uppercase">Disfruta de tus peliculas y series favoritas</h2>
-			</div>
-			<MoviesDataBase/>
-			<Footer/>
-		</main>
-		<BoxSearch client:idle>
-			<SearchMovieAndSeries/>
-		</BoxSearch>
-	</div>
+  <div class="flex h-full w-full flex-col">
+    <MovieHero />
+    <MediaHomeCarousel />
+    <Footer />
+  </div>
 </Layout>

@@ -1,51 +1,56 @@
 ---
-import IconGitHub from "@/icons/IconGitHub.astro";
-import IconInstagram from "@/icons/IconInstagram.astro";
-import IconLinkedin from "@/icons/IconLinkedin.astro";
-import ButtonSearch from "../react/ButtonSearch";
-import InfoTMDB from "./InfoTMDB.astro";
-import IconTMDB from "@/icons/IconTMDB.astro"
-
+import { Link } from '@heroui/link'
+import IconTMDB from '@/icons/icon-tmdb.astro'
+import CreditsAndSocialFooter from '@/components/astro/credits-and-social-footer.astro'
+import WelcomeSearchFooter from '@/components/react/welcome-search-footer'
+import Button from '@/components/shared/button'
 ---
 
-<footer class="relative w-full h-full">
-  <div class="flex flex-col h-full">
-    <div class="flex-grow grid grid-cols-1 sm:max-xl:grid-cols-2 xl:grid-cols-4 place-items-center gap-10 py-10 px-5 md:px-10">
-      <div class="flex flex-col justify-center items-center gap-2">
-        <span class="text-gray-500 font-Noto_Sans uppercase text-xs sm:text-sm">Proveedor de los datos</span>
-        <IconTMDB/>
+<footer class="relative h-full w-full">
+  <div class="flex h-full flex-col">
+    <div
+      class="grid flex-grow grid-cols-1 place-items-center gap-10 px-5 py-10 sm:max-xl:grid-cols-2 md:px-10 xl:grid-cols-4"
+    >
+      <div class="flex flex-col items-center justify-center gap-2">
+        <span class="sm:text-small text-xs text-gray-500 uppercase">Proveedor de los datos</span>
+        <IconTMDB />
       </div>
-      <div class="flex flex-col justify-center items-start">
-        <div class="flex flex-col gap-2 max-w-md lg:max-w-lg">
-          <span class="font-Ubuntu text-white font-bold text-xl lg:self-start">Cripop</span>
-          <p class="text-zinc-500 font-Noto_Sans text-xs">Un espacio donde puedes ver lo que te gusta de una manera rápida, sencilla y eficaz.</p>
-          <p class="text-zinc-500 font-Noto_Sans text-xs">Busca tu serie y película favorita. ¿Te perderás alguna?</p>
-          <ButtonSearch client:visible icon={false} text={'Comenzar'} styles="text-zinc-950 bg-white transition-colors hover:bg-white/50 flex-grow 1 py-2 text-sm"/>
-        </div>
-      </div>
-      <div class="flex flex-col justify-center items-center lg:items-start max-w-md lg:max-w-lg col-span-1 sm:col-span-2">
+      <WelcomeSearchFooter client:visible />
+      <div
+        class="col-span-1 flex max-w-md flex-col items-center justify-center sm:col-span-2 lg:max-w-lg lg:items-start"
+      >
         <div class="flex flex-col gap-2">
-          <span class="text-white font-bold font-Noto_Sans text-lg lg:self-start">¿Quíen soy yo?</span>
-          <div class="flex flex-col gap-2 mb-8 max-w-md lg:max-w-lg">
-            <p class="text-xs font-Noto_Sans text text-zinc-500">Puedes mirar mis proyectos creados en el siguiente enlace: <a class="hover:underline" href="https://github.com/Crisops" target="_blank" rel="noopener noreferrer">https://github.com/Crisops</a> o darle click en el siguiente botón</p>
-            <a class="text-zinc-950 bg-white transition-colors hover:bg-white/50 px-3 py-2 text-sm text-center" href="https://github.com/Crisops" target="_blank" rel="noopener noreferrer">Mirar perfil</a>
+          <span class="text-lg font-bold text-white lg:self-start">¿Quíen soy yo?</span>
+          <div class="mb-8 flex max-w-md flex-col gap-2 lg:max-w-lg">
+            <p class="text-tiny text-zinc-500">
+              Puedes mirar mis proyectos creados en el siguiente enlace: <a
+                class="hover:underline"
+                href="https://github.com/Crisops"
+                target="_blank"
+                rel="noopener noreferrer">https://github.com/Crisops</a
+              > o darle click en el siguiente botón
+            </p>
+            <Button
+              variant="solid"
+              radius="sm"
+              as={Link}
+              href="https://github.com/Crisops"
+              className="flex-grow bg-white py-2 text-sm text-zinc-950 transition-colors hover:!bg-white/50"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Mirar perfil
+            </Button>
           </div>
           <div class="flex flex-col">
-            <span class="text-white font-bold font-Noto_Sans text-lg lg:self-start">Contacto</span>
-            <p class="text-xs font-Noto_Sans text text-zinc-500 max-w-sm">Me puedes encontrar en la red social de Instagram como cris.alejo13 o en Linkedin como Cristian Pérez</p>
+            <span class="text-lg font-bold text-white lg:self-start">Contacto</span>
+            <p class="text-tiny max-w-sm text-zinc-500">
+              Me puedes encontrar en la red social de Instagram como cris.alejo13 o en Linkedin como Cristian Pérez
+            </p>
           </div>
         </div>
       </div>
     </div>
-    <div class="flex flex-col gap-3 justify-between items-center py-4 px-5 md:px-10 sm:flex-row border-t border-zinc-900">
-      <div class="max-w-lg">
-        <InfoTMDB/>
-      </div>
-      <div class="flex justify-center items-center gap-3 px-5 md:px-10 [&>a]:transition-colors [&>a]:hover:text-[#00f815]">
-        <a class="hover:text-[#00f815]" href="https://github.com/Crisops" target="_blank" rel="noopener noreferrer"><IconGitHub/></a>
-        <a class="hover:text-[#00f815]" href="https://instagram.com/cris.alejo13" target="_blank" rel="noopener noreferrer"><IconInstagram/></a>
-        <a class="hover:fill-[#00f815]" href="https://www.linkedin.com/in/cristian-perez-5b306a239/" target="_blank" rel="noopener noreferrer"><IconLinkedin/></a>
-      </div>
-    </div>
+    <CreditsAndSocialFooter />
   </div>
 </footer>
