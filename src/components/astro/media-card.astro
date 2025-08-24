@@ -1,0 +1,87 @@
+---
+import { Image } from 'astro:assets'
+import type { FormSearch } from '@/utils/validate-rules-form'
+import type { HTMLAttributes } from 'astro/types'
+import type { MovieWithValidGenders } from '@/types/genders'
+import type { ResultSearch } from '@/types/database.types'
+import { tmdbUrls } from '@/services/tmdb/urls'
+import MediaCardDetails from '@/components/astro/media-card-details.astro'
+
+type ClassNames = {
+  base: HTMLAttributes<'article'>['class']
+  image: HTMLAttributes<'img'>['class']
+}
+
+interface Props {
+  index: number
+  item: ResultSearch['results'][number]
+  genders: MovieWithValidGenders[]
+  url_image: string
+  type: FormSearch['type']
+  class?: Partial<Record<keyof ClassNames, string>>
+}
+
+const URL_IMG = tmdbUrls.images.w500
+
+const { item, index, genders, url_image: urlImage, type, class: className } = Astro.props
+
+const urlTitle =
+  'title' in item
+    ? item.title?.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')
+    : item.name?.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')
+
+const endPoint = type === 'tv' ? `tv/series/${item.id}/${urlTitle}` : `movie/${item.id}/${urlTitle}`
+---
+
+<article
+  class:list={[
+    'group relative h-full cursor-pointer overflow-hidden rounded-lg border border-zinc-900',
+    className?.base,
+  ]}
+  transition:name=`box ${item.id}`
+>
+  <a href={endPoint}>
+    {
+      urlImage ? (
+        <Image
+          transition:name={`image ${item.id}`}
+          class:list={['rounded-lg transition-transform duration-500 group-hover:scale-105', className?.image]}
+          src={URL_IMG + urlImage}
+          alt={`${'title' in item ? item.title : item.name}`}
+          width={500}
+          height={700}
+          quality={'low'}
+        />
+      ) : (
+        <div
+          class:list={[
+            'relative h-full cursor-pointer overflow-hidden rounded-lg border border-zinc-900',
+            className?.base,
+          ]}
+        >
+          <Image
+            class:list={[
+              'rounded-lg object-cover transition-transform duration-500 group-hover:scale-105',
+              className?.image,
+            ]}
+            src={'/images/not-found-image.png'}
+            alt={`${'title' in item ? item.title : item.name}`}
+            width={500}
+            height={700}
+            quality={'low'}
+          />
+          <div class="absolute bottom-2 left-2 max-w-44">
+            <span class="text-tiny font-medium text-white">
+              Lo sentimos, no se encuentra una imagen para esta película.
+            </span>
+          </div>
+        </div>
+      )
+    }
+    <MediaCardDetails genders={genders} index={index} rate={item.vote_average} />
+    <div
+      class="absolute inset-0 top-0 right-0 translate-y-full cursor-pointer bg-gradient-to-t from-black transition-all duration-300 ease-linear group-hover:translate-y-0"
+    >
+    </div>
+  </a>
+</article>

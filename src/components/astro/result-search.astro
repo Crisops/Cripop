@@ -1,0 +1,87 @@
+---
+import type { ResultSearch } from '@/types/database.types'
+import type { Genders } from '@/types/genders'
+import type { ImagesTMDB } from '@/types/images'
+import { type FormSearch } from '@/utils/validate-rules-form'
+import { getOptimizedResultWithGenders } from '@/services/get_genders_list'
+import axiosClient from '@/lib/axios/client'
+import { tmdbUrls } from '@/services/tmdb/urls'
+import MediaCard from '@/components/astro/media-card.astro'
+import Pagination from '@/components/react/Pagination'
+import NotFoundSearch from '@/icons/not-found-search.astro'
+
+interface Props {
+  url: string
+  type: FormSearch['type']
+  page: number | null
+}
+
+const { type, url, page } = Astro.props
+
+const result = await axiosClient.get<ResultSearch>(url)
+
+if (!result.success) {
+  throw new Error('Error al obtener los resultados de la busqueda')
+}
+
+const [img, genders] = await Promise.all([
+  Promise.all(
+    result.data.results.map((search) => axiosClient.get<ImagesTMDB>(tmdbUrls.images.includeLanguage(type, search.id))),
+  ),
+  axiosClient.get<Genders>(tmdbUrls.genres(type)),
+])
+if (!img) throw new Error('Error al obtener las imagenes de los resultados de la busqueda')
+
+if (!genders.success) throw new Error('Error al obtener las generos de los resultados de la busqueda')
+
+const listIdWithGender = getOptimizedResultWithGenders(result.data, genders.data)
+---
+
+<div id="containerMovies" class="relative mt-10 h-full">
+  <div
+    class:list={[
+      'realtive px-5 pb-20',
+      {
+        'grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6':
+          result.success,
+        'h-full w-full': !result.success,
+      },
+    ]}
+  >
+    {
+      result.success ? (
+        result.data?.results.map((item, index) => (
+          <MediaCard
+            item={item}
+            genders={listIdWithGender}
+            url_image={img[index].success ? img[index].data.posters[0]?.file_path : ''}
+            index={index}
+            type={type}
+            class={{
+              base: 'relative h-64 min-h-64 w-full sm:h-[450px] sm:min-h-[450px]',
+              image: 'h-full object-cover',
+            }}
+          />
+        ))
+      ) : (
+        <div class="flex h-full w-full max-w-lg flex-col items-center gap-2">
+          <span class="font-Noto_Sans self-start text-sm text-gray-200/30 sm:self-center">
+            Lo sentimos, no se encontró un resultado para tu búsqueda
+          </span>
+          <NotFoundSearch />
+          <a
+            href="/"
+            class="w-80 border border-zinc-500 px-3 py-3 text-center text-sm font-medium text-white transition-colors duration-300 hover:bg-white hover:text-black"
+          >
+            Volver
+          </a>
+        </div>
+      )
+    }
+  </div>
+</div>
+{
+  result.success && (
+    <Pagination client:visible page={page || 1} component={type} totalPages={result.data?.total_pages ?? 20} />
+  )
+}
