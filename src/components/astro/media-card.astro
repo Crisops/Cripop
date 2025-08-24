@@ -5,6 +5,7 @@ import type { HTMLAttributes } from 'astro/types'
 import type { MovieWithValidGenders } from '@/types/genders'
 import type { ResultSearch } from '@/types/database.types'
 import { tmdbUrls } from '@/services/tmdb/urls'
+import { env } from '@/config/env'
 import MediaCardDetails from '@/components/astro/media-card-details.astro'
 
 type ClassNames = {
@@ -30,7 +31,23 @@ const urlTitle =
     ? item.title?.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')
     : item.name?.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')
 
-const endPoint = type === 'tv' ? `tv/series/${item.id}/${urlTitle}` : `movie/${item.id}/${urlTitle}`
+const currentUrl = Astro.url.pathname
+
+const isNavigateList = currentUrl.split('/').at(1) as FormSearch['type']
+
+const BASE_URL = Astro.url.origin
+
+let endPoint = ''
+
+if (isNavigateList) {
+  if (isNavigateList === 'movie') {
+    endPoint = `${BASE_URL}/${isNavigateList}/${item.id}/${urlTitle}`
+  } else {
+    endPoint = `${BASE_URL}/${isNavigateList}/series/${item.id}/${urlTitle}`
+  }
+} else {
+  endPoint = type === 'tv' ? `tv/series/${item.id}/${urlTitle}` : `movie/${item.id}/${urlTitle}`
+}
 ---
 
 <article
