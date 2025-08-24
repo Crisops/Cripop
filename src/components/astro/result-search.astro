@@ -6,14 +6,14 @@ import { type FormSearch } from '@/utils/validate-rules-form'
 import { getOptimizedResultWithGenders } from '@/services/get_genders_list'
 import axiosClient from '@/lib/axios/client'
 import { tmdbUrls } from '@/services/tmdb/urls'
-import MediaCard from '@/components/astro/media-card.astro'
-import Pagination from '@/components/react/Pagination'
 import NotFoundSearch from '@/icons/not-found-search.astro'
+import MediaCard from '@/components/astro/media-card.astro'
+import PaginationResults from '@/components/react/pagination-results'
 
 interface Props {
   url: string
   type: FormSearch['type']
-  page: number | null
+  page: number
 }
 
 const { type, url, page } = Astro.props
@@ -38,6 +38,7 @@ const listIdWithGender = getOptimizedResultWithGenders(result.data, genders.data
 ---
 
 <div id="containerMovies" class="relative mt-10 h-full">
+  <slot name="header" />
   <div
     class:list={[
       'realtive px-5 pb-20',
@@ -79,9 +80,5 @@ const listIdWithGender = getOptimizedResultWithGenders(result.data, genders.data
       )
     }
   </div>
+  {result.success && <PaginationResults client:visible page={page} totalPages={500} />}
 </div>
-{
-  result.success && (
-    <Pagination client:visible page={page || 1} component={type} totalPages={result.data?.total_pages ?? 20} />
-  )
-}

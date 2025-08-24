@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react'
+import { navigate } from 'astro:transitions/client'
 import { Search } from 'lucide-react'
 import { Navbar as NavbarHero, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar'
 import { Link } from '@heroui/link'
@@ -16,12 +17,16 @@ const Navbar = () => {
     [isOpen, setIsOpen],
   )
 
+  const handleNavigate = () => {
+    navigate('/')
+  }
+
   return (
     <>
       <NavbarHero position="sticky" className="z-50 h-16 bg-black/50 backdrop-blur-sm [&>header]:max-w-full">
         <NavbarBrand>
-          <Link href="/" className="text-white">
-            <p className="text-lg font-bold">cripop</p>
+          <Link onPress={handleNavigate} className="text-large cursor-pointer font-bold text-white">
+            cripop
           </Link>
         </NavbarBrand>
         <NavbarContent justify="end" className="gap-0">
