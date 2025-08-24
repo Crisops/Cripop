@@ -44,8 +44,11 @@ const Navbar = () => {
           </NavbarItem>
           <NavbarItem>
             <Button
-              startContent={<GitHub className="hidden size-5 fill-white md:block" />}
+              as={Link}
+              target="_blank"
+              rel="noopener noreferrer"
               href="https://github.com/Crisops/Cripop"
+              startContent={<GitHub className="hidden size-5 fill-white md:block" />}
               className="w-max min-w-max bg-transparent text-white"
             >
               <div className="flex md:hidden">
