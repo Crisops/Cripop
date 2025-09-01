@@ -3,7 +3,7 @@ import type { ResultSearch } from '@/types/database.types'
 import type { Genders } from '@/types/genders'
 import type { ImagesTMDB } from '@/types/images'
 import { type FormSearch } from '@/utils/validate-rules-form'
-import { getOptimizedResultWithGenders } from '@/services/get_genders_list'
+import { getOptimizedResultWithGenders } from '@/services/get-genders-list'
 import axiosClient from '@/lib/axios/client'
 import { tmdbUrls } from '@/services/tmdb/urls'
 import NotFoundSearch from '@/icons/not-found-search.astro'
@@ -35,6 +35,8 @@ if (!img) throw new Error('Error al obtener las imagenes de los resultados de la
 if (!genders.success) throw new Error('Error al obtener las generos de los resultados de la busqueda')
 
 const listIdWithGender = getOptimizedResultWithGenders(result.data, genders.data)
+
+const totalPages = result.data.total_pages < 500 ? result.data.total_pages : 500
 ---
 
 <div id="containerMovies" class="relative mt-10 h-full">
@@ -50,20 +52,23 @@ const listIdWithGender = getOptimizedResultWithGenders(result.data, genders.data
     ]}
   >
     {
-      result.success ? (
-        result.data?.results.map((item, index) => (
-          <MediaCard
-            item={item}
-            genders={listIdWithGender}
-            url_image={img[index].success ? img[index].data.posters[0]?.file_path : ''}
-            index={index}
-            type={type}
-            class={{
-              base: 'relative h-64 min-h-64 w-full sm:h-[450px] sm:min-h-[450px]',
-              image: 'h-full object-cover',
-            }}
-          />
-        ))
+      result.success && img.every((img) => img.success) ? (
+        result.data.results.map((item, index) => {
+          const posterImage = img[index]?.data?.posters?.[0]?.file_path
+          return (
+            <MediaCard
+              item={item}
+              genders={listIdWithGender}
+              url_image={posterImage}
+              index={index}
+              type={type}
+              class={{
+                base: 'relative h-64 min-h-64 w-full sm:h-[450px] sm:min-h-[450px]',
+                image: 'h-full object-cover',
+              }}
+            />
+          )
+        })
       ) : (
         <div class="flex h-full w-full max-w-lg flex-col items-center gap-2">
           <span class="font-Noto_Sans self-start text-sm text-gray-200/30 sm:self-center">
@@ -80,5 +85,5 @@ const listIdWithGender = getOptimizedResultWithGenders(result.data, genders.data
       )
     }
   </div>
-  {result.success && <PaginationResults client:visible page={page} totalPages={500} />}
+  {result.success && <PaginationResults client:visible page={page} totalPages={totalPages} />}
 </div>

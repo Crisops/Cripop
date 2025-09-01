@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { navigate } from 'astro:transitions/client'
-
 import { Pagination } from '@heroui/pagination'
+import { useDevice } from '@/hooks/use-device'
 
 interface PaginationResultsProps {
   page: number
@@ -11,6 +11,7 @@ interface PaginationResultsProps {
 const PaginationResults = ({ page, totalPages }: PaginationResultsProps) => {
   const [currentPage, setCurrentPage] = useState<number>(page)
   const [isNavigating, setIsNavigating] = useState<boolean>(false)
+  const { isMobile } = useDevice()
 
   useEffect(() => {
     setCurrentPage(page)
@@ -22,14 +23,19 @@ const PaginationResults = ({ page, totalPages }: PaginationResultsProps) => {
       if (isNavigating) return
       setIsNavigating(true)
       const url = new URL(window.location.href)
-      navigate(`${url.pathname}?page=${newPage}`)
+      if (url.searchParams.get('page')) {
+        url.searchParams.set('page', newPage.toString())
+      } else {
+        url.searchParams.append('page', newPage.toString())
+      }
+      navigate(url.href)
     },
     [isNavigating],
   )
   return (
     <Pagination
       isDisabled={isNavigating}
-      siblings={2}
+      siblings={isMobile ? 1 : 2}
       variant="light"
       onChange={handlePageChange}
       classNames={{
