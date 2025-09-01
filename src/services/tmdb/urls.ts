@@ -5,7 +5,10 @@ export type PreviewLists = 'now_playing' | 'popular' | 'top_rated' | 'upcoming'
 export const tmdbUrls = {
   images: {
     original: 'https://image.tmdb.org/t/p/original',
+    w300: 'https://image.tmdb.org/t/p/w300',
     w500: 'https://image.tmdb.org/t/p/w500',
+    w1280: 'https://image.tmdb.org/t/p/w1280',
+    w92: 'https://image.tmdb.org/t/p/w92',
     includeLanguage: (type: FormSearch['type'], id: number) => `/${type}/${id}/images?include_image_language=en,es`,
     posters: (type: FormSearch['type'], id: number) => `/${type}/${id}/images?include_image_language=en,es`,
   },
@@ -17,4 +20,19 @@ export const tmdbUrls = {
       `/${type}/${list}?language=es&page=${page ?? 1}`,
   },
   details: (type: FormSearch['type'], id: number) => `/${type}/${id}?language=es`,
+  detailsWithVideos: (type: FormSearch['type'], id: number) => `/${type}/${id}?append_to_response=videos&language=es`,
+  detailsSeason: (type: Exclude<FormSearch['type'], 'movie'>, id: number, seasonNumber: number) =>
+    `/${type}/${id}/season/${seasonNumber}?language=es`,
+  detailsEpisode: (
+    type: Exclude<FormSearch['type'], 'movie'>,
+    id: number,
+    seasonNumber: number,
+    episodeNumber: number,
+  ) => `/${type}/${id}/season/${seasonNumber}/episode/${episodeNumber}?language=es`,
+  videos: {
+    season: {
+      episodes: (type: Exclude<FormSearch['type'], 'movie'>, id: number, seasonNumber: number, episodeNumber: number) =>
+        `/${type}/${id}/season/${seasonNumber}/episode/${episodeNumber}/videos?include_video_language=es,en&language=es`,
+    },
+  },
 }
