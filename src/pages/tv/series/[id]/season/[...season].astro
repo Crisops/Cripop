@@ -1,99 +1,54 @@
 ---
-  import Layout from "@/layouts/Layout.astro"
-  import Episode from "@/components/astro/Episode.astro"
-  import type {DetailsSeriesSeason} from "@/types/dataSeriesSeasons"
-  import type {EpisodeData} from "@/types/dataEpisodeSeason"
-  import { getEpisodesOfSeasons } from "@/services/get_episodesOfSeasons_tv"
-  import { getDetailsEpisode } from "@/services/get_data_episodes_tv"
-  import type { DetailsSeries } from "@/types/dataDetailsSeries"
-  import {getPosterEpisode} from "@/services/get_images_episodesSeasons"
-  import { Image } from "astro:assets"
-  import { getPosterPath } from "@/services/get_poster_img"
-  import BoxMain from "@/components/react/BoxMain"
-  import BoxSearch from "@/components/react/BoxSearch"
-  import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro"
-  import ViewTrailerEpisode from "@/components/astro/ViewTrailerEpisode.astro"
-  import BoxViewTrailer from "@/components/react/BoxViewTrailer"
+import Layout from '@/layouts/Layout.astro'
+import type { DetailsSeriesSeasons } from '@/types/database.types'
+import type { DetailsSeries } from '@/types/details-serie'
+import type { DetailsSeason } from '@/types/data-season'
+import type { Videos } from '@/types/videos'
+import { tmdbUrls } from '@/services/tmdb/urls'
+import axiosClient from '@/lib/axios/client'
+import MediaDetails from '@/components/astro/media-details.astro'
 
+const { id, season } = Astro.params
+const [seasonNumber, _, episodeNumber, __] = season?.split('/') ?? []
 
+if (!id || !seasonNumber || !episodeNumber) return Astro.redirect('/404')
 
-  const {season} = Astro.params
+const URL_SERIE_DETAILS = tmdbUrls.detailsWithVideos('tv', parseInt(id))
+const URL_SEASON_DETAILS = tmdbUrls.detailsSeason('tv', parseInt(id), parseInt(seasonNumber))
+const URL_EPISODE_VIDEOS = tmdbUrls.videos.season.episodes(
+  'tv',
+  parseInt(id),
+  parseInt(seasonNumber),
+  parseInt(episodeNumber),
+)
 
-  const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
-  const URL_IMG_STILL_PATH = `https://image.tmdb.org/t/p/w500`
-  const URL_IMG = `https://image.tmdb.org/t/p/w1280`
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${ACCESS_TOKEN}`
-    }
-  }
+const [detailSerie, detailSeason, detailEpisodeVideos] = await Promise.all([
+  axiosClient.get<DetailsSeries>(URL_SERIE_DETAILS),
+  axiosClient.get<DetailsSeason>(URL_SEASON_DETAILS),
+  axiosClient.get<Videos>(URL_EPISODE_VIDEOS),
+])
 
+if (!detailSerie.success || !detailSeason.success || !detailEpisodeVideos.success) return Astro.redirect('/404')
 
-  const idSerie: string | undefined = Astro.url.pathname.split("/")[3]
-  const seasonNumber: string | undefined = season?.split("/")[0]
-  const episodeNumber: (number | string) | undefined = season?.split("/")[2]
-  const nameEpisode: string | undefined = season?.split("/")[3]
-  
-  let episodesSeason: DetailsSeriesSeason | undefined // Se utilizara para mostrar los demas episodios de esa temporada
-  let episodeData: EpisodeData | undefined // Información de los episodios
+const { data: dataSerie } = detailSerie
+const { data: dataSeason } = detailSeason
+const { data: dataEpisodeVideos } = detailEpisodeVideos
 
-  episodesSeason = await getEpisodesOfSeasons(ACCESS_TOKEN,idSerie,seasonNumber)
-  
-  episodeData = await getDetailsEpisode({token:ACCESS_TOKEN, idSerie, seasonNumber, episodeNumber }) 
+const dataEpisode =
+  dataSeason.episodes.find((episode) => episode.episode_number === parseInt(episodeNumber)) ?? dataSeason.episodes[0]
 
-
-  const URL_SERIE_DETAILS = `https://api.themoviedb.org/3/tv/${idSerie}&language=es` // traer serie
-  const response = await fetch(URL_SERIE_DETAILS, options)
-  const serie = await response.json() as DetailsSeries
-  const backdrop_path = serie.backdrop_path // extraer la imagen de fondo
-
-  const imgSerie = await getPosterPath(ACCESS_TOKEN, parseInt(idSerie), "tv")
-  const imgUrlSerie = imgSerie?.file_path
-
-  const imgEpisode = await getPosterEpisode(ACCESS_TOKEN, idSerie, seasonNumber, episodeNumber)
-  const imgUrlEpisode = imgEpisode?.file_path // imagén del episodeo
-  
-
-  
-
+const detailsSerieSeason: DetailsSeriesSeasons = {
+  ...dataSerie,
+  name: dataEpisode.name,
+  overview: dataEpisode.overview,
+  first_air_date: dataEpisode.air_date,
+  currentSeason: { ...dataSeason, episode: dataEpisode },
+  videos: dataEpisodeVideos,
+  vote_average: dataEpisode.vote_average,
+  runtime: dataEpisode.runtime,
+}
 ---
 
-<Layout title={`Cripop - ${nameEpisode}`}>
-  <BoxMain client:idle>
-    <main class="relative h-screen">
-      <Episode
-      id={idSerie}
-      name={episodeData?.name}
-      poster_img={URL_IMG_STILL_PATH + imgUrlSerie}
-      overview={episodeData?.overview}
-      rate={episodeData?.vote_average}
-      duration={episodeData?.runtime}
-      dateStart={episodeData?.air_date}
-      episodesSeason={episodesSeason}
-      episodeNumber={episodeNumber}
-      seasonNumber={seasonNumber}
-      />
-      <div class="absolute w-full h-[500px] xl:h-full">
-        <Image
-        class={"absolute w-full h-full object-cover object-center"}
-        src={URL_IMG + (backdrop_path ?? "")}
-        alt={nameEpisode ?? ""}
-        width={1280}
-        height={720}
-        quality={60}
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-[#000105]"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-[#000105]"></div>
-        <div class="absolute inset-0 bg-[#000105]/30"></div>
-      </div>
-      <BoxViewTrailer client:idle>
-        <ViewTrailerEpisode idSerie={idSerie} numberSeason={seasonNumber} numberEpisode={episodeNumber}/>
-      </BoxViewTrailer>
-    </main>
-  </BoxMain>
-  <BoxSearch client:idle>
-    <SearchMovieAndSeries/>
-  </BoxSearch>
+<Layout title={`Cripop - ${dataEpisode.name}`}>
+  <MediaDetails data={detailsSerieSeason} type="tv" isSeason />
 </Layout>

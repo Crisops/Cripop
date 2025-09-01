@@ -1,0 +1,29 @@
+---
+import type { MediaDetails } from '@/types/database.types'
+import type { FormSearch } from '@/utils/validate-rules-form'
+import MediaDetailsInfo from '@/components/astro/media-details-info.astro'
+
+interface Props {
+  data: MediaDetails
+  type: FormSearch['type']
+  isSeason?: boolean
+}
+
+const { data, type, isSeason } = Astro.props
+---
+
+<div class="block xl:h-[calc(100vh_-_4rem)]">
+  <section class="z-10 w-full overflow-hidden xl:h-full">
+    <div class="flex h-full flex-col-reverse gap-5 xl:flex-row xl:gap-0">
+      <MediaDetailsInfo data={data} type={type} isSeason={isSeason} />
+    </div>
+    <div
+      class="pointer-events-none absolute top-0 left-0 h-full w-full bg-linear-[45deg,_transparent_30%,_rgba(255,255,255,0.03)_35%,_rgba(255,255,255,0.05)_40%,_transparent_45%]"
+    >
+    </div>
+    <div
+      class="pointer-events-none absolute top-0 left-0 h-full w-full bg-linear-[135deg,_transparent_30%,_rgba(255,255,255,0.02)_35%,_rgba(255,255,255,0.05)_40%,_transparent_45%]"
+    >
+    </div>
+  </section>
+</div>

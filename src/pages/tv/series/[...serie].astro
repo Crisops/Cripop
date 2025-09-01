@@ -1,103 +1,30 @@
 ---
-  import ItemSerieSelect from "@/components/astro/ItemSerieSelect.astro"
-  import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro"
-  import ViewTrailer from "@/components/astro/ViewTrailer.astro"
-  import BoxMain from "@/components/react/BoxMain"
-  import BoxSearch from "@/components/react/BoxSearch"
-  import BoxViewTrailer from "@/components/react/BoxViewTrailer"
-  import Layout from "@/layouts/Layout.astro"
-  import { getPosterPath } from "@/services/get_poster_img"
-  import type {DetailsSeries} from "@/types/dataDetailsSeries"
-  import { Image } from "astro:assets"
+import Layout from '@/layouts/Layout.astro'
+import { tmdbUrls } from '@/services/tmdb/urls'
+import axiosClient from '@/lib/axios/client'
+import MediaDetails from '@/components/astro/media-details.astro'
+import type { DetailsSeries } from '@/types/details-serie'
+import type { DetailsSeriesSeasons } from '@/types/database.types'
 
-  const {serie} = Astro.params
+const { serie } = Astro.params
 
-  let idSerie: number | undefined
-  let nameSerie: string | undefined
-  let data
-  let URL_IMG: string | undefined
-  let URL_IMG_POSTER: string | undefined
-  let img
-  let imgUrl: string | undefined
-  const chooseURL: string = Astro.url.pathname.split("/")[1]
-  
-  let backdrop_path: string | undefined
+if (!serie) return Astro.redirect('/404')
 
-  const API_KEY = import.meta.env.SECRET_API_KEY
-  const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
-  
-  if (serie) {
-    const [id, name] = serie?.split("/") 
-    idSerie = parseInt(id)
-    nameSerie = name;
+const [id, name] = serie.split('/')
 
-    const URL_SERIE_DETAILS = `https://api.themoviedb.org/3/tv/${idSerie}?api_key=${API_KEY}&language=es`
-    
-    URL_IMG = `https://image.tmdb.org/t/p/w1280`
-    URL_IMG_POSTER = `https://image.tmdb.org/t/p/w500`
+const URL_SERIE_DETAILS = tmdbUrls.detailsWithVideos('tv', parseInt(id))
+const result = await axiosClient.get<DetailsSeries>(URL_SERIE_DETAILS)
 
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${ACCESS_TOKEN}`
-      }
-    }
+if (!result.success) return Astro.redirect('/404')
 
-    const response = await fetch(URL_SERIE_DETAILS, options)
-    data = await response.json() as DetailsSeries
+const { data } = result
 
-    // console.log(data);
-    
-
-    img = await getPosterPath(ACCESS_TOKEN, idSerie, chooseURL)
-
-    imgUrl = img?.file_path
-    backdrop_path = data.backdrop_path
-    
-
-  }
-
+const detailsSerie: Omit<DetailsSeriesSeasons, 'currentSeason'> = {
+  ...data,
+  runtime: data.episode_run_time[0] * data.number_of_episodes,
+}
 ---
 
-<Layout title={`Cripop - ${nameSerie || data?.name}`}>
-  <BoxMain client:idle>
-    <main class="relative h-screen">
-      <ItemSerieSelect
-        id={idSerie}
-        name={data?.name}
-        genres={data?.genres}
-        language={data?.spoken_languages}
-        overview={data?.overview}
-        poster_img={URL_IMG_POSTER + (imgUrl ?? "")}
-        dateStart={data?.first_air_date}
-        dateEnd={data?.last_air_date}
-        tagline={data?.tagline}
-        video={data?.videos}
-        rate={data?.vote_average}
-        numberSeasons={data?.number_of_seasons}
-        numberEpisodes={data?.number_of_episodes}
-        seasons={data?.seasons}
-      />
-      <div class="absolute w-full h-[500px] xl:h-full">
-        <Image
-        class={"absolute w-full h-full object-cover object-center"}
-        src={URL_IMG + (backdrop_path ?? "")}
-        alt={nameSerie ?? ""}
-        width={1280}
-        height={720}
-        quality={60}
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-[#000105]"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-[#000105]"></div>
-        <div class="absolute inset-0 bg-[#000105]/30"></div>
-      </div>
-      <BoxViewTrailer client:idle>
-        <ViewTrailer view="tv" idMovie={idSerie}/>
-      </BoxViewTrailer>
-    </main>
-  </BoxMain>
-  <BoxSearch client:idle>
-    <SearchMovieAndSeries/>
-  </BoxSearch>
+<Layout title={`Cripop - ${name}`}>
+  <MediaDetails data={detailsSerie} type="tv" />
 </Layout>

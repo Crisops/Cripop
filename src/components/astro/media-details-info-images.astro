@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets'
+
+interface Props {
+  id: number
+  title: string
+  imgPoster: string
+  imgBackdrop: string
+}
+
+const { id, title, imgPoster, imgBackdrop } = Astro.props
+---
+
+<div class="relative">
+  <div
+    class="flex h-72 items-end justify-start pl-5 md:max-xl:justify-start xl:h-full xl:items-center xl:justify-center xl:pl-0"
+  >
+    <div
+      class="relative z-10 aspect-square w-32 rounded-lg min-[1800px]:w-[450px] sm:w-36 min-xl:h-full xl:w-xl"
+      transition:name=`box ${id}`
+    >
+      <Image
+        transition:name=`image ${id}`
+        class={'rounded-lg xl:rounded-none xl:mask-l-from-30% xl:mask-l-to-90% xl:absolute xl:w-full xl:h-full object-cover'}
+        src={imgPoster}
+        alt={title}
+        width={600}
+        height={700}
+        quality="low"
+      />
+    </div>
+  </div>
+
+  <div class="absolute top-0 h-72 w-full xl:hidden">
+    <Image
+      class={'absolute w-full h-full object-cover mask-b-from-10% mask-b-to-80%'}
+      src={imgBackdrop}
+      alt={title}
+      width={1280}
+      height={720}
+      quality={60}
+    />
+  </div>
+</div>

@@ -1,102 +1,25 @@
 ---
-  import Layout from "@/layouts/Layout.astro"
-  import type { MovieIDSelect} from "@/types/dataIdMovieSelect"
-  import { Image } from "astro:assets"
-  import ItemMovieSelect from "@/components/astro/ItemMovieSelect.astro"
-  import { getPosterPath } from "@/services/get_poster_img"
-  import BoxMain from "@/components/react/BoxMain"
-  import BoxSearch from "@/components/react/BoxSearch"
-  import SearchMovieAndSeries from "@/components/astro/SearchMovieAndSeries.astro"
-  import BoxViewTrailer from "@/components/react/BoxViewTrailer"
-  import ViewTrailer from "@/components/astro/ViewTrailer.astro"
-  
-  const { movie } = Astro.params
-  
-  let idMovie: number | undefined
-  let title: string | undefined
-  let data
-  let URL_IMG: string | undefined
-  let URL_IMG_POSTER: string | undefined
-  let img
-  let imgUrl: string | undefined
-  const chooseURL: string = Astro.url.pathname.split("/")[1]
-  let backdrop_path: string | undefined
+import Layout from '@/layouts/Layout.astro'
+import type { DetailsMovieId } from '@/types/details-movie-id'
+import { tmdbUrls } from '@/services/tmdb/urls'
+import axiosClient from '@/lib/axios/client'
+import MediaDetails from '@/components/astro/media-details.astro'
 
-  const API_KEY = import.meta.env.SECRET_API_KEY
-  const ACCESS_TOKEN = import.meta.env.SECRET_TOKEN_ACCESS
+const { movie } = Astro.params
 
-  if (movie) {
-    const [id, name] = movie?.split("/") 
-    idMovie = parseInt(id)
-    title = name;
+if (!movie) return Astro.redirect('/404')
 
-    const URL_MOVIE_DETAILS = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&append_to_response=videos&language=es`
-    
-    URL_IMG = `https://image.tmdb.org/t/p/w1280`
-    URL_IMG_POSTER = `https://image.tmdb.org/t/p/w500`
-  
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${ACCESS_TOKEN}`
-      }
-    };
+const [id, name] = movie.split('/')
 
-    const response = await fetch(URL_MOVIE_DETAILS, options)
+const URL_MOVIE_DETAILS = tmdbUrls.detailsWithVideos('movie', parseInt(id))
 
-    const movie_details = await response.json() as MovieIDSelect
- 
-    data = movie_details
+const result = await axiosClient.get<DetailsMovieId>(URL_MOVIE_DETAILS)
 
-    backdrop_path = (movie_details.belongs_to_collection) ? movie_details.belongs_to_collection.backdrop_path : movie_details.backdrop_path
+if (!result.success) return Astro.redirect('/404')
 
-    img = await getPosterPath(ACCESS_TOKEN, idMovie, chooseURL)
-
-    imgUrl = img?.file_path
-    
-
-  }
-
+const { data } = result
 ---
 
-<Layout title={`Cripop - ${(title ?? data?.title)}`}>
-  <BoxMain client:load>
-    <main class="relative h-screen">
-      <ItemMovieSelect
-        id={idMovie}
-        title={data?.title}
-        genres={data?.genres}
-        language={data?.spoken_languages}
-        overview={data?.overview}
-        poster_img={URL_IMG_POSTER + (imgUrl ?? "")}
-        production_companies={data?.production_companies}
-        date={data?.release_date}
-        duration={data?.runtime}
-        tagline={data?.tagline}
-        video={data?.videos.results}
-        rate={data?.vote_average}
-    
-      />
-      <div class="absolute w-full h-[500px] xl:h-full">
-        <Image
-        class={"absolute w-full h-full object-cover object-center"}
-        src={URL_IMG + (backdrop_path ?? "")}
-        alt={title ?? ""}
-        width={1280}
-        height={720}
-        quality={60}
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-[#000105]"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-[#000105]"></div>
-        <div class="absolute inset-0 bg-[#000105]/0"></div>
-      </div>
-      <BoxViewTrailer client:idle>
-        <ViewTrailer view="movie" idMovie={idMovie}/>
-      </BoxViewTrailer>
-    </main>
-  </BoxMain>
-  <BoxSearch client:idle>
-    <SearchMovieAndSeries/>
-  </BoxSearch>
+<Layout title={`Cripop - ${name}`}>
+  <MediaDetails data={data} type="movie" />
 </Layout>

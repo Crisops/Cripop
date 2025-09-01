@@ -1,0 +1,94 @@
+---
+import type { MediaDetails } from '@/types/database.types'
+import type { ImagesTMDB } from '@/types/images'
+import { tmdbUrls } from '@/services/tmdb/urls'
+import axiosClient from '@/lib/axios/client'
+import type { FormSearch } from '@/utils/validate-rules-form'
+import { getVideoTrailer } from '@/utils/get-video-trailer'
+import MediaDetailsInfoPreview from '@/components/astro/movie-preview-home.astro'
+import ButtonEpisodes from '@/components/react/button-episodes'
+import ButtonTrailer from '@/components/react/button-trailer'
+import ButtonViewSeasons from '@/components/react/button-seasons'
+import MediaDetailsInfoImages from '@/components/astro/media-details-info-images.astro'
+import SeasonSeries from '@/components/astro/season-series.astro'
+
+interface Props {
+  data: MediaDetails
+  type: FormSearch['type']
+  isSeason?: boolean
+}
+
+const { data, type, isSeason } = Astro.props
+
+const img = await axiosClient.get<ImagesTMDB>(tmdbUrls.images.includeLanguage(type, data.id))
+
+if (!img.success) return
+
+const title = 'title' in data ? data.title : data.name
+const date = 'release_date' in data ? data.release_date : data.first_air_date
+const time = 'runtime' in data ? data.runtime : undefined
+const language = data.spoken_languages.map((language) => language.name).join(', ')
+
+// Validar que existan posters e imágenes de fondo
+const posterPath = img.data.posters?.[0]?.file_path
+const backdropPath = data.backdrop_path ?? img.data.backdrops?.[0]?.file_path
+
+if (!posterPath || !backdropPath) {
+  console.error('No se encontraron imágenes válidas para el media:', data.id)
+  return
+}
+
+const imgUrlPoster = `${tmdbUrls.images.w500}/${posterPath}`
+const imgUrlBackdrop = `${tmdbUrls.images.w1280}/${backdropPath}`
+
+const videoTrailer = getVideoTrailer(data.videos)
+---
+
+<div class="relative flex flex-col-reverse items-start pb-5 xl:grow xl:flex-row xl:items-center">
+  {
+    type === 'tv' && (
+      <SeasonSeries
+        idSerie={data.id}
+        seasons={'seasons' in data ? data.seasons : []}
+        currentSeason={'currentSeason' in data ? data.currentSeason : undefined}
+        isSeason={isSeason}
+      />
+    )
+  }
+  <MediaDetailsInfoPreview
+    title={title}
+    tagline={data.tagline}
+    language={language}
+    genders={data.genres}
+    overview={data.overview}
+    date={date}
+    rate={data.vote_average}
+    time={time}
+  >
+    <div slot="actions" class="flex flex-wrap items-center justify-start gap-2">
+      <ButtonTrailer
+        client:visible
+        id={videoTrailer?.key}
+        title={videoTrailer?.name}
+        className="shadow-2xs max-xl:w-full max-xl:border-white max-xl:bg-white max-xl:text-black"
+      />
+      {
+        type === 'tv' && !isSeason && (
+          <ButtonViewSeasons
+            client:visible
+            className="shadow-2xs max-xl:w-full max-xl:border-zinc-700 max-xl:bg-transparent max-xl:text-white"
+          />
+        )
+      }
+      {
+        type === 'tv' && isSeason && (
+          <ButtonEpisodes
+            client:visible
+            className="shadow-2xs max-xl:w-full max-xl:border-zinc-700 max-xl:bg-transparent max-xl:text-white"
+          />
+        )
+      }
+    </div>
+  </MediaDetailsInfoPreview>
+</div>
+<MediaDetailsInfoImages id={data.id} title={title} imgPoster={imgUrlPoster} imgBackdrop={imgUrlBackdrop} />
