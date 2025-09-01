@@ -5,7 +5,6 @@ import type { HTMLAttributes } from 'astro/types'
 import type { MovieWithValidGenders } from '@/types/genders'
 import type { ResultSearch } from '@/types/database.types'
 import { tmdbUrls } from '@/services/tmdb/urls'
-import { env } from '@/config/env'
 import MediaCardDetails from '@/components/astro/media-card-details.astro'
 
 type ClassNames = {
@@ -17,7 +16,7 @@ interface Props {
   index: number
   item: ResultSearch['results'][number]
   genders: MovieWithValidGenders[]
-  url_image: string
+  url_image: string | undefined
   type: FormSearch['type']
   class?: Partial<Record<keyof ClassNames, string>>
 }
@@ -28,26 +27,13 @@ const { item, index, genders, url_image: urlImage, type, class: className } = As
 
 const urlTitle =
   'title' in item
-    ? item.title?.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')
-    : item.name?.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')
-
-const currentUrl = Astro.url.pathname
-
-const isNavigateList = currentUrl.split('/').at(1) as FormSearch['type']
+    ? item.title?.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]/g, '').replace(/\s+/g, '-')
+    : item.name?.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]/g, '').replace(/\s+/g, '-')
 
 const BASE_URL = Astro.url.origin
 
-let endPoint = ''
-
-if (isNavigateList) {
-  if (isNavigateList === 'movie') {
-    endPoint = `${BASE_URL}/${isNavigateList}/${item.id}/${urlTitle}`
-  } else {
-    endPoint = `${BASE_URL}/${isNavigateList}/series/${item.id}/${urlTitle}`
-  }
-} else {
-  endPoint = type === 'tv' ? `tv/series/${item.id}/${urlTitle}` : `movie/${item.id}/${urlTitle}`
-}
+const endPoint =
+  type === 'tv' ? `${BASE_URL}/${type}/series/${item.id}/${urlTitle}` : `${BASE_URL}/${type}/${item.id}/${urlTitle}`
 ---
 
 <article

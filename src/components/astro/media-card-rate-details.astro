@@ -1,35 +1,36 @@
 ---
-  import IconStar from "@/icons/IconStar.astro"
+import { Star } from '@lucide/astro'
 
-  interface Props {
-    rate: number
-  }
+interface Props {
+  rate: number
+}
 
-  const { rate } = Astro.props
-
+const { rate } = Astro.props
 ---
 
-
-
-<div class="flex gap-1 flex-grow">
-  <div class:list={[
-    'flex gap-2 opacity-0 group-hover:opacity-100',
-    { 
-    "text-red-600": rate < 5,
-    "text-yellow-500": rate >=5 && rate < 8,
-    "text-green-600": rate >= 8
-    }
-  ]}>
-  <span class="text-lg font-Noto_Sans font-bold text-white">Rate:</span>
-  <IconStar/>
+<div class="flex flex-grow gap-1">
+  <div
+    class:list={[
+      'flex items-center gap-2 opacity-0 group-hover:opacity-100',
+      {
+        'text-red-600': rate < 5,
+        'text-yellow-500': rate >= 5 && rate < 8,
+        'text-green-600': rate >= 8,
+      },
+    ]}
+  >
+    <span class="text-medium font-bold text-white">Rate:</span>
+    <Star class="size-5" color="currentColor" fill="currentColor" />
   </div>
-  <span class:list={[
-    'text-lg font-bold font-Noto_Sans opacity-0 group-hover:opacity-100',
-    { 
-    "text-red-600": rate < 5,
-    "text-yellow-500": rate >=5 && rate < 8,
-    "text-green-600": rate >= 8
-    }
-  ]}>{rate !== 10 ? rate?.toFixed(1).toString() : rate}
+  <span
+    class:list={[
+      'text-medium font-bold opacity-0 group-hover:opacity-100',
+      {
+        'text-red-600': rate < 5,
+        'text-yellow-500': rate >= 5 && rate < 8,
+        'text-green-600': rate >= 8,
+      },
+    ]}
+    >{rate !== 10 ? rate?.toFixed(1).toString() : rate}
   </span>
 </div>

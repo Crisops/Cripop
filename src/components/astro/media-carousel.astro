@@ -4,7 +4,7 @@ import type { ImagesTMDB } from '@/types/images'
 import type { ResultSearch } from '@/types/database.types'
 import type { PreviewLists } from '@/services/tmdb/urls'
 import type { FormSearch } from '@/utils/validate-rules-form'
-import { getOptimizedResultWithGenders } from '@/services/get_genders_list'
+import { getOptimizedResultWithGenders } from '@/services/get-genders-list'
 import { tmdbUrls } from '@/services/tmdb/urls'
 import axiosClient from '@/lib/axios/client'
 import Button from '@/components/shared/button'
@@ -36,7 +36,7 @@ const [imgPoster, genders] = await Promise.all([
 ])
 
 if (!imgPoster) {
-  console.log(imgPoster)
+  console.log('Error al obtener las imagenes')
   return
 }
 if (!genders.success) {
@@ -70,19 +70,24 @@ const descriptionList =
         Ver Más
       </Button>
       {
-        result.data.results.slice(0, 6).map((item, index) => (
-          <MediaCard
-            index={index}
-            item={item}
-            genders={listIdWithGender}
-            url_image={imgPoster[index].success ? imgPoster[index].data.posters[0]?.file_path : ''}
-            type={type}
-            class={{
-              base: 'max-w-75 min-w-[300px]',
-              image: 'absolute aspect-square h-full w-full',
-            }}
-          />
-        ))
+        result.success &&
+          imgPoster.every((img) => img.success) &&
+          result.data.results.slice(0, 6).map((item, index) => {
+            const posterImage = imgPoster[index]?.data?.posters?.[0]?.file_path
+            return (
+              <MediaCard
+                item={item}
+                genders={listIdWithGender}
+                url_image={posterImage}
+                index={index}
+                type={type}
+                class={{
+                  base: 'max-w-75 min-w-[300px]',
+                  image: 'absolute aspect-square h-full w-full',
+                }}
+              />
+            )
+          })
       }
     </div>
     <div class="absolute top-0 right-0 h-full w-96 bg-gradient-to-l from-black from-50% lg:w-xl"></div>
