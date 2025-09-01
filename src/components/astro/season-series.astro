@@ -1,0 +1,48 @@
+---
+import type { DetailsSeries } from '@/types/details-serie'
+import type { DetailsSeason } from '@/types/data-season'
+import { getSeasonDetails } from '@/services/get-season-details'
+import Seasons from '@/components/react/seasons'
+import EpisodesOfSeason from '@/components/astro/episodes-of-season.astro'
+
+interface Props {
+  idSerie: number
+  seasons: DetailsSeries['seasons']
+  currentSeason?: DetailsSeason
+  isSeason?: boolean
+}
+
+const { idSerie, seasons, currentSeason, isSeason } = Astro.props
+
+const seasons_render = seasons?.filter((season) => season.name !== 'Especiales')
+
+const details = await Promise.all(
+  seasons_render.map((s) => getSeasonDetails({ id_serie: idSerie, season_number: s.season_number })),
+)
+---
+
+<div class="max-xl:w-full">
+  <Seasons
+    client:visible
+    details={details}
+    fullWidth={false}
+    itemClasses={{
+      base: ['bg-black xl:bg-zinc-900/80'],
+      content: [
+        'h-80 overflow-y-scroll [&::-webkit-scrollbar-thumb]:bg-zinc-700 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar]:w-1',
+      ],
+      trigger: ['px-4 py-2'],
+      title: ['text-xl font-bold text-white'],
+      subtitle: 'line-clamp-2 text-tiny',
+    }}
+  />
+  {
+    isSeason && (
+      <EpisodesOfSeason
+        seasonNumber={currentSeason?.season_number ?? 1}
+        episodeNumber={currentSeason?.episode.episode_number ?? 1}
+        episodesSeason={currentSeason?.episodes ?? []}
+      />
+    )
+  }
+</div>

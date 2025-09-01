@@ -1,0 +1,14 @@
+---
+import type { DetailsSeason } from '@/types/data-season'
+import SwiperEpisodes from '@/components/react/swipper-episodes'
+
+interface Props {
+  episodesSeason: DetailsSeason['episodes']
+  episodeNumber: number
+  seasonNumber: number
+}
+
+const { episodesSeason, episodeNumber, seasonNumber } = Astro.props
+---
+
+<SwiperEpisodes client:idle seasonNumber={seasonNumber} episodeNumber={episodeNumber} episodes={episodesSeason} />
