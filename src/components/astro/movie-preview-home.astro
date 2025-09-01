@@ -1,38 +1,37 @@
 ---
 import type { Genre } from '@/types/details-movie'
 import { Languages, Clapperboard, Clock } from '@lucide/astro'
+import { formatTime } from '@/utils/format-time'
 
 interface Props {
   title: string
+  tagline: string
   language: string
   genders: Genre[]
   overview: string
   date: Date
   rate: number
-  time: number
+  time?: number
 }
 
-const { title, language, genders, overview, date, rate, time } = Astro.props
+const { title, tagline, language, genders, overview, date, rate, time } = Astro.props
 
-let runningTime: string = ''
-
-if (time) {
-  const hour = Math.floor(time / 60)
-  const minutes = Math.floor(time % 60)
-
-  runningTime =
-    hour < 2 ? `${hour} hora ${minutes} minutos` : `${hour} horas ${minutes.toString().padStart(2, '0')} minutos`
-}
+const runningTime = time ? formatTime(time) : undefined
 ---
 
-<div class="z-10 flex flex-col gap-5 px-5 md:pr-10">
+<div class="z-10 flex w-full max-w-xl flex-col gap-5 px-4 md:pr-10">
   <h1 class="max-w-lg text-4xl font-semibold text-white uppercase sm:max-w-2xl sm:text-5xl lg:text-6xl">{title}</h1>
+  {
+    tagline !== '' && (
+      <p class="text-tiny sm:text-medium max-w-56 font-light text-balance text-zinc-400/50 xl:max-w-xs">{tagline}</p>
+    )
+  }
   <div class="flex items-center gap-4">
     <div class="inline-flex items-center gap-2">
       <Languages class="size-5" color="white" />
       <span class="text-small sm:text-medium font-light text-white uppercase">{language}</span>
     </div>
-    <div class="inline-flex gap-2">
+    <div class="inline-flex items-center gap-2">
       <Clapperboard class="size-5" color="white" />
       <p class="text-small sm:text-medium font-light text-white">{genders?.map((gender) => gender.name).join(', ')}</p>
     </div>
@@ -41,9 +40,18 @@ if (time) {
     <span class="text-small sm:text-medium font-light text-white">Fecha de estreno: {date}</span>
     <span class="text-small sm:text-medium font-light text-white">Rate: {rate?.toFixed(1).toString()}</span>
   </div>
-  <p class="text-small sm:text-medium max-w-xs font-light text-white sm:max-w-md">{overview}</p>
-  <div class="flex items-center gap-1">
-    <Clock class="size-5" color="white" />
-    <span class="text-small sm:text-medium font-light text-white">{runningTime}</span>
-  </div>
+  {
+    overview !== '' && (
+      <p class="text-small sm:text-medium line-clamp-6 max-w-xs font-light text-white sm:max-w-md">{overview}</p>
+    )
+  }
+  {
+    time && (
+      <div class="flex items-center gap-1">
+        <Clock class="size-5" color="white" />
+        <span class="text-small sm:text-medium font-light text-white">{runningTime}</span>
+      </div>
+    )
+  }
+  <slot name="actions" />
 </div>
