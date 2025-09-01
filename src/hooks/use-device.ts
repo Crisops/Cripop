@@ -1,25 +1,24 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react'
 
 export const useDevice = () => {
   const [viewport, setViewport] = useState({
-    width: typeof window !== "undefined" ? window.innerWidth : 0,
-  });
+    width: typeof window !== 'undefined' ? window.innerWidth : 0,
+  })
 
   useEffect(() => {
     const handleResize = () => {
       setViewport({
         width: window.innerWidth,
-      });
-    };
+      })
+    }
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize)
     return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
 
   return {
-    width: viewport.width,
     isMobile: viewport.width < 768,
-  };
-};
+  }
+}
