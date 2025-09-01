@@ -21,7 +21,7 @@ const { title } = Astro.props
     <ClientRouter fallback="none" />
   </head>
   <body>
-    <main class="relative">
+    <main class="relative min-h-screen">
       <Navbar client:idle />
       <slot />
     </main>

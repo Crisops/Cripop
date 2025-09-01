@@ -3,7 +3,6 @@ import { navigate } from 'astro:transitions/client'
 import { Search } from 'lucide-react'
 import { Navbar as NavbarHero, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar'
 import { Link } from '@heroui/link'
-import { GitHub } from '@/icons/icons'
 import FormSearch from '@/components/react/form-search'
 import Button from '@/components/shared/button'
 import Modal from '@/components/shared/modal'
@@ -34,27 +33,12 @@ const Navbar = () => {
             <Button
               onPress={() => handleOpenModal(true)}
               startContent={<Search className="hidden md:block" color="white" size={20} />}
-              className="w-max min-w-max bg-transparent text-white"
+              className="w-max min-w-max bg-transparent px-0 text-white xl:px-4"
             >
               <div className="flex md:hidden">
                 <Search color="white" size={20} />
               </div>
               <span className="hidden text-current md:inline">Buscar</span>
-            </Button>
-          </NavbarItem>
-          <NavbarItem>
-            <Button
-              as={Link}
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://github.com/Crisops/Cripop"
-              startContent={<GitHub className="hidden size-5 fill-white md:block" />}
-              className="w-max min-w-max bg-transparent text-white"
-            >
-              <div className="flex md:hidden">
-                <GitHub className="size-5 fill-white" />
-              </div>
-              <span className="hidden text-current md:inline">GitHub</span>
             </Button>
           </NavbarItem>
         </NavbarContent>
