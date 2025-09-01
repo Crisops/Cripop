@@ -54,7 +54,7 @@ const totalPages = result.data.total_pages < 500 ? result.data.total_pages : 500
     {
       result.success && img.every((img) => img.success) ? (
         result.data.results.map((item, index) => {
-          const posterImage = img[index]?.data?.posters?.[0]?.file_path
+          const posterImage = img[index]?.data?.posters?.[0]?.file_path ?? item.poster_path
           return (
             <MediaCard
               item={item}

@@ -21,7 +21,7 @@ const { id, title, imgPoster, imgBackdrop } = Astro.props
     >
       <Image
         transition:name=`image ${id}`
-        class={'rounded-lg xl:rounded-none xl:mask-l-from-30% xl:mask-l-to-90% xl:absolute xl:w-full xl:h-full object-cover'}
+        class={'rounded-lg max-h-44 xl:max-h-none xl:rounded-none xl:mask-l-from-30% xl:mask-l-to-90% xl:absolute xl:w-full xl:h-full object-cover'}
         src={imgPoster}
         alt={title}
         width={600}

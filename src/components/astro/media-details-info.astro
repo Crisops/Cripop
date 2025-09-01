@@ -30,16 +30,19 @@ const time = 'runtime' in data ? data.runtime : undefined
 const language = data.spoken_languages.map((language) => language.name).join(', ')
 
 // Validar que existan posters e imágenes de fondo
-const posterPath = img.data.posters?.[0]?.file_path
-const backdropPath = data.backdrop_path ?? img.data.backdrops?.[0]?.file_path
+let posterPath = img.data.posters?.[0]?.file_path ?? data.poster_path
+let backdropPath = data.backdrop_path ?? img.data.backdrops?.[0]?.file_path
+let imgUrlPoster = ''
+let imgUrlBackdrop = ''
 
 if (!posterPath || !backdropPath) {
   console.error('No se encontraron imágenes válidas para el media:', data.id)
-  return
+  imgUrlPoster = '/images/not-found-image.png'
+  imgUrlBackdrop = '/images/not-found-image.png'
+} else {
+  imgUrlPoster = `${tmdbUrls.images.w500}${posterPath}`
+  imgUrlBackdrop = `${tmdbUrls.images.w1280}${backdropPath}`
 }
-
-const imgUrlPoster = `${tmdbUrls.images.w500}/${posterPath}`
-const imgUrlBackdrop = `${tmdbUrls.images.w1280}/${backdropPath}`
 
 const videoTrailer = getVideoTrailer(data.videos)
 ---
