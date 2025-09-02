@@ -30,6 +30,7 @@ export const tmdbUrls = {
     episodeNumber: number,
   ) => `/${type}/${id}/season/${seasonNumber}/episode/${episodeNumber}?language=es`,
   videos: {
+    all: (type: FormSearch['type'], id: number) => `/${type}/${id}/videos?include_video_language=es,en&language=es`,
     season: {
       episodes: (type: Exclude<FormSearch['type'], 'movie'>, id: number, seasonNumber: number, episodeNumber: number) =>
         `/${type}/${id}/season/${seasonNumber}/episode/${episodeNumber}/videos?include_video_language=es,en&language=es`,

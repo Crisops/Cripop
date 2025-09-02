@@ -1,3 +1,5 @@
+import type { Videos } from '@/types/videos'
+
 export type DetailsMovieId = {
   adult: boolean
   backdrop_path: string
@@ -55,21 +57,4 @@ export type SpokenLanguage = {
   english_name: string
   iso_639_1: string
   name: string
-}
-
-export type Videos = {
-  results: Result[]
-}
-
-export type Result = {
-  iso_639_1: string
-  iso_3166_1: string
-  name: string
-  key: string
-  site: string
-  size: number
-  type: string
-  official: boolean
-  published_at: Date
-  id: string
 }

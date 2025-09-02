@@ -1,4 +1,4 @@
-import type { Videos } from '@/types/details-movie-id'
+import type { Videos } from '@/types/videos'
 
 export const getVideoTrailer = (videos: Videos | null): Videos['results'][number] | null => {
   if (!videos?.results?.length || !videos) return null
