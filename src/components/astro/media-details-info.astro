@@ -6,9 +6,7 @@ import axiosClient from '@/lib/axios/client'
 import type { FormSearch } from '@/utils/validate-rules-form'
 import { getVideoTrailer } from '@/utils/get-video-trailer'
 import MediaDetailsInfoPreview from '@/components/astro/movie-preview-home.astro'
-import ButtonEpisodes from '@/components/react/button-episodes'
-import ButtonTrailer from '@/components/react/button-trailer'
-import ButtonViewSeasons from '@/components/react/button-seasons'
+import MediaDetailsInfoActions from '@/components/astro/media-details-actions.astro'
 import MediaDetailsInfoImages from '@/components/astro/media-details-info-images.astro'
 import SeasonSeries from '@/components/astro/season-series.astro'
 
@@ -68,30 +66,7 @@ const videoTrailer = getVideoTrailer(data.videos)
     rate={data.vote_average}
     time={time}
   >
-    <div slot="actions" class="flex flex-wrap items-center justify-start gap-2">
-      <ButtonTrailer
-        client:visible
-        id={videoTrailer?.key}
-        title={videoTrailer?.name}
-        className="shadow-2xs max-xl:w-full max-xl:border-white max-xl:bg-white max-xl:text-black"
-      />
-      {
-        type === 'tv' && !isSeason && (
-          <ButtonViewSeasons
-            client:visible
-            className="shadow-2xs max-xl:w-full max-xl:border-zinc-700 max-xl:bg-transparent max-xl:text-white"
-          />
-        )
-      }
-      {
-        type === 'tv' && isSeason && (
-          <ButtonEpisodes
-            client:visible
-            className="shadow-2xs max-xl:w-full max-xl:border-zinc-700 max-xl:bg-transparent max-xl:text-white"
-          />
-        )
-      }
-    </div>
+    <MediaDetailsInfoActions slot="actions" type={type} isSeason={isSeason} videoTrailer={videoTrailer} />
   </MediaDetailsInfoPreview>
 </div>
 <MediaDetailsInfoImages id={data.id} title={title} imgPoster={imgUrlPoster} imgBackdrop={imgUrlBackdrop} />
