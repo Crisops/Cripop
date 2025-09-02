@@ -1,6 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro'
 import type { DetailsMovieId } from '@/types/details-movie-id'
+import type { Videos } from '@/types/videos'
 import { tmdbUrls } from '@/services/tmdb/urls'
 import axiosClient from '@/lib/axios/client'
 import MediaDetails from '@/components/astro/media-details.astro'
@@ -13,11 +14,22 @@ const [id, name] = movie.split('/')
 
 const URL_MOVIE_DETAILS = tmdbUrls.detailsWithVideos('movie', parseInt(id))
 
-const result = await axiosClient.get<DetailsMovieId>(URL_MOVIE_DETAILS)
+const URL_MOVIE_VIDEOS = tmdbUrls.videos.all('movie', parseInt(id))
 
-if (!result.success) return Astro.redirect('/404')
+const [detailMovie, detailMovieVideos] = await Promise.all([
+  axiosClient.get<DetailsMovieId>(URL_MOVIE_DETAILS),
+  axiosClient.get<Videos>(URL_MOVIE_VIDEOS),
+])
 
-const { data } = result
+if (!detailMovie.success || !detailMovieVideos.success) return Astro.redirect('/404')
+
+const { data: dataMovie } = detailMovie
+const { data: dataMovieVideos } = detailMovieVideos
+
+const data = {
+  ...dataMovie,
+  videos: dataMovieVideos,
+}
 ---
 
 <Layout title={`Cripop - ${name}`}>
