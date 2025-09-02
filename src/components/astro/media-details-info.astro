@@ -1,10 +1,13 @@
 ---
 import type { MediaDetails } from '@/types/database.types'
 import type { ImagesTMDB } from '@/types/images'
+import { Link } from '@heroui/react'
+import { ArrowLeft } from '@lucide/astro'
 import { tmdbUrls } from '@/services/tmdb/urls'
 import axiosClient from '@/lib/axios/client'
 import type { FormSearch } from '@/utils/validate-rules-form'
 import { getVideoTrailer } from '@/utils/get-video-trailer'
+import Button from '@/components/shared/button'
 import MediaDetailsInfoPreview from '@/components/astro/movie-preview-home.astro'
 import MediaDetailsInfoActions from '@/components/astro/media-details-actions.astro'
 import MediaDetailsInfoImages from '@/components/astro/media-details-info-images.astro'
@@ -66,7 +69,21 @@ const videoTrailer = getVideoTrailer(data.videos)
     rate={data.vote_average}
     time={time}
   >
+    {
+      isSeason && (
+        <Button
+          variant="light"
+          className="hidden min-xl:inline-flex"
+          slot="back"
+          as={Link}
+          href={`/tv/series/${data.id}`}
+          isIconOnly
+        >
+          <ArrowLeft class="size-6" color="white" />
+        </Button>
+      )
+    }
     <MediaDetailsInfoActions slot="actions" type={type} isSeason={isSeason} videoTrailer={videoTrailer} />
   </MediaDetailsInfoPreview>
 </div>
-<MediaDetailsInfoImages id={data.id} title={title} imgPoster={imgUrlPoster} imgBackdrop={imgUrlBackdrop} />
+<MediaDetailsInfoImages id={data.id} title={title} imgPoster={imgUrlPoster} imgBackdrop={imgUrlBackdrop} type={type} />

@@ -34,7 +34,7 @@ const SwiperEpisodes = ({ episodeNumber, episodes, seasonNumber }: EpisodesOfSea
   const buttonNext = useRef<HTMLButtonElement>(null)
   return (
     <div
-      className={`transition-translate duration-300 ${isViewEpisodes ? 'translate-y-0' : 'translate-y-[200%]'} relative z-20 flex h-44 w-screen flex-col items-center justify-start gap-1 md:items-end xl:absolute xl:bottom-0 xl:items-center xl:justify-center`}
+      className={`transition-translate duration-300 ${isViewEpisodes ? 'translate-y-0' : 'translate-y-[200%]'} relative z-10 flex h-44 w-screen flex-col items-center justify-start gap-1 md:items-end xl:absolute xl:bottom-0 xl:items-center xl:justify-center`}
     >
       <div className="w-full max-sm:max-w-screen sm:max-w-[500px] 2xl:max-w-[600px]">
         <div className="flex justify-center pr-5">

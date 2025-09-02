@@ -22,12 +22,15 @@ const { type, isSeason, videoTrailer } = Astro.props
     className="shadow-2xs max-xl:w-full max-xl:border-white max-xl:bg-white max-xl:text-black"
   />
   {
-    type === 'tv' && !isSeason ? (
+    type === 'tv' && !isSeason && (
       <ButtonViewSeasons
         client:visible
         className="shadow-2xs max-xl:w-full max-xl:border-zinc-700 max-xl:bg-transparent max-xl:text-white"
       />
-    ) : (
+    )
+  }
+  {
+    type === 'tv' && isSeason && (
       <ButtonEpisodes
         client:visible
         className="shadow-2xs max-xl:w-full max-xl:border-zinc-700 max-xl:bg-transparent max-xl:text-white"

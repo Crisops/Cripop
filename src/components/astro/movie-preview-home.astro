@@ -19,7 +19,8 @@ const { title, tagline, language, genders, overview, date, rate, time } = Astro.
 const runningTime = time ? formatTime(time) : undefined
 ---
 
-<div class="z-10 flex w-full max-w-xl flex-col gap-5 px-4 md:pr-10">
+<div class="z-20 flex w-full max-w-xl flex-col gap-5 px-4 md:pr-10">
+  <slot name="back" />
   <h1 class="max-w-lg text-4xl font-semibold text-white uppercase sm:max-w-2xl sm:text-5xl lg:text-6xl">{title}</h1>
   {
     tagline !== '' && (

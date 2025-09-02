@@ -1,14 +1,21 @@
 ---
 import { Image } from 'astro:assets'
+import type { FormSearch } from '@/utils/validate-rules-form'
+import { ArrowLeft } from '@lucide/astro'
+import { Link } from '@heroui/react'
+import Button from '@/components/shared/button'
 
 interface Props {
   id: number
   title: string
   imgPoster: string
   imgBackdrop: string
+  type: FormSearch['type']
 }
 
-const { id, title, imgPoster, imgBackdrop } = Astro.props
+const { id, title, imgPoster, imgBackdrop, type } = Astro.props
+
+const urlBack = type === 'tv' ? `/${type}/series/${id}` : `/`
 ---
 
 <div class="relative">
@@ -16,7 +23,7 @@ const { id, title, imgPoster, imgBackdrop } = Astro.props
     class="flex h-72 items-end justify-start pl-5 md:max-xl:justify-start xl:h-full xl:items-center xl:justify-center xl:pl-0"
   >
     <div
-      class="relative z-10 aspect-square w-32 rounded-lg min-[1800px]:w-[450px] sm:w-36 min-xl:h-full xl:w-xl"
+      class="relative aspect-square w-32 rounded-lg min-[1800px]:w-[450px] sm:w-36 min-xl:h-full xl:w-xl"
       transition:name=`box ${id}`
     >
       <Image
@@ -32,6 +39,16 @@ const { id, title, imgPoster, imgBackdrop } = Astro.props
   </div>
 
   <div class="absolute top-0 h-72 w-full xl:hidden">
+    <Button
+      variant="light"
+      className="absolute top-5 left-5 z-20 min-xl:hidden"
+      slot="back"
+      as={Link}
+      href={urlBack}
+      isIconOnly
+    >
+      <ArrowLeft class="size-5" color="white" />
+    </Button>
     <Image
       class={'absolute w-full h-full object-cover mask-b-from-10% mask-b-to-80%'}
       src={imgBackdrop}
