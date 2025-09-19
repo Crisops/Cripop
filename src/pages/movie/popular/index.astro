@@ -1,15 +1,28 @@
 ---
 import Layout from '@/layouts/Layout.astro'
 import { tmdbUrls } from '@/services/tmdb/urls'
+import { hasValidFilterParams } from '@/utils/validate-filter-search-params'
 import ResultSearch from '@/components/astro/result-search.astro'
 import Footer from '@/components/astro/footer.astro'
 
 const page = Number(Astro.url.searchParams.get('page') ?? 2)
 
-const URL_MOVIES_POPULAR = tmdbUrls.lists.buildUrl('movie', 'popular', page)
+let URL_MOVIES_POPULAR = ''
+
+if (hasValidFilterParams(Astro.url.searchParams)) {
+  URL_MOVIES_POPULAR = tmdbUrls.discover('movie', Astro.url.search)
+} else {
+  URL_MOVIES_POPULAR = tmdbUrls.lists.buildUrl('movie', 'popular', page)
+}
 ---
 
 <Layout title="Cripop - Disfruta de las películas más populares del entretenimiento">
-  <ResultSearch type="movie" url={URL_MOVIES_POPULAR} page={page} />
+  <ResultSearch
+    title="El Momento en Pantalla"
+    description="¿Qué está viendo todo el mundo? Sumérgete en las películas más comentadas y aclamadas del momento. Desde los éxitos de taquilla más recientes hasta los favoritos de la crítica, explora los títulos que están dominando las conversaciones."
+    type="movie"
+    url={URL_MOVIES_POPULAR}
+    page={page}
+  />
   <Footer />
 </Layout>

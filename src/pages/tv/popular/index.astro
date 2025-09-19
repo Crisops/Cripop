@@ -1,15 +1,28 @@
 ---
 import Layout from '@/layouts/Layout.astro'
 import { tmdbUrls } from '@/services/tmdb/urls'
+import { hasValidFilterParams } from '@/utils/validate-filter-search-params'
 import ResultSearch from '@/components/astro/result-search.astro'
 import Footer from '@/components/astro/footer.astro'
 
 const page = Number(Astro.url.searchParams.get('page') ?? 1)
 
-const URL_SERIES_POPULAR = tmdbUrls.lists.buildUrl('tv', 'popular', page)
+let URL_SERIES_POPULAR = ''
+
+if (hasValidFilterParams(Astro.url.searchParams)) {
+  URL_SERIES_POPULAR = tmdbUrls.discover('tv', Astro.url.search)
+} else {
+  URL_SERIES_POPULAR = tmdbUrls.lists.buildUrl('tv', 'popular', page)
+}
 ---
 
 <Layout title="Cripop - Series populares que no te puedes verder">
-  <ResultSearch type="tv" url={URL_SERIES_POPULAR} page={page} />
+  <ResultSearch
+    title=" De la Pantalla a tu Sofá"
+    description="Entérate de las series que están causando sensación. Desde dramas intensos hasta comedias hilarantes, aquí te mostramos los programas que no puedes dejar de ver. Prepárate para tu próximo atracón"
+    type="tv"
+    url={URL_SERIES_POPULAR}
+    page={page}
+  />
   <Footer />
 </Layout>

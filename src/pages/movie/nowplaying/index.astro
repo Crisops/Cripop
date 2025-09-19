@@ -3,13 +3,25 @@ import Layout from '@/layouts/Layout.astro'
 import { tmdbUrls } from '@/services/tmdb/urls'
 import ResultSearch from '@/components/astro/result-search.astro'
 import Footer from '@/components/astro/footer.astro'
+import { hasValidFilterParams } from '@/utils/validate-filter-search-params'
 
 const page = Number(Astro.url.searchParams.get('page') ?? 1)
+let URL_MOVIES = ''
 
-const URL_MOVIES_NOW_PLAYING = tmdbUrls.lists.buildUrl('movie', 'now_playing', page)
+if (hasValidFilterParams(Astro.url.searchParams)) {
+  URL_MOVIES = tmdbUrls.discover('movie', Astro.url.search)
+} else {
+  URL_MOVIES = tmdbUrls.lists.buildUrl('movie', 'now_playing', page)
+}
 ---
 
 <Layout title="Cripop - Películas en cartelera">
-  <ResultSearch type="movie" url={URL_MOVIES_NOW_PLAYING} page={page} />
+  <ResultSearch
+    title="¡Hoy en el cine!"
+    description="Descubre las películas que están actualmente en la gran pantalla. Desde estrenos de Hollywood hasta cine independiente, aquí encontrarás todo lo que necesitas para tu próxima salida al cine"
+    type="movie"
+    url={URL_MOVIES}
+    page={page}
+  />
   <Footer />
 </Layout>
