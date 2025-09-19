@@ -1,27 +1,120 @@
-import { IconFilter } from './Icons'
-import FilterItem from './FilterItem'
-import { optionsPopularity, optionsRate, optionsGenders } from '@/types/Filters'
+import { useState, useCallback, useMemo } from 'react'
+import { ListFilterPlus } from 'lucide-react'
+import { navigate } from 'astro:transitions/client'
+import type { FormSearch } from '@/utils/validate-rules-form'
+import { getChangedFormFilters } from '@/utils/get-filled-properties'
+import { objectToURLSearchParams } from '@/utils/object-to-url-search-params'
+import { useDevice } from '@/hooks/use-device'
+import { useForm } from '@/hooks/use-form'
+import { createInitialFormFilters } from '@/config/initial-forms'
+import { Drawer, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter } from '@heroui/drawer'
+import Button from '@/components/shared/button'
+import FormFilters from '@/components/react/form-filters'
 
+interface FiltersProps {
+  contentType: FormSearch['type']
+}
 
+const Filters = ({ contentType }: FiltersProps) => {
+  const initialForm = useMemo(() => createInitialFormFilters(contentType), [contentType])
+  const { handleSubmit, control, trigger, getValues, isSubmitting, errors, isDirty } = useForm<any>({
+    initialForm,
+  })
+  const { isMobile } = useDevice()
+  const [isOpen, setIsOpen] = useState<boolean>(false)
 
-const Filters = ({choose}: {choose: string}) => {
+  const handleOpenChange = (isOpen: boolean) => {
+    setIsOpen(isOpen)
+  }
+
+  const onSumit = useCallback(
+    handleSubmit((data) => {
+      if (!isDirty) return
+      let filteredData = getChangedFormFilters(data, initialForm, contentType)
+      const dateFieldName = contentType === 'movie' ? 'primary_release_date' : 'first_air_date'
+
+      filteredData = {
+        ...filteredData,
+        sort_by: data.sort_by,
+        with_runtime: {
+          gte: parseInt(filteredData.with_runtime?.gte?.toString() ?? '0') * 60,
+          lte: parseInt(filteredData.with_runtime?.lte?.toString() ?? '0') * 60,
+        },
+      }
+      const dateField = filteredData[dateFieldName as keyof typeof filteredData]
+
+      if (dateField && typeof dateField === 'object' && 'gte' in dateField && 'lte' in dateField) {
+        filteredData[dateFieldName as keyof typeof filteredData] = {
+          gte: dateField.gte?.toString() ?? '',
+          lte: dateField.lte?.toString() ?? '',
+        } as any
+
+        const urlSearchParams = objectToURLSearchParams({ formData: filteredData as any })
+        navigate(`${location.origin}${location.pathname}?${urlSearchParams}`)
+        return
+      }
+
+      const urlSearchParams = objectToURLSearchParams({ formData: filteredData as any })
+      navigate(`${location.origin}${location.pathname}?${urlSearchParams}`)
+    }),
+    [isDirty, contentType],
+  )
 
   return (
-
-    <form className='relative flex-grow' method='GET'>
-      <div className='flex flex-wrap flex-grow gap-10 items-center justify-center'>
-        <FilterItem iconFilter={<IconFilter />} typeFilter='Rate' options={optionsRate} select="vote_average.gte"/>
-        <FilterItem iconFilter={<IconFilter />} typeFilter='Ordenar por' options={optionsPopularity} select="sort_by"/>
-        <FilterItem iconFilter={<IconFilter />} typeFilter='Género' options={optionsGenders} select="with_genres"/>
-        <button
-          type='submit'
-          className='px-3 py-2 flex-grow text-white border border-zinc-700 font-Noto_Sans text-sm transition-colors duration-300 hover:bg-white hover:text-black'
-        >Aplicar
-        </button>
-      </div>
-      <input type="hidden" name='choose' value={choose} />
-    </form>
-
+    <>
+      <Button
+        variant="flat"
+        radius="sm"
+        onPress={() => handleOpenChange(true)}
+        startContent={<ListFilterPlus />}
+        className="bg-white text-black"
+      >
+        Filtrar
+      </Button>
+      <Drawer
+        classNames={{
+          base: ['bg-zinc-900'],
+          closeButton: ['end-3 hover:bg-default-100/20 transition-colors hover:text-white'],
+        }}
+        radius="sm"
+        placement="right"
+        isOpen={isOpen}
+        onOpenChange={handleOpenChange}
+        size={isMobile ? 'xs' : 'sm'}
+      >
+        <DrawerContent>
+          <>
+            <DrawerHeader className="end-3 flex flex-col gap-1 text-white">
+              Encuentra tu contenido favorito
+            </DrawerHeader>
+            <DrawerBody>
+              <FormFilters
+                onSubmit={onSumit}
+                control={control}
+                trigger={trigger}
+                getValues={getValues}
+                contentType={contentType}
+              />
+            </DrawerBody>
+            <DrawerFooter>
+              <Button variant="solid" className="bg-transparent text-white" onPress={() => handleOpenChange(false)}>
+                Cerrar
+              </Button>
+              <Button
+                isDisabled={Object.keys(errors).length > 0 || !isDirty}
+                isLoading={isSubmitting}
+                type="submit"
+                form="form-filters"
+                variant="solid"
+                className="bg-white text-black"
+              >
+                Enviar
+              </Button>
+            </DrawerFooter>
+          </>
+        </DrawerContent>
+      </Drawer>
+    </>
   )
 }
 
