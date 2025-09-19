@@ -16,10 +16,10 @@ function WelcomeSearchFooter() {
       <div className="flex items-start justify-center">
         <div className="flex max-w-md flex-col gap-2 lg:max-w-lg">
           <span className="text-xl font-bold text-white lg:self-start">Cripop</span>
-          <p className="text-tiny text-zinc-500">
+          <p className="text-tiny text-foreground-500">
             Un espacio donde puedes ver lo que te gusta de una manera rápida, sencilla y eficaz.
           </p>
-          <p className="text-tiny text-zinc-500">Busca tu serie y película favorita. ¿Te perderás alguna?</p>
+          <p className="text-tiny text-foreground-500">Busca tu serie y película favorita. ¿Te perderás alguna?</p>
           <Button
             variant="solid"
             radius="sm"

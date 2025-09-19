@@ -9,18 +9,22 @@ import { tmdbUrls } from '@/services/tmdb/urls'
 import NotFoundSearch from '@/icons/not-found-search.astro'
 import MediaCard from '@/components/astro/media-card.astro'
 import PaginationResults from '@/components/react/pagination-results'
+import ResultSearchHeader from '@/components/astro/result-search-header.astro'
 
 interface Props {
+  title: string
+  description: string
   url: string
   type: FormSearch['type']
   page: number
 }
 
-const { type, url, page } = Astro.props
+const { type, url, page, title, description } = Astro.props
 
 const result = await axiosClient.get<ResultSearch>(url)
 
 if (!result.success) {
+  console.log(result.error)
   throw new Error('Error al obtener los resultados de la busqueda')
 }
 
@@ -40,6 +44,7 @@ const totalPages = result.data.total_pages < 500 ? result.data.total_pages : 500
 ---
 
 <div id="containerMovies" class="relative mt-10 h-full">
+  <ResultSearchHeader title={title} description={description} contentType={type} />
   <slot name="header" />
   <div
     class:list={[

@@ -1,0 +1,24 @@
+---
+import type { FormSearch } from '@/utils/validate-rules-form'
+import Filters from '@/components/react/filters'
+
+interface Props {
+  title: string
+  description: string
+  contentType?: FormSearch['type']
+}
+
+const { title, description, contentType = 'movie' } = Astro.props
+---
+
+<header class="my-5 w-full px-5 py-2">
+  <div class="flex items-center justify-between gap-2">
+    <div class="flex flex-col justify-center gap-2">
+      <h1 class="text-2xl font-bold text-white">{title}</h1>
+      <p class="text-tiny sm:text-small text-foreground-500 max-w-2xl text-balance">{description}</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <Filters client:visible contentType={contentType} />
+    </div>
+  </div>
+</header>
