@@ -1,6 +1,6 @@
 import type { FormSearch } from '@/utils/validate-rules-form'
 
-export type PreviewLists = 'now_playing' | 'popular' | 'top_rated' | 'upcoming'
+export type PreviewLists = 'now_playing' | 'popular' | 'top_rated'
 
 export const tmdbUrls = {
   images: {
@@ -19,6 +19,8 @@ export const tmdbUrls = {
     buildUrl: (type: FormSearch['type'], list: PreviewLists, page?: number) =>
       `/${type}/${list}?language=es&page=${page ?? 1}`,
   },
+  discover: (type: FormSearch['type'], filters?: string) =>
+    `/discover/${type}${filters}&include_adult=false&include_video=true&language=es`,
   details: (type: FormSearch['type'], id: number) => `/${type}/${id}?language=es`,
   detailsWithVideos: (type: FormSearch['type'], id: number) => `/${type}/${id}?append_to_response=videos&language=es`,
   detailsSeason: (type: Exclude<FormSearch['type'], 'movie'>, id: number, seasonNumber: number) =>
