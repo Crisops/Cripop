@@ -1,49 +1,31 @@
-import { forwardRef } from "react";
-import { RadioGroup, Radio, type RadioGroupProps } from "@heroui/radio";
+import type { FilterOption } from '@/types/filter-options'
+import { forwardRef } from 'react'
+import { RadioGroup, Radio, type RadioGroupProps, type RadioProps } from '@heroui/radio'
 
-const RadioInput = forwardRef<HTMLDivElement, RadioGroupProps>((props, ref) => {
-  const { onValueChange, ...rest } = props;
+interface Props extends RadioGroupProps {
+  items: FilterOption[]
+  radioClassNames?: RadioProps['classNames']
+}
+
+const RadioInput = forwardRef<HTMLDivElement, Props>((props, ref) => {
+  const { onValueChange, items, ...rest } = props
   const handleChange = (value: string) => {
-    onValueChange?.(value);
-  };
+    onValueChange?.(value)
+  }
 
   return (
-    <RadioGroup
-      {...rest}
-      onValueChange={handleChange}
-      ref={ref}
-      classNames={{
-        wrapper: "gap-10 flex-nowrap",
-      }}
-    >
-      <Radio
-        classNames={{
-          base: "text-neutral-700 w-full max-w-full grow lg:grow-0 lg:max-w-max px-3 py-2 bg-transparent border border-zinc-900 rounded-small",
-          label:
-            "text-neutral-800 group-data-[selected=true]:text-white group-data-[hover=true]:text-neutral-700 text-small",
-          wrapper: "group-data-[selected=true]:border-white border-zinc-900",
-          control: "bg-white",
-        }}
-        value="movie"
-      >
-        Películas
-      </Radio>
-      <Radio
-        classNames={{
-          base: "text-neutral-700 w-full max-w-full grow lg:grow-0 lg:max-w-max px-3 py-2 bg-transparent border border-zinc-900 rounded-small",
-          label:
-            "text-neutral-800 group-data-[selected=true]:text-white group-data-[hover=true]:text-neutral-700 text-small",
-          wrapper: "group-data-[selected=true]:border-white border-zinc-900",
-          control: "bg-white",
-        }}
-        value="tv"
-      >
-        Series
-      </Radio>
+    <RadioGroup {...rest} onValueChange={handleChange} ref={ref}>
+      {items.map((item) => {
+        return (
+          <Radio key={item.key} value={item.key} classNames={rest.radioClassNames}>
+            {item.label}
+          </Radio>
+        )
+      })}
     </RadioGroup>
-  );
-});
+  )
+})
 
-RadioInput.displayName = "RadioInput";
+RadioInput.displayName = 'RadioInput'
 
-export default RadioInput;
+export default RadioInput
