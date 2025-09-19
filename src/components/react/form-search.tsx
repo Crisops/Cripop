@@ -50,6 +50,17 @@ const FormSearch = ({ iconSearch }: FormSearchProps) => {
                 errorMessage={errors.type?.message}
                 isInvalid={!!errors.type}
                 orientation="horizontal"
+                items={[
+                  { key: 'movie', label: 'Películas' },
+                  { key: 'tv', label: 'Series' },
+                ]}
+                radioClassNames={{
+                  base: 'text-neutral-700 w-full max-w-full grow lg:grow-0 lg:max-w-max px-3 py-2 bg-transparent border border-zinc-900 rounded-small m-0',
+                  label:
+                    'text-neutral-800 group-data-[selected=true]:text-white group-data-[hover=true]:text-neutral-700 text-small',
+                  wrapper: 'group-data-[selected=true]:border-white border-zinc-900',
+                  control: 'bg-white',
+                }}
               />
             )}
           />
