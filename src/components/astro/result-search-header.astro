@@ -12,9 +12,9 @@ const { title, description, contentType = 'movie' } = Astro.props
 ---
 
 <header class="my-5 w-full px-5 py-2">
-  <div class="flex items-center justify-between gap-2">
+  <div class="flex items-start justify-between gap-2 sm:items-center">
     <div class="flex flex-col justify-center gap-2">
-      <h1 class="text-2xl font-bold text-white">{title}</h1>
+      <h1 class="text-2xl font-bold text-balance text-white">{title}</h1>
       <p class="text-tiny sm:text-small text-foreground-500 max-w-2xl text-balance">{description}</p>
     </div>
     <div class="flex items-center gap-2">
