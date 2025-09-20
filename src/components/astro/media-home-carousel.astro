@@ -3,8 +3,10 @@ import MoviesCarousel from '@/components/astro/media-carousel.astro'
 // import HeroTvSeries from './HeroTvSeries.astro'
 ---
 
-<div class="relative mt-5 flex h-full flex-col space-y-5 pl-5">
-  <h2 class="text-2xl font-semibold text-white uppercase sm:text-3xl">Disfruta de tus peliculas y series favoritas</h2>
+<div class="relative mt-5 flex h-full flex-col space-y-5">
+  <h2 class="pl-4 text-xl font-semibold text-balance text-white uppercase sm:text-3xl">
+    Disfruta de tus peliculas y series favoritas
+  </h2>
   <MoviesCarousel
     title="Películas actualmente en cartelera"
     list="now_playing"
@@ -44,6 +46,5 @@ import MoviesCarousel from '@/components/astro/media-carousel.astro'
     type="tv"
     href="/tv/popular"
   />
-
   <!-- <HeroTvSeries /> -->
 </div>
