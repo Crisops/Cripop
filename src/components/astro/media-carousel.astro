@@ -8,8 +8,10 @@ import { getOptimizedResultWithGenders } from '@/services/get-genders-list'
 import { tmdbUrls } from '@/services/tmdb/urls'
 import axiosClient from '@/lib/axios/client'
 import Button from '@/components/shared/button'
+import CarouselComponent from '@/components/react/swiper-carousel'
 import MediaCard from '@/components/astro/media-card.astro'
 import { Link } from '@heroui/link'
+import SwiperCarousel from '@/components/react/swiper-carousel'
 
 interface Props {
   title: string
@@ -54,42 +56,49 @@ const descriptionList =
 ---
 
 <div class="flex flex-col gap-4">
-  <div class="max-w-md space-y-1">
-    <h3 class="text-2xl font-bold text-balance text-white">{title}</h3>
-    <h5 class="text-medium text-foreground-500 text-balance">{descriptionList}</h5>
+  <div class="max-w-md space-y-1 pl-4">
+    <h3 class="text-lg font-normal text-balance text-white sm:text-xl">{title}</h3>
+    <h5 class="text-small text-foreground-500 sm:text-medium w-full max-w-2xs text-balance sm:max-w-full">
+      {descriptionList}
+    </h5>
   </div>
   <div class="relative h-full gap-2 overflow-x-hidden rounded-lg py-3">
-    <div class="flex h-[450px] gap-2">
+    <SwiperCarousel client:visible>
+      <div class="flex h-[450px] gap-2">
+        {
+          result.success &&
+            imgPoster.every((img) => img.success) &&
+            result.data.results.map((item, index) => {
+              const posterImage = imgPoster[index]?.data?.posters?.[0]?.file_path
+              return (
+                <MediaCard
+                  item={item}
+                  genders={listIdWithGender}
+                  url_image={posterImage}
+                  index={index}
+                  type={type}
+                  class={{
+                    base: 'max-w-75 min-w-[300px]',
+                    image: 'absolute aspect-square h-full w-full',
+                  }}
+                />
+              )
+            })
+        }
+      </div>
+    </SwiperCarousel>
+    <div
+      class="absolute top-0 right-0 z-40 h-full w-10 bg-gradient-to-l from-black to-transparent md:w-20 lg:w-2xs lg:from-10%"
+    >
       <Button
         variant="ghost"
         radius="sm"
         as={Link}
         href={href}
-        className="border-small text-small absolute top-1/2 right-5 z-10 -translate-y-1/2 border-zinc-500 text-white hover:!bg-white hover:text-black"
+        className="border-small text-small absolute top-1/2 right-5 z-50 hidden -translate-y-1/2 border-zinc-500 text-white hover:!bg-white hover:text-black md:inline-flex"
       >
         Ver Más
       </Button>
-      {
-        result.success &&
-          imgPoster.every((img) => img.success) &&
-          result.data.results.slice(0, 6).map((item, index) => {
-            const posterImage = imgPoster[index]?.data?.posters?.[0]?.file_path
-            return (
-              <MediaCard
-                item={item}
-                genders={listIdWithGender}
-                url_image={posterImage}
-                index={index}
-                type={type}
-                class={{
-                  base: 'max-w-75 min-w-[300px]',
-                  image: 'absolute aspect-square h-full w-full',
-                }}
-              />
-            )
-          })
-      }
     </div>
-    <div class="absolute top-0 right-0 h-full w-96 bg-gradient-to-l from-black from-50% lg:w-xl"></div>
   </div>
 </div>
