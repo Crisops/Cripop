@@ -1,14 +1,16 @@
 import { useCallback, useState } from 'react'
 import { navigate } from 'astro:transitions/client'
 import { Search } from 'lucide-react'
-import { Navbar as NavbarHero, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar'
+import { Navbar as NavbarHero, NavbarBrand } from '@heroui/navbar'
 import { Link } from '@heroui/link'
 import FormSearch from '@/components/react/form-search'
-import Button from '@/components/shared/button'
 import Modal from '@/components/shared/modal'
+import NavbarContent from '@/components/react/navbar-content'
+import NavbarMenu from '@/components/react/navbar-menu'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
   const handleOpenModal = useCallback(
     (isOpen: boolean) => {
       setIsOpen(isOpen)
@@ -16,32 +18,24 @@ const Navbar = () => {
     [isOpen, setIsOpen],
   )
 
-  const handleNavigate = () => {
-    navigate('/')
+  const handleNavigate = (href: string) => {
+    navigate(href)
   }
 
   return (
     <>
-      <NavbarHero position="sticky" className="z-50 h-16 bg-black/50 backdrop-blur-sm [&>header]:max-w-full">
+      <NavbarHero
+        onMenuOpenChange={setIsMenuOpen}
+        position="sticky"
+        className="z-50 h-16 bg-black/50 backdrop-blur-sm [&>header]:max-w-full [&>header]:px-4"
+      >
         <NavbarBrand>
-          <Link onPress={handleNavigate} className="text-large cursor-pointer font-bold text-white">
+          <Link onPress={() => handleNavigate('/')} className="text-large cursor-pointer font-bold text-white">
             cripop
           </Link>
         </NavbarBrand>
-        <NavbarContent justify="end" className="gap-0">
-          <NavbarItem>
-            <Button
-              onPress={() => handleOpenModal(true)}
-              startContent={<Search className="hidden md:block" color="white" size={20} />}
-              className="w-max min-w-max bg-transparent px-0 text-white xl:px-4"
-            >
-              <div className="flex md:hidden">
-                <Search color="white" size={20} />
-              </div>
-              <span className="hidden text-current md:inline">Buscar</span>
-            </Button>
-          </NavbarItem>
-        </NavbarContent>
+        <NavbarContent handleNavigate={handleNavigate} handleOpenModal={handleOpenModal} isMenuOpen={isMenuOpen} />
+        <NavbarMenu handleNavigate={handleNavigate} />
       </NavbarHero>
       <Modal isOpen={isOpen} onOpenChange={handleOpenModal} size="full" placement="center">
         <FormSearch iconSearch={<Search color="white" size={20} />} />
