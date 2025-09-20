@@ -21,22 +21,17 @@ interface Props {
 
 const { type, url, page, title, description } = Astro.props
 
-const result = await axiosClient.get<ResultSearch>(url)
-
-if (!result.success) {
-  console.log(result.error)
-  throw new Error('Error al obtener los resultados de la busqueda')
-}
-
-const [img, genders] = await Promise.all([
-  Promise.all(
-    result.data.results.map((search) => axiosClient.get<ImagesTMDB>(tmdbUrls.images.includeLanguage(type, search.id))),
-  ),
+const [result, genders] = await Promise.all([
+  axiosClient.get<ResultSearch>(url),
   axiosClient.get<Genders>(tmdbUrls.genres(type)),
 ])
-if (!img) throw new Error('Error al obtener las imagenes de los resultados de la busqueda')
 
-if (!genders.success) throw new Error('Error al obtener las generos de los resultados de la busqueda')
+if (!result.success) throw new Error('Error al obtener resultados')
+if (!genders.success) throw new Error('Error al obtener géneros')
+
+const img = await Promise.all(
+  result.data.results.map((search) => axiosClient.get<ImagesTMDB>(tmdbUrls.images.includeLanguage(type, search.id))),
+)
 
 const listIdWithGender = getOptimizedResultWithGenders(result.data, genders.data)
 
@@ -48,7 +43,7 @@ const totalPages = result.data.total_pages < 500 ? result.data.total_pages : 500
   <slot name="header" />
   <div
     class:list={[
-      'realtive px-5 pb-20',
+      'relative px-5 pb-20',
       {
         'grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6':
           result.success,

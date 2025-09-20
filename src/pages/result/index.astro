@@ -23,15 +23,12 @@ const URL_SEARCH = tmdbUrls.search(type, query, page)
 ---
 
 <Layout title={`(${query}) - Cripop`}>
-  <ResultSearch type={type} url={URL_SEARCH} page={page}>
-    <div slot="header" class="relative my-10 flex flex-col items-start justify-between px-5 xl:flex-row">
-      <h1 class="text-left text-xl font-light text-white sm:text-2xl">
-        Resultados de tu busqueda: <span
-          class="text-center text-xl font-bold text-white sm:text-left sm:text-2xl lg:max-xl:text-center xl:text-left"
-          >"{query}"</span
-        >
-      </h1>
-    </div>
-  </ResultSearch>
+  <ResultSearch
+    type={type}
+    url={URL_SEARCH}
+    page={page}
+    title="Resultados de tu busqueda"
+    description={`Mostramos los resultados más relevantes para tu búsqueda en Cripop. Explora entre diferentes tipos de contenido relacionados con "${query}".`}
+  />
   <Footer />
 </Layout>

@@ -13,14 +13,14 @@ interface NavbarContentProps {
 
 const NavbarContent = ({ handleNavigate, handleOpenModal, isMenuOpen }: NavbarContentProps) => {
   return (
-    <NavbarContentHero justify="end" className="gap-4 sm:gap-0">
-      <NavbarItem className="hidden sm:list-item">
+    <NavbarContentHero justify="end" className="gap-4 xl:gap-0">
+      <NavbarItem className="hidden xl:list-item">
         <Button onPress={() => handleNavigate('/')} className="w-max min-w-max bg-transparent text-white">
           Inicio
         </Button>
       </NavbarItem>
       {menuLinks.map((item) => (
-        <NavbarItem key={item.id} className="hidden sm:list-item">
+        <NavbarItem key={item.id} className="hidden xl:list-item">
           <Tooltip buttonText={item.label}>
             <div className="flex flex-col gap-2">
               {item.subcategories.map((subcategory) => (
@@ -40,7 +40,7 @@ const NavbarContent = ({ handleNavigate, handleOpenModal, isMenuOpen }: NavbarCo
         <NavbarMenuToggle
           icon={<Menu color="white" />}
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-          className="sm:hidden"
+          className="xl:hidden"
         />
       </NavbarItem>
       <NavbarItem>
