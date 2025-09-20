@@ -73,7 +73,7 @@ const Filters = ({ contentType }: FiltersProps) => {
       </Button>
       <Drawer
         classNames={{
-          base: ['bg-zinc-900'],
+          base: ['bg-black/90 backdrop-blur-sm border-l-1 border-l-foreground-800'],
           closeButton: ['end-3 hover:bg-default-100/20 transition-colors hover:text-white'],
         }}
         radius="sm"
