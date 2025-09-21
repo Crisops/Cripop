@@ -11,7 +11,7 @@ const { serie } = Astro.params
 
 if (!serie) return Astro.redirect('/404')
 
-const [id, name] = serie.split('/')
+const [id, _] = serie.split('/')
 
 const URL_SERIE_DETAILS = tmdbUrls.detailsWithVideos('tv', parseInt(id))
 const URL_SERIE_VIDEOS = tmdbUrls.videos.all('tv', parseInt(id))
@@ -30,8 +30,10 @@ const detailsSerie: Omit<DetailsSeriesSeasons, 'currentSeason'> = {
   runtime: dataSerie.episode_run_time[0] * dataSerie.number_of_episodes,
   videos: dataSerieVideos,
 }
+
+const name = `${detailsSerie.name} ${`(${new Date(detailsSerie.first_air_date).getFullYear()} - ${new Date(detailsSerie.last_air_date).getFullYear()}) | ${detailsSerie.seasons.length} temporadas`}`
 ---
 
-<Layout title={`Cripop - ${name}`}>
+<Layout title={`${name} - Cripop`}>
   <MediaDetails data={detailsSerie} type="tv" />
 </Layout>

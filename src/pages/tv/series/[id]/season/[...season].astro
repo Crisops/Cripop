@@ -47,8 +47,10 @@ const detailsSerieSeason: DetailsSeriesSeasons = {
   vote_average: dataEpisode.vote_average,
   runtime: dataEpisode.runtime,
 }
+
+const name = `${dataSerie.name}: Temporada ${dataSeason.season_number} (${new Date(dataEpisode.air_date).getFullYear()}): Episodio ${dataEpisode.episode_number} - ${dataEpisode.name}`
 ---
 
-<Layout title={`Cripop - ${dataEpisode.name}`}>
+<Layout title={`${name}`}>
   <MediaDetails data={detailsSerieSeason} type="tv" isSeason />
 </Layout>
