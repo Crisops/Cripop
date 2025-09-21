@@ -1,9 +1,9 @@
 ---
 import Layout from '@/layouts/Layout.astro'
 import { tmdbUrls } from '@/services/tmdb/urls'
+import { hasValidFilterParams } from '@/utils/validate-filter-search-params'
 import ResultSearch from '@/components/astro/result-search.astro'
 import Footer from '@/components/astro/footer.astro'
-import { hasValidFilterParams } from '@/utils/validate-filter-search-params'
 
 const page = Number(Astro.url.searchParams.get('page') ?? 1)
 let URL_MOVIES = ''
