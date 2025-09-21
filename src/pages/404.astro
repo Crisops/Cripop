@@ -1,100 +1,35 @@
 ---
-  import NotFound from "@/layouts/NotFound.astro";
+import Sprite from '@/assets/sprite.svg'
+import Layout from '@/layouts/Layout.astro'
+import Button from '@/components/shared/button'
+import { Link } from '@heroui/link'
 ---
 
-
-<NotFound title="404 not Found">
-  <section id="page" class="relative w-full h-screen flex justify-center items-center px-5 md:px-10">
-    <div class="h-full flex flex-col justify-center items-center">
-        <div class="flex justify-center">
-          <h1 id="title" class="font-Ubuntu font-bold uppercase ">404</h1>
-        </div>
-        <div class="flex flex-col items-center gap-10">
-          <h3 id="message" class="text-2xl sm:text-3xl font-Ubuntu text-center font-semibold uppercase">Creo que te has perdido</h3>
-          <p id="content_message" class="text-center font-Ubuntu text-lg max-w-sm ">La página que acabas de solicitar no se encuentra disponible</p>
-          <a id="btn_back" href="/" class="px-5 py-2 font-Ubuntu text-lg font-bold">Regresar</a>
-        </div>
+<Layout title="404 not Found">
+  <section class="relative flex h-[calc(100vh_-_4rem)] w-full overflow-hidden px-3">
+    <div class="grid w-full grid-cols-1 grid-rows-2 place-items-center xl:grid-cols-2 xl:grid-rows-1">
+      <div class="relative z-20 flex h-full w-full flex-col items-center justify-center space-y-5">
+        <h1 class="text-center text-2xl font-semibold text-balance text-white uppercase sm:text-4xl">
+          Creo que te has perdido
+        </h1>
+        <h3 class="text-center text-xl text-white uppercase md:text-2xl">Página no encontrada</h3>
+        <p class="text-tiny sm:text-small text-foreground-600 max-w-xs text-center font-light sm:max-w-sm">
+          tu búsqueda se ha aventurado más allá del universo conocido
+        </p>
+        <Button
+          variant="ghost"
+          radius="sm"
+          as={Link}
+          href="/"
+          className="text-small before:rounded-small border-none bg-linear-to-r from-blue-500 to-purple-500 text-white before:absolute before:inset-px before:bg-black"
+        >
+          <span class="relative text-current">Regresar a casa</span>
+        </Button>
+      </div>
+      <div class="relative flex items-center justify-center">
+        <div class="absolute h-72 w-full max-w-2xl bg-linear-to-r from-blue-500 to-purple-500 blur-3xl"></div>
+        <Sprite class="z-10 size-[500px] mask-b-from-30% mask-b-to-70% saturate-150 xl:size-[600px]" />
+      </div>
     </div>
   </section>
-</NotFound>
-
-
-<style>
-
-  #page{
-    background: linear-gradient(to top, #000105, #001F3F);
-  }
-
-  #title{
-    text-shadow: -1px -1px 0 #4682B4,
-    1px 1px 0 #001F3F;
-    font-size: 8rem;
-  }
-
-  #message{
-    text-shadow: 1px 1px 10px #003366,
-      1px 1px 50px #003366;
-  }
-  
-  #content_message {
-    color: #007BA7;
-    opacity: 50%;
-  }
-
-  #btn_back{
-    background: #000105;
-    color: #001F3F;
-  }
-
-  @media (min-width: 400px) {
-
-    #title{
-      font-size: 12rem;
-    }
-
-  }
-
-  @media (min-width: 640px) {
-
-    #title{
-      font-size: 14rem;
-    }
-
-  }  
-
-  @media (min-width: 780px) {
-
-    #title{
-      font-size: 16rem;
-    }
-
-  }  
-
-
-  @media (min-width: 1024px) {
-
-  #title{
-    font-size: 18rem;
-  }
-
-  }  
-
-  @media (min-width: 1280px) {
-
-  #title{
-    font-size: 20rem;
-  }
-
-}  
-
-/* 
-  @media (max-width: 600px) {
-
-    #title{
-    font-size: 15rem;
-    }
-
-  } */
-
-
-</style>
+</Layout>
