@@ -67,7 +67,7 @@ const Filters = ({ contentType }: FiltersProps) => {
         radius="sm"
         onPress={() => handleOpenChange(true)}
         startContent={<ListFilterPlus />}
-        className="bg-white text-black"
+        className="text-tiny sm:text-small bg-white text-black"
       >
         Filtrar
       </Button>
@@ -84,7 +84,7 @@ const Filters = ({ contentType }: FiltersProps) => {
       >
         <DrawerContent>
           <>
-            <DrawerHeader className="end-3 flex flex-col gap-1 text-white">
+            <DrawerHeader className="end-3 flex flex-col gap-1 text-balance text-white">
               Encuentra tu contenido favorito
             </DrawerHeader>
             <DrawerBody>
