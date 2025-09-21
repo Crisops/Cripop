@@ -22,7 +22,14 @@ if (!query || !type) return
 const URL_SEARCH = tmdbUrls.search(type, query, page)
 ---
 
-<Layout title={`${query} - Cripop`}>
+<Layout
+  title={`${query} - Cripop`}
+  description={`Mostramos los resultados más relevantes para tu búsqueda en Cripop. Explora entre diferentes tipos de contenido relacionados con "${query}".`}
+  og={{
+    url: '/result',
+    image: '/images/og/result.jpg',
+  }}
+>
   <ResultSearch
     type={type}
     url={URL_SEARCH}

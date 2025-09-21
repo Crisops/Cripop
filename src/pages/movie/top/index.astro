@@ -16,7 +16,14 @@ if (hasValidFilterParams(Astro.url.searchParams)) {
 }
 ---
 
-<Layout title="Películas mejores puntuadas - Cripop">
+<Layout
+  title="Películas mejores puntuadas - Cripop"
+  description="Revisa el panteón de las mejores películas de todos los tiempos."
+  og={{
+    url: '/movie/top',
+    image: '/images/og/movie-top.jpg',
+  }}
+>
   <ResultSearch
     title="Los Clásicos del Futuro"
     description="Revisa el panteón de las mejores películas de todos los tiempos."

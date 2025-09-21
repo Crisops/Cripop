@@ -10,7 +10,7 @@ const { movie } = Astro.params
 
 if (!movie) return Astro.redirect('/404')
 
-const [id, _] = movie.split('/')
+const [id, nameUrl] = movie.split('/')
 
 const URL_MOVIE_DETAILS = tmdbUrls.detailsWithVideos('movie', parseInt(id))
 
@@ -34,6 +34,13 @@ const data = {
 const name = `${data.title} ${`(${new Date(data.release_date).getFullYear()})`}`
 ---
 
-<Layout title={`${name} - Cripop`}>
+<Layout
+  title={`${name} - Cripop`}
+  description={`${data.overview}`}
+  og={{
+    url: `/movie/${id}/${nameUrl}`,
+    image: `${tmdbUrls.images.original}${data.backdrop_path}`,
+  }}
+>
   <MediaDetails data={data} type="movie" />
 </Layout>

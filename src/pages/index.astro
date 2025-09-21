@@ -5,7 +5,14 @@ import MediaHomeCarousel from '@/components/astro/media-home-carousel.astro'
 import Footer from '@/components/astro/footer.astro'
 ---
 
-<Layout title="Cripop">
+<Layout
+  title="Cripop"
+  description="Un espacio donde puedes ver lo que te gusta de una manera rápida, sencilla y eficaz."
+  og={{
+    url: '/',
+    image: '/images/og/home.jpg',
+  }}
+>
   <div class="flex h-full w-full flex-col">
     <MovieHero />
     <MediaHomeCarousel />

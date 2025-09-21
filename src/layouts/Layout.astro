@@ -6,19 +6,46 @@ import Navbar from '@/components/react/navbar'
 
 interface Props {
   title: string
+  description: string
+  og: {
+    url: string
+    image: string
+  }
+}
+const { title, description, og } = Astro.props
+
+function getAbsoluteUrl(path: string) {
+  const base = import.meta.env.SITE || Astro.url.origin
+  return new URL(path, base).href
 }
 
-const { title } = Astro.props
+const ogData = {
+  url: og.url.startsWith('http') ? og.url : getAbsoluteUrl(og.url || Astro.url.pathname),
+  image: og.image.startsWith('http') ? og.image : getAbsoluteUrl(og.image),
+}
 ---
 
 <!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content={description} />
+    <meta property="og:site_name" content="Cripop" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={ogData.url} />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:image" content={ogData.image} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@cripop" />
+    <meta name="twitter:creator" content="@crisopsdev" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogData.image} />
     <ClientRouter fallback="none" />
   </head>
   <body>

@@ -16,9 +16,16 @@ if (hasValidFilterParams(Astro.url.searchParams)) {
 }
 ---
 
-<Layout title="Series populares - Cripop">
+<Layout
+  title="Series populares - Cripop"
+  description="Entérate de las series que están causando sensación. Desde dramas intensos hasta comedias hilarantes, aquí te mostramos los programas que no puedes dejar de ver. Prepárate para tu próximo atracón"
+  og={{
+    url: '/tv/popular',
+    image: '/images/og/tv-popular.jpg',
+  }}
+>
   <ResultSearch
-    title=" De la Pantalla a tu Sofá"
+    title="De la Pantalla a tu Sofá"
     description="Entérate de las series que están causando sensación. Desde dramas intensos hasta comedias hilarantes, aquí te mostramos los programas que no puedes dejar de ver. Prepárate para tu próximo atracón"
     type="tv"
     url={URL_SERIES_POPULAR}

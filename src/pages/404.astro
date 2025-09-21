@@ -5,7 +5,14 @@ import Button from '@/components/shared/button'
 import { Link } from '@heroui/link'
 ---
 
-<Layout title="Página no encontrada - Cripop">
+<Layout
+  title="Página no encontrada - Cripop"
+  description="Cripop es un espacio donde puedes ver lo que te gusta de una manera rápida, sencilla y eficaz."
+  og={{
+    url: Astro.url.pathname,
+    image: '/images/og/not-found.jpg',
+  }}
+>
   <section class="relative flex h-[calc(100vh_-_4rem)] w-full overflow-hidden px-3">
     <div class="grid w-full grid-cols-1 grid-rows-2 place-items-center xl:grid-cols-2 xl:grid-rows-1">
       <div class="relative z-20 flex h-full w-full flex-col items-center justify-center space-y-5">

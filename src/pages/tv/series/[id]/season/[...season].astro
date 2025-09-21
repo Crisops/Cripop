@@ -9,7 +9,7 @@ import axiosClient from '@/lib/axios/client'
 import MediaDetails from '@/components/astro/media-details.astro'
 
 const { id, season } = Astro.params
-const [seasonNumber, _, episodeNumber, __] = season?.split('/') ?? []
+const [seasonNumber, _, episodeNumber, nameUrl] = season?.split('/') ?? []
 
 if (!id || !seasonNumber || !episodeNumber) return Astro.redirect('/404')
 
@@ -51,6 +51,13 @@ const detailsSerieSeason: DetailsSeriesSeasons = {
 const name = `${dataSerie.name}: Temporada ${dataSeason.season_number} (${new Date(dataEpisode.air_date).getFullYear()}): Episodio ${dataEpisode.episode_number} - ${dataEpisode.name}`
 ---
 
-<Layout title={`${name}`}>
+<Layout
+  title={`${name}`}
+  description={`${detailsSerieSeason.overview}`}
+  og={{
+    url: `/tv/series/${id}/season/${seasonNumber}/episode/${episodeNumber}/${nameUrl}`,
+    image: `${tmdbUrls.images.original}${detailsSerieSeason.backdrop_path}`,
+  }}
+>
   <MediaDetails data={detailsSerieSeason} type="tv" isSeason />
 </Layout>
