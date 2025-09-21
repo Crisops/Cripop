@@ -8,7 +8,11 @@ import Modal from '@/components/shared/modal'
 import NavbarContent from '@/components/react/navbar-content'
 import NavbarMenu from '@/components/react/navbar-menu'
 
-const Navbar = () => {
+interface NavbarProps {
+  children: React.ReactNode
+}
+
+const Navbar = ({ children: logo }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
   const handleOpenModal = useCallback(
@@ -30,6 +34,7 @@ const Navbar = () => {
         className="z-50 h-16 bg-black/50 backdrop-blur-sm [&>header]:max-w-full [&>header]:px-4"
       >
         <NavbarBrand>
+          {logo}
           <Link onPress={() => handleNavigate('/')} className="text-large cursor-pointer font-bold text-white">
             cripop
           </Link>
