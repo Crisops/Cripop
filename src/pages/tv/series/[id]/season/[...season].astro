@@ -56,7 +56,7 @@ const name = `${dataSerie.name}: Temporada ${dataSeason.season_number} (${new Da
   description={`${detailsSerieSeason.overview}`}
   og={{
     url: `/tv/series/${id}/season/${seasonNumber}/episode/${episodeNumber}/${nameUrl}`,
-    image: `${tmdbUrls.images.original}${detailsSerieSeason.backdrop_path}`,
+    image: `${tmdbUrls.images.w1280}${detailsSerieSeason.backdrop_path}`,
   }}
 >
   <MediaDetails data={detailsSerieSeason} type="tv" isSeason />
